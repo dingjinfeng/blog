@@ -14,15 +14,14 @@ const getters = {
 // actions
 const actions = {
   getEssayList ({ commit, state }, param) {
-    console.log('getEssays....')
+    console.log(param)
     essayApi.getEssayList(param).then(function (response) {
-      console.log('getEaaaaaa...')
       var data = response.data
       if (data.flag) {
         data = data.res
-        console.log(data.list)
-        commit('setEssayList', data.list)
-        param.success(data.currentPage)
+        var list = param.isMore ? state.essayList.concat(data.list) : data.list
+        commit('setEssayList', list)
+        param.success(data.list)
       } else {
         ViewUI.Message.error(data.info)
       }
@@ -30,12 +29,12 @@ const actions = {
   },
   getEssayListByUserId ({ commit, state }, param) {
     essayApi.getEssayListByUserId(param).then(function (response) {
-      console.log('getEaaaaaa...')
       var data = response.data
       if (data.flag) {
         data = data.res
-        commit('setEssayList', data.list)
-        param.success(data.currentPage)
+        var list = param.isMore ? state.essayList.concat(data.list) : data.list
+        commit('setEssayList', list)
+        param.success(data.list)
       } else {
         ViewUI.Message.error(data.info)
       }
@@ -49,8 +48,6 @@ const mutations = {
     state.essayListFrom = essayListFrom
   },
   setEssayList (state, essayList) {
-    console.log('set.....')
-    console.dir(essayList)
     state.essayList = essayList
     console.dir(state.essayList)
   },

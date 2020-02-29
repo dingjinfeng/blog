@@ -3,12 +3,12 @@
 <div class="loginWrap">
     <Form ref="formLogin" :model="formLogin" :rules="ruleLogin" id="requestloginflex" style="width: 310px">
         <FormItem prop="mail">
-            <i-input type="text" v-model="formLogin.mail" placeholder="Email">
+            <i-input type="text" v-model="formLogin.mail" placeholder="邮箱">
                 <Icon type="ios-person-outline" slot="prepend"></Icon>
             </i-input>
         </FormItem>
-        <FormItem prop="password" :show-message="false">
-            <i-input type="password" v-model="formLogin.password" placeholder="Password"  width="50%">
+        <FormItem prop="password">
+            <i-input type="password" v-model="formLogin.password" :maxlength="20"  placeholder="密码"  width="50%">
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
             </i-input>
         </FormItem>
@@ -25,7 +25,7 @@ export default {
     return {
       formLogin: {
         mail: '1306104920@qq.com',
-        password: '12345678'
+        password: '123456789'
       },
       ruleLogin: {
         mail: [
@@ -33,7 +33,7 @@ export default {
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
-          { type: 'string', min: 6, message: 'The password length cannot be less than 6 bits', trigger: 'blur' }
+          { pattern: /^[0-9|a-zA-Z]{8,20}$/, message: '密码长度错误，请重新输入密码', trigger: 'blur' }
         ]
       }
     }

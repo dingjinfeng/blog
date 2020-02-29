@@ -4,7 +4,7 @@
         <div class="userInfoWrap" v-if="type == 1">
             <div class="left">
                 <div class="line avatar">
-                    <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg"  icon="ios-person" size="large" />
+                    <Avatar src="/api/images/1.jpg"  icon="ios-person" size="large" />
                 </div>
                 <div class="line">
                     <span>昵称:</span>
@@ -35,16 +35,31 @@
         <!-- 修改用户信息 -->
         <div class="editInfo" v-if="type == 2">
             <Form ref="formEdit" :model="formEdit" :rules="ruleEdit" :label-width="90" style="width:400px">
-                <FormItem label="昵称" prop="userInfo.username">
+                <FormItem label="头像" prop="username">
+                  <div class="avatarItem">
+                    <Avatar :src="'/api/images/' + formEdit.imgid" class="avatar"/>
+                    <Upload class="uploadAvatar"
+                        action="/api/user/upload"
+                        :format="['jpg','jpeg','png']"
+                        :on-error="uploadError"
+                        :before-upload="uploadBefore"
+                        :on-success="uploadSuccess"
+                        :max-size="1024"
+                        name="upload">
+                      <Button icon="ios-cloud-upload-outline">上传图片</Button>
+                    </Upload>
+                  </div>
+                </FormItem>
+                <FormItem label="昵称" prop="username">
                     <i-input v-model="formEdit.username" placeholder="请输入用户名"></i-input>
                 </FormItem>
-                <FormItem label="性别" prop="userInfo.sex">
+                <FormItem label="性别" prop="sex">
                     <RadioGroup v-model="formEdit.sex">
                         <Radio :label="1">男</Radio>
                         <Radio :label="2">女</Radio>
                     </RadioGroup>
                 </FormItem>
-                <FormItem label="个性签名" prop="userInfo.intro">
+                <FormItem label="个性签名" prop="intro">
                     <i-input v-model="formEdit.intro" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入个性签名"></i-input>
                 </FormItem>
                 <FormItem class="editBtnWrap">
@@ -77,29 +92,33 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  computed: {
-    ...mapState({
-      userInfo: state => state.user.userInfo
-    })
-  },
   data () {
+    console.log(this.$store.state.user.userInfo)
     return {
       // 1用户个人资料展示 2修改用户信息 3修改密码
       type: 1,
       formEdit: {
         username: this.$store.state.user.userInfo.username,
         sex: this.$store.state.user.userInfo.sex,
-        intro: this.$store.state.user.userInfo.intro
+        intro: this.$store.state.user.userInfo.intro,
+        // imgid: this.$store.state.user.userInfo.imgid + '.jpg',
+        imgid: '1.jpg',
+        imgLocation: ""
       },
       ruleEdit: {
         username: [
-          { required: true, message: '名称不能为空,输入一些字符试试吧', trigger: 'blur' }
+          { required: true, message: 'The name cannot be empty', trigger: 'blur' }
+        ],
+        mail: [
+          { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
+          { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
         ],
         sex: [
-          { required: true }
+          { required: true, message: 'Please select gender', trigger: 'change' }
         ],
         intro: [
-          { type: 'string', min: 0, trigger: 'blur' }
+          { required: true, message: 'Please enter a personal introduction', trigger: 'blur' },
+          { type: 'string', min: 20, message: 'Introduce no less than 20 words', trigger: 'blur' }
         ]
       },
       formSetPwd: {
@@ -119,6 +138,24 @@ export default {
   created () {
     this.$store.commit("user/setLeftCurrent", 4)
     this.$store.commit("switchLoading", !1)
+  }
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
+  },
+  created () {
+    // this.$store.commit("img/getImgLocation", {
+    //   id: this.userInfo.imgId,
+    //   success: (res) => {
+    //     this.formEdit.imgLocation = res
+    //   }
+    // })
+    // this.formEdit = this.userInfo
+      this.$store.commit("user/setLeftCurrent", 4)
+      this.$store.commit("switchLoading", !1)
+    console.log(this.userInfo)
+>>>>>>> update
   },
   methods: {
     editSubmit (name) {
@@ -164,6 +201,17 @@ export default {
     },
     setPwdReset (name) {
       this.$refs[name].resetFields()
+    },
+    uploadBefore (aa) {
+      console.log(aa)
+    },
+    uploadError () {
+      this.$Notice.error({ title: '头像上传错误' })
+    },
+    uploadSuccess (response, file, fileList) {
+      console.dir(response)
+      console.dir(file)
+      console.dir(fileList)
     }
   }
 }
@@ -202,5 +250,19 @@ export default {
 }
 .editInfo .editBtnWrap .btn{
   margin-right:15px;
+}
+.editInfo .ivu-upload{
+  margin-left: 10px;
+}
+.editInfo .avatarItem{
+  display: flex;
+}
+.editInfo .avatar{
+  max-width: 40px;
+}
+.editInfo .uploadAvatar{
+  margin-left: 10px;
+  flex-shrink: 1;
+  flex-shrink: 1;
 }
 </style>

@@ -62,3 +62,11 @@ export default {
   margin-top: 20px;
 }
 </style>
+<style>
+.scrollFinish .ivu-scroll-loader{
+  display: none;
+}
+.scrollFinish .ivu-scroll-content{
+  opacity: 1;
+}
+</style>

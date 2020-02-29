@@ -9,7 +9,7 @@
             <i-input type="email" v-model="formValidate.mail" placeholder="请输入邮箱"></i-input>
         </FormItem>
         <FormItem type="password" label="密码" prop="password">
-            <i-input type="password" v-model="formValidate.password" :maxlength="20" :minlength="8" placeholder="请输入密码(8-20位)"></i-input>
+            <i-input type="password" v-model="formValidate.password" :maxlength="20" placeholder="请输入密码(字母数字组合，8-20位)"></i-input>
         </FormItem>
         <FormItem label="性别" prop="sex">
             <RadioGroup v-model="formValidate.sex">

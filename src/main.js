@@ -7,6 +7,13 @@ import 'view-design/dist/styles/iview.css'
 
 Vue.use(ViewUI)
 Vue.config.productionTip = false
+// Vue.mixin({
+//   computed: {
+//     getImg: (imgid) => {
+//       this.
+//     }
+//   }
+// })
 
 new Vue({
   router,
