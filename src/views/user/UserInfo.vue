@@ -138,24 +138,11 @@ export default {
   created () {
     this.$store.commit("user/setLeftCurrent", 4)
     this.$store.commit("switchLoading", !1)
-  }
+  },
   computed: {
     ...mapState({
       userInfo: state => state.user.userInfo
     })
-  },
-  created () {
-    // this.$store.commit("img/getImgLocation", {
-    //   id: this.userInfo.imgId,
-    //   success: (res) => {
-    //     this.formEdit.imgLocation = res
-    //   }
-    // })
-    // this.formEdit = this.userInfo
-      this.$store.commit("user/setLeftCurrent", 4)
-      this.$store.commit("switchLoading", !1)
-    console.log(this.userInfo)
->>>>>>> update
   },
   methods: {
     editSubmit (name) {

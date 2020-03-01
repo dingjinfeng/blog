@@ -59,21 +59,21 @@ export default {
       switch (path) {
         case "/":
           essayListFrom = 0
-          this.flag = 1
+          this.flag = [1]
           break
         case "/user/blogmanagement":
-          essayListFrom = 1
+          essayListFrom = [-1, 0, 1]
           this.flag = 1
           this.userId = this.userInfo.id
           break
         case "/otheruser/essayList":
           essayListFrom = 2
-          this.flag = 1
+          this.flag = [1]
           this.userId = this.$route.query.userid
           break
         default:
           essayListFrom = 0
-          this.flag = 1
+          this.flag = [1]
       }
       this.$store.commit("essay/setEssayListFrom", essayListFrom)
     },
