@@ -1,10 +1,10 @@
 <template>
   <div>
+    <!-- <avatar :imgId="22"/> -->
     <div id="loading" v-if="loading">
       <loading></loading>
     </div>
     <div id="headerWrap">
-      <avatar :imgId="2"></avatar>
       <myheader></myheader>
     </div>
     <div id="contentWrap">
@@ -19,8 +19,8 @@
 import { sstorage } from '@/store/storage'
 import loading from '@/components/utils/Loading'
 import myheader from './views/nav/myheader'
-import avatar from "@/components/utils/Avatar"
 import { mapState } from "vuex"
+// import avatar from "@/components/utils/Avatar"
 
 export default {
   computed: {
@@ -30,8 +30,8 @@ export default {
   },
   components: {
     loading,
-    myheader,
-    avatar
+    myheader
+    // avatar
   },
   created () {
     console.log('App---created')

@@ -1,12 +1,13 @@
 <template>
   <div class="addEssay">
+    <!-- <div v-html="formAddEssay.contentObj.html"></div> -->
      <Form ref="formAddEssay" :model="formAddEssay" :rules="ruleAddEssay" hide-required-mark>
         <FormItem prop="title" :label-width = "70" label="标题">
             <i-input type="text" v-model="formAddEssay.title" :maxlength="100" placeholder="输入博文标题"></i-input>
         </FormItem>
         <FormItem :label-width = "70" label="博文标签">
             <Select v-model="formAddEssay.cate" multiple style="width:296px">
-                <Option v-for="item in cates" :value="item.name" :key="item.id">{{ item.name }}</Option>
+                <Option v-for="item in cates" :value="item.id" :key="item.id">{{ item.name }}</Option>
             </Select>
             <i-input v-model="formAddEssay.newCate" placeholder="新增博文标签" :maxlength="20" class="input"/>
         </FormItem>
@@ -14,7 +15,7 @@
         </FormItem>
         <editor v-model="formAddEssay.contentObj"></editor>
         <FormItem>
-            <Button type="primary" @click="handleSubmit('formAddEssay')">Signin</Button>
+            <Button type="primary" @click="handleSubmit('formAddEssay')">提交博文</Button>
         </FormItem>
     </Form>
   </div>
@@ -29,12 +30,12 @@ export default {
   data () {
     return {
       formAddEssay: {
-        title: "",
-        cate: [],
-        newCate: "",
+        title: "title",
+        cate: ["cateid1", "cate433333"],
+        newCate: "cate4",
         contentObj: {
           txt: "",
-          slot: ""
+          html: ""
         }
       },
       cates: [{
@@ -60,23 +61,23 @@ export default {
       }, {
         id: 6,
         userId: 3,
-        name: "vue"
+        name: "vue1"
       }, {
         id: 7,
         userId: 3,
-        name: "vue"
+        name: "vue2"
       }, {
         id: 8,
         userId: 3,
-        name: "vue"
+        name: "vue3"
       }, {
         id: 9,
         userId: 3,
-        name: "vue"
+        name: "vue4"
       }, {
         id: 10,
         userId: 3,
-        name: "vue"
+        name: "vue5"
       }],
       ruleAddEssay: {
         title: [
@@ -90,14 +91,23 @@ export default {
   },
   methods: {
     handleSubmit (name) {
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          console.log(this.formAddEssay)
-        //   this.$Message.success('Success!')
-        } else {
-        //   this.$Message.error('Fail!')
-        }
-      })
+      console.log("哈哈哈")
+      console.log(this.formAddEssay)
+      // this.$store.dispatch("essay/addEssay", {
+      //   userId: 3,
+      //   oldCateId: [1, 3, 5],
+      //   newCateName: "dingjajdf",
+      //   title: "title--sss",
+      //   msg: this.formAddEssay.contentObj.txt,
+      //   htmlMsg: this.formAddEssay.contentObj.html
+      // })
+      // this.$refs[name].validate((valid) => {
+      //   if (valid) {
+      //   //   this.$Message.success('Success!')
+      //   } else {
+      //   //   this.$Message.error('Fail!')
+      //   }
+      // })
     }
   }
 }

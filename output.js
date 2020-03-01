@@ -1180,7 +1180,7 @@
                 '.vue'
               ],
               cache: true,
-              cacheIdentifier: '2dace2e2',
+              cacheIdentifier: '41c802fe',
               emitWarning: false,
               emitError: false,
               eslintPath: '/Users/huahua/Documents/jin/miniblog/node_modules/eslint',
@@ -1259,6 +1259,10 @@
       {
         'process.env': {
           NODE_ENV: '"development"',
+          VUE_APP_domain: '"http://192.168.2.101:8080"',
+          VUE_APP_imagesDir: '"/images"',
+          VUE_APP_uploadApi: '"/user/upload"',
+          VUE_APP_API: '"/api"',
           BASE_URL: '"/"'
         }
       }

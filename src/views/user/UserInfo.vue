@@ -4,7 +4,8 @@
         <div class="userInfoWrap" v-if="type == 1">
             <div class="left">
                 <div class="line avatar">
-                    <Avatar :src="getImg(1)"  icon="ios-person" size="large" />
+                  <!-- todo -->
+                    <avatar :imgId="1" />
                 </div>
                 <div class="line">
                     <span>昵称:</span>
@@ -37,9 +38,9 @@
             <Form ref="formEdit" :model="formEdit" :rules="ruleEdit" :label-width="90" style="width:400px">
                 <FormItem label="头像" prop="username">
                   <div class="avatarItem">
-                    <Avatar :src="'/api/images/' + formEdit.imgid" class="avatar"/>
+                    <avatar :imgId="formEdit.imgid" class="avatar"/>
                     <Upload class="uploadAvatar"
-                        action="/api/user/upload"
+                        :action="uploadAddress"
                         :format="['jpg','jpeg','png']"
                         :on-error="uploadError"
                         :before-upload="uploadBefore"
@@ -91,10 +92,13 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import avatar from "@/components/utils/Avatar"
 export default {
   data () {
     console.log(this.$store.state.user.userInfo)
     return {
+      // 上传文件地址
+      uploadAddress: process.env.VUE_APP_API + process.env.VUE_APP_uploadApi,
       // 1用户个人资料展示 2修改用户信息 3修改密码
       type: 1,
       formEdit: {
@@ -134,6 +138,9 @@ export default {
         ]
       }
     }
+  },
+  components: {
+    avatar
   },
   created () {
     this.$store.commit("user/setLeftCurrent", 4)

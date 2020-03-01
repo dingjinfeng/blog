@@ -7,6 +7,16 @@ export default {
       userId: param.userId
     })
   },
+  addEssay (param) {
+    return axios.post('/user/addEssay', {
+      userId: param.userId,
+      oldCateId: param.oldCateId,
+      newCateName: param.newCateName,
+      title: param.title,
+      msg: param.msg,
+      htmlMsg: param.htmlMsg
+    })
+  },
   getEssayListByUserId (param) {
     return axios.post('/user/getEssaysByUserIdByTime', {
       page: param.page,

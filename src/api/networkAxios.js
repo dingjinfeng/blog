@@ -3,7 +3,7 @@ import axios from 'axios'
 
 // 不设置超时时间
 axios.defaults.timeout = 0
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = process.env.VUE_APP_API
 axios.defaults.headers['Content-Type'] = 'application/json'
 axios.defaults.responseType = 'json'
 

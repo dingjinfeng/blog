@@ -39,6 +39,17 @@ const actions = {
         ViewUI.Message.error(data.info)
       }
     })
+  },
+  addEssay ({ commit, state }, param) {
+    essayApi.addEssay(param).then(function (response) {
+      console.log(response)
+      var data = response.data
+      if (data.flag) {
+        console.log(data.res)
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
   }
 }
 

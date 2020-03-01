@@ -14,11 +14,11 @@ module.exports = {
   devServer: {
     disableHostCheck: true,
     proxy: {
-      '/api': {
-        target: 'http://192.168.2.101:8080',
+      [process.env.VUE_APP_API]: {
+        target: process.env.VUE_APP_domain,
         changeOrigin: true,
         pathRewrite: {
-          '^/api': ''
+          ['^' + process.env.VUE_APP_API]: ''
         }
       }
     }

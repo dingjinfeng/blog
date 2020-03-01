@@ -29,7 +29,7 @@ export default {
     return {
       isFinish: !1,
       page: 0,
-      flag: 1,
+      flag: [1],
       userId: 0,
       essayListAction: "essay/getEssayList"
     }
