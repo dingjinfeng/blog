@@ -7,7 +7,7 @@
         <Button class="btn" size="small"  type="primary" @click="changeShow(2,cate.id)">删除博文</Button>
         <Button class="btn" size="small" type="primary">删除标签</Button>
         <Drawer title="添加博文" :closable="true" :scrollable="true" v-model="isShow">
-          <div v-for="(essay, essayIndex) in essayList" :key="essayIndex">
+          <div v-for="(essay,essayIndex) in essayList" :key="essayIndex">
             <div class="essayInfo">
               <div class="title mgr20">{{essay.title}}</div>
               <div class="date mgr20">时间:{{essay.createtime}}</div>
@@ -77,7 +77,6 @@ export default {
         }
       })
     }
-    // delEssay
   },
   components: {}
 }
