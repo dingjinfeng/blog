@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { methods } from '@/mixin'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -7,14 +8,10 @@ import 'view-design/dist/styles/iview.css'
 
 Vue.use(ViewUI)
 Vue.config.productionTip = false
-// Vue.mixin({
-//   computed: {
-//     getImg: (imgid) => {
-//       this.
-//     }
-//   }
-// })
-
+Vue.mixin({
+  methods
+})
+console.dir(process.env)
 new Vue({
   router,
   store,

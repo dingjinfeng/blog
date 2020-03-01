@@ -4,6 +4,7 @@
       <loading></loading>
     </div>
     <div id="headerWrap">
+      <avatar :imgId="2"></avatar>
       <myheader></myheader>
     </div>
     <div id="contentWrap">
@@ -16,8 +17,9 @@
 </template>
 <script>
 import { sstorage } from '@/store/storage'
-import loading from '@/views/utils/loading'
+import loading from '@/components/utils/Loading'
 import myheader from './views/nav/myheader'
+import avatar from "@/components/utils/Avatar"
 import { mapState } from "vuex"
 
 export default {
@@ -28,7 +30,8 @@ export default {
   },
   components: {
     loading,
-    myheader
+    myheader,
+    avatar
   },
   created () {
     console.log('App---created')

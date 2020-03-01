@@ -7,7 +7,7 @@
         <Button class="btn" size="small"  type="primary" @click="changeShow(2,cate.id)">删除博文</Button>
         <Button class="btn" size="small" type="primary">删除标签</Button>
         <Drawer title="添加博文" :closable="true" :scrollable="true" v-model="isShow">
-          <div v-for="(essay,essayIndex) in essayList" :key="index">
+          <div v-for="(essay, essayIndex) in essayList" :key="essayIndex">
             <div class="essayInfo">
               <div class="title mgr20">{{essay.title}}</div>
               <div class="date mgr20">时间:{{essay.createtime}}</div>
@@ -54,11 +54,12 @@ export default {
   },
   methods: {
     changeShow (isShow, cateId) {
-      if(isShow === 1) {
+      if (isShow === 1) {
         this.$store.dispatch("essay/getEssayByCateId", {
           cateId,
           page: 1,
-          flag: 1,// 1表示查询所有具备该标签的文章,2 表示查询所有不具备该标签的文章
+          // 1表示查询所有具备该标签的文章,2 表示查询所有不具备该标签的文章
+          flag: 1,
           success: (res) => {
             this.essayPage = res
           }
@@ -75,8 +76,8 @@ export default {
           this.essayList.splice(essayIndex, 1)
         }
       })
-    },
-    delEssay
+    }
+    // delEssay
   },
   components: {}
 }
