@@ -17,7 +17,7 @@
             <essayBriefInfo :essay="item.essay" :userId="item.user.id" :essayListFrom="essayListFrom"></essayBriefInfo>
           </div>
         </div>
-        <Divider v-if="isFinish">已经到底了</Divider>
+        <Divider v-if="isFinish" :dashed="true">已经到底了</Divider>
       </Scroll>
     </div>
   </div>

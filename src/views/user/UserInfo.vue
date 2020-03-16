@@ -56,8 +56,8 @@
                 </FormItem>
                 <FormItem label="性别" prop="sex">
                     <RadioGroup v-model="formEdit.sex">
-                        <Radio :label="1">男</Radio>
-                        <Radio :label="2">女</Radio>
+                        <Radio label="1">男</Radio>
+                        <Radio label="2">女</Radio>
                     </RadioGroup>
                 </FormItem>
                 <FormItem label="个性签名" prop="intro">
@@ -158,11 +158,13 @@ export default {
           this.$store.commit("switchLoading", !0)
           this.$store.dispatch("user/updateUser", {
             id: this.userInfo.id,
+            imgid: this.formEdit.imgid,
             sex: this.formEdit.sex,
             username: this.formEdit.username,
             intro: this.formEdit.intro,
-            success: () => {
-              this.$router.push("/user/addessay")
+            success: (userInfo) => {
+              this.$store.commit("user/setUserInfo", userInfo)
+              this.$router.go(0)
             }
           })
           this.$Message.success('Success!')
@@ -177,13 +179,13 @@ export default {
     setPwdSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.$store.commit("switchLoading", !0)
           this.$store.dispatch("user/setPassword", {
             userId: this.userInfo.id,
             oldPassword: this.formSetPwd.oldPassword,
             newPassword: this.formSetPwd.newPassword,
             success: () => {
-              this.$router.push("/user/addessay")
+              this.$Message.success("修改成功")
+              this.$router.go(0)
             }
           })
         } else {

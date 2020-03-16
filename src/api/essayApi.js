@@ -23,6 +23,13 @@ export default {
       htmlMsg: param.htmlMsg
     })
   },
+  getAllEssayByCateId (param) {
+    return axios.post("/user/getAllEssaysByCateId", {
+      cateId: param.cateId,
+      flag: param.flag,
+      userId: param.userId
+    })
+  },
   getEssayListByUserId (param) {
     return axios.post('/user/getEssaysByUserIdByTime', {
       page: param.page,

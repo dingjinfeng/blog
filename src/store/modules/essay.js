@@ -66,6 +66,17 @@ const actions = {
       }
     })
   },
+  getAllEssayByCateId ({ commit, state }, param) {
+    essayApi.getAllEssayByCateId(param).then(function (response) {
+      var data = response.data
+      if (data.flag) {
+        data = data.res
+        param.success(data)
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
+  },
   addEssayCate ({ commit, state }, param) {
     essayApi.addEssayCate(param).then(function (response) {
       var data = response.data

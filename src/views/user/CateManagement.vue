@@ -1,27 +1,30 @@
 <template>
   <div class="cateManagement">
     <Button class="btn" type="dashed" @click="addCate">添加分类</Button>
-    <div class="line" v-for="(cate, cateIndex) in cateList" :key="cateIndex">
-      <span>{{cate.name}}</span>
-      <div>
-        <Button class="btn" size="small" type="primary" @click="changeShow(1, cate.id, cateIndex)">添加博文</Button>
-        <Button class="btn" size="small"  type="primary" @click="changeShow(2, cate.id, cateIndex)">删除博文</Button>
-        <Button class="btn" size="small" type="primary" @click="deleteCate(cate.id, cateIndex)">删除标签</Button>
+    <Scroll ref="scroll" :on-reach-bottom="!isFinish ? handleAddCate : stopAddCate" height="700">
+      <div class="line" v-for="(cate, cateIndex) in cateList" :key="cateIndex">
+        <span>{{cate.name}}</span>
+        <div>
+          <Button class="btn" size="small" type="primary" @click="changeShow(1, cate.id)">添加博文</Button>
+          <Button class="btn" size="small"  type="primary" @click="changeShow(2, cate.id)">删除博文</Button>
+          <Button class="btn" size="small" type="primary" @click="deleteCate(cate.id, cateIndex)">删除标签</Button>
+        </div>
       </div>
-      <div>
-        <Drawer :title="isShow === 1? '添加博文':'删除博文'" :closable="true" :scrollable="true" :value="current_cate == cate.id" @on-close="initEssayData(cateIndex)">
-          <div v-for="(essay,essayIndex) in essayList" :key="essayIndex">
-            <div class="essayInfo">
-              <div class="title mgr20">{{essay.title}}</div>
-              <div class="date mgr20">时间:{{essay.createtime}}</div>
-            </div>
-            <div class="btn">
-              <Button class="btn" size="small" type="primary" v-if="isShow == 1" @click="addEssayCate(essay.id, cate.id, essayIndex)">添加</Button>
-              <Button class="btn" size="small" type="primary" v-if="isShow == 2" @click="deleteEssayCate(essay.id, cate.id, essayIndex)">删除</Button>
-            </div>
+      <Divider v-if="isFinish" :dashed="true">已经到底了</Divider>
+    </Scroll>
+    <div>
+      <Drawer :title="isShow === 1?'添加博文':'删除博文'" :closable="true" :scrollable="true" :value="!!isShow" @on-close="initEssayData">
+        <div v-for="(essay,essayIndex) in essayList" :key="essayIndex">
+          <div class="essayInfo">
+            <div class="title mgr20">{{essay.title}}</div>
+            <div class="date mgr20">时间:{{essay.createtime}}</div>
           </div>
-        </Drawer>
-      </div>
+          <div class="btn">
+            <Button class="btn" size="small" type="primary" v-if="isShow == 1" @click="addEssayCate(essay.id, current_cate, essayIndex)">添加</Button>
+            <Button class="btn" size="small" type="primary" v-if="isShow == 2" @click="deleteEssayCate(essay.id, current_cate, essayIndex)">删除</Button>
+          </div>
+        </div>
+      </Drawer>
     </div>
   </div>
 </template>
@@ -30,13 +33,7 @@ import { mapState } from "vuex"
 export default {
   created () {
     this.$store.commit("user/setLeftCurrent", 3)
-    this.$store.dispatch("cate/getCates", {
-      userId: this.userInfo.id,
-      page: ++this.page,
-      success: (list) => {
-        this.cateList = this.cateList.concat(list)
-      }
-    })
+    this.getCates()
     this.$store.commit("switchLoading", !1)
   },
   data () {
@@ -46,8 +43,9 @@ export default {
       isShow: 0,
       essayPage: 0,
       essayList: [],
-      cate_name: "123123",
-      current_cate: 0
+      cate_name: "",
+      current_cate: 0,
+      isFinish: 0
     }
   },
   computed: {
@@ -56,25 +54,36 @@ export default {
     })
   },
   methods: {
-    changeShow (isShow, cateId, cateIndex) {
+    getCates () {
+      var cate_param = {
+        userId: this.userInfo.id,
+        page: ++this.page,
+        success: (list) => {
+          this.isFinish = list.length < 10
+          this.cateList = this.cateList.concat(list)
+        }
+      }
+      this.$store.dispatch("cate/getCates", cate_param)
+    },
+    changeShow (isShow, cateId) {
+      // 1表示查询所有具备该标签的文章,2 表示查询所有不具备该标签的文章
       this.essayPage = 0
       this.essayList = []
-      // 1表示查询所有具备该标签的文章,2 表示查询所有不具备该标签的文章
       var param = {
         cateId,
-        page: ++this.essayPage,
         flag: 1,
         userId: this.userInfo.id,
         success: (list) => {
+          console.log(list.length)
           this.essayList = this.essayList.concat(list)
+          this.current_cate = cateId
+          this.isShow = isShow
         }
       }
       if (isShow === 1) {
         param.flag = 2
       }
-      this.$store.dispatch("essay/getEssayByCateId", param)
-      this.isShow = isShow
-      this.current_cate = cateId
+      this.$store.dispatch("essay/getAllEssayByCateId", param)
     },
     addEssayCate (essayId, cateId, essayIndex) {
       this.$store.dispatch("essay/addEssayCate", {
@@ -116,14 +125,16 @@ export default {
             name: this.cate_name,
             userId: this.userInfo.id,
             success: (cate) => {
-              this.cateList.push(cate)
+              this.$router.go(0)
             }
           })
+        },
+        onCancel: () => {
+          this.cate_name = ""
         }
       })
     },
-    initEssayData (cateIndex) {
-      this.essayPage = 0
+    initEssayData () {
       this.essayList = []
       this.isShow = 0
       this.current_cate = 0
@@ -132,13 +143,28 @@ export default {
       var cate_param = {
         cateId,
         success: () => {
-          this.cateList.splice(cateIndex, 1)
+          this.$router.go(0)
         }
       }
       this.$store.dispatch("cate/deleteCate", cate_param)
+    },
+    stopAddCate () {
+    },
+    handleAddCate () {
+      return new Promise(resolve => {
+        this.getCates()
+        resolve()
+      })
+    },
+    handleAddEssay () {
+      return new Promise(resolve => {
+        this.changeShow(this.isShow, this.current_cate)
+        resolve()
+      })
+    },
+    stopAddEssay () {
     }
-  },
-  components: {}
+  }
 }
 </script>
 <style scoped>

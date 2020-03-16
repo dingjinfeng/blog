@@ -128,7 +128,10 @@ export default {
             success: (comment) => {
               this.msg = ""
               this.commentList.unshift(comment)
-              this.commentList.length > 10 && this.commentList.pop()
+              if (!this.commentList.length <= 10) {
+                this.commentList.pop()
+              }
+              console.log(this.commentList)
             }
           }
           this.$store.dispatch("comment/addComments", comment_param)

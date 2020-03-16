@@ -58,7 +58,7 @@ const actions = {
       (response) => {
         var data = response.data
         if (data.flag) {
-          param.success()
+          param.success(data.res)
         } else {
           ViewUI.Message.error(data.info)
         }

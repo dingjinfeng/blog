@@ -18,7 +18,8 @@ export default {
       id: param.id,
       sex: param.sex,
       username: param.username,
-      intro: param.intro
+      intro: param.intro,
+      imgid: param.imgid
     })
   }
 }
