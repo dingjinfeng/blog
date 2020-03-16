@@ -1,20 +1,23 @@
 <template>
   <div class="cateManagement">
+    <Button class="btn" type="dashed" @click="addCate">添加分类</Button>
     <div class="line" v-for="(cate, cateIndex) in cateList" :key="cateIndex">
       <span>{{cate.name}}</span>
       <div>
-        <Button class="btn" size="small" type="primary" @click="changeShow(1,cate.id)">添加博文</Button>
-        <Button class="btn" size="small"  type="primary" @click="changeShow(2,cate.id)">删除博文</Button>
-        <Button class="btn" size="small" type="primary">删除标签</Button>
-        <Drawer title="添加博文" :closable="true" :scrollable="true" v-model="isShow">
+        <Button class="btn" size="small" type="primary" @click="changeShow(1, cate.id, cateIndex)">添加博文</Button>
+        <Button class="btn" size="small"  type="primary" @click="changeShow(2, cate.id, cateIndex)">删除博文</Button>
+        <Button class="btn" size="small" type="primary" @click="deleteCate(cate.id, cateIndex)">删除标签</Button>
+      </div>
+      <div>
+        <Drawer :title="isShow === 1? '添加博文':'删除博文'" :closable="true" :scrollable="true" :value="current_cate == cate.id" @on-close="initEssayData(cateIndex)">
           <div v-for="(essay,essayIndex) in essayList" :key="essayIndex">
             <div class="essayInfo">
               <div class="title mgr20">{{essay.title}}</div>
               <div class="date mgr20">时间:{{essay.createtime}}</div>
             </div>
             <div class="btn">
-              <Button class="btn" size="small" type="primary" v-if="isShow == 1" @click="addEssay(essay.id, cate.id, essayIndex)">添加</Button>
-              <Button class="btn" size="small" type="primary" v-if="isShow == 2" @click="delEssay(essay.id, cate.id, essayIndex)">删除</Button>
+              <Button class="btn" size="small" type="primary" v-if="isShow == 1" @click="addEssayCate(essay.id, cate.id, essayIndex)">添加</Button>
+              <Button class="btn" size="small" type="primary" v-if="isShow == 2" @click="deleteEssayCate(essay.id, cate.id, essayIndex)">删除</Button>
             </div>
           </div>
         </Drawer>
@@ -29,53 +32,121 @@ export default {
     this.$store.commit("user/setLeftCurrent", 3)
     this.$store.dispatch("cate/getCates", {
       userId: this.userInfo.id,
-      page: 1,
-      success: (res) => {
-        this.currentPage = res
-        console.log(res)
+      page: ++this.page,
+      success: (list) => {
+        this.cateList = this.cateList.concat(list)
+        console.log("cateList:")
+        console.log(this.cateList)
       }
     })
-    console.log(this.cateList)
     this.$store.commit("switchLoading", !1)
+    console.log(this.cateList)
   },
   data () {
     return {
-      currentPage: 1,
+      page: 0,
+      cateList: [],
       isShow: 0,
-      essayPage: 1
+      essayPage: 0,
+      essayList: [],
+      cate_name: "123123",
+      current_cate: 0
     }
   },
   computed: {
     ...mapState({
-      userInfo: state => state.user.userInfo,
-      cateList: state => state.cate.cateList,
-      essayList: state => state.essay.essayList
+      userInfo: state => state.user.userInfo
     })
   },
   methods: {
-    changeShow (isShow, cateId) {
-      if (isShow === 1) {
-        this.$store.dispatch("essay/getEssayByCateId", {
-          cateId,
-          page: 1,
-          // 1表示查询所有具备该标签的文章,2 表示查询所有不具备该标签的文章
-          flag: 1,
-          success: (res) => {
-            this.essayPage = res
-          }
-        })
+    changeShow (isShow, cateId, cateIndex) {
+      this.essayPage = 0
+      this.essayList = []
+      // 1表示查询所有具备该标签的文章,2 表示查询所有不具备该标签的文章
+      var param = {
+        cateId,
+        page: ++this.essayPage,
+        flag: 1,
+        userId: this.userInfo.id,
+        success: (list) => {
+          console.log(list)
+          console.log(this.cateList[cateIndex])
+          this.essayList = this.essayList.concat(list)
+        }
       }
+      if (isShow === 1) {
+        param.flag = 2
+      }
+      this.$store.dispatch("essay/getEssayByCateId", param)
       this.isShow = isShow
+      this.current_cate = cateId
+      console.log(this.current_cate)
+      console.log("isshow", isShow)
     },
-    addEssay (essayId, cateId, essayIndex) {
-      this.$store.commit("switchLoading", !0)
+    addEssayCate (essayId, cateId, essayIndex) {
       this.$store.dispatch("essay/addEssayCate", {
         cateId,
         essayId,
         success: () => {
           this.essayList.splice(essayIndex, 1)
+          this.$store.commit("switchLoading", !1)
         }
       })
+    },
+    deleteEssayCate (essayId, cateId, essayIndex) {
+      this.$store.dispatch("essay/deleteEssayCate", {
+        cateId,
+        essayId,
+        success: () => {
+          this.essayList.splice(essayIndex, 1)
+          this.$store.commit("switchLoading", !1)
+        }
+      })
+    },
+    addCate () {
+      this.$Modal.confirm({
+        render: (h) => {
+          return h('Input', {
+            props: {
+              value: this.cate_name,
+              placeholder: '请输入标签名...'
+            },
+            on: {
+              input: (val) => {
+                this.cate_name = val
+              }
+            }
+          })
+        },
+        onOk: () => {
+          console.log("提交....")
+          console.log(this.userInfo.id)
+          this.$store.dispatch("cate/addCate", {
+            name: this.cate_name,
+            userId: this.userInfo.id,
+            success: (cate) => {
+              this.cateList.push(cate)
+            }
+          })
+        }
+      })
+    },
+    initEssayData (cateIndex) {
+      console.log("dfjhajkhdkjhfjashdjkfhkj")
+      console.log("cate", cateIndex)
+      this.essayPage = 0
+      this.essayList = []
+      this.isShow = 0
+      this.current_cate = 0
+    },
+    deleteCate (cateId, cateIndex) {
+      var cate_param = {
+        cateId,
+        success: () => {
+          this.cateList.splice(cateIndex, 1)
+        }
+      }
+      this.$store.dispatch("cate/deleteCate", cate_param)
     }
   },
   components: {}

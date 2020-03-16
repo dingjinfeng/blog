@@ -68,6 +68,18 @@ const actions = {
         }
       }
     )
+  },
+  getUserByUserId ({ commit, state }, param) {
+    userApi.getUser(param).then(
+      (response) => {
+        var data = response.data
+        if (data.flag) {
+          param.success(data.res)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
+      }
+    )
   }
   // checkout ({ commit, state }, products) {
   //   const savedCartItems = [...state.items]

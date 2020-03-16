@@ -5,7 +5,7 @@
             <div class="left">
                 <div class="line avatar">
                   <!-- todo -->
-                    <avatar :imgId="1" />
+                    <avatar :imgId="userInfo.imgid" />
                 </div>
                 <div class="line">
                     <span>昵称:</span>
@@ -37,7 +37,7 @@
         <div class="editInfo" v-if="type == 2">
             <Form ref="formEdit" :model="formEdit" :rules="ruleEdit" :label-width="90" style="width:400px">
                 <FormItem label="头像" prop="username">
-                  <div class="avatarItem">
+                  <div class="avatarItem">{{formEdit.imgid}}
                     <avatar :imgId="formEdit.imgid" class="avatar"/>
                     <Upload class="uploadAvatar"
                         :action="uploadAddress"
@@ -95,7 +95,6 @@ import { mapState } from 'vuex'
 import avatar from "@/components/utils/Avatar"
 export default {
   data () {
-    console.log(this.$store.state.user.userInfo)
     return {
       // 上传文件地址
       uploadAddress: process.env.VUE_APP_API + process.env.VUE_APP_uploadApi,
@@ -106,7 +105,7 @@ export default {
         sex: this.$store.state.user.userInfo.sex,
         intro: this.$store.state.user.userInfo.intro,
         // imgid: this.$store.state.user.userInfo.imgid + '.jpg',
-        imgid: '1.jpg',
+        imgid: this.$store.state.user.userInfo.imgid,
         imgLocation: ""
       },
       ruleEdit: {
@@ -204,6 +203,9 @@ export default {
     },
     uploadSuccess (response, file, fileList) {
       console.dir(response)
+      // this.$set(this.formEdit, 'imgid', response.res.id)
+      this.formEdit.imgid = response.res.id
+      console.log(this.formEdit.imgid)
       console.dir(file)
       console.dir(fileList)
     }

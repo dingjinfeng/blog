@@ -1,9 +1,9 @@
 <template>
   <div id="essayBriefInfo">
-    <div class="item">
+    <div class="essayItem">
       <div class="line header">
-        <div class="title mgr20">
-          <!-- {{essay.title}} -->
+        <div class="title mgr20" @click="showEssay(userId,essay.id)">
+          {{essay.title}}
         </div>
         <div class="date mgr20">
           时间:{{essay.createtime}}
@@ -11,9 +11,15 @@
         <div class="goodnum mgr20">
           点赞数:5
         </div>
-        <div v-if="essayListFrom === 1">
-          <Button size="small" type="dashed">编辑文章</Button>
-          <Button size="small" type="dashed">删除文章</Button>
+        <div class="checkStatus" v-if="essayListFrom === 1">
+          <div v-if="essay.flag == 0">审核中</div>
+          <div v-if="essay.flag == 1">审核成功</div>
+          <div v-if="essay.flag == -1">{{essay.checkmsg}}</div>
+        </div>
+        <div v-if="essayListFrom === 1" class="rightAlign">
+          <Button size="small" type="dashed" @click="showEssay(userId, essay.id)">查看文章</Button>
+          <Button size="small" type="dashed" @click="editEssay(essay.id)">编辑文章</Button>
+          <Button size="small" type="dashed" @click="deleteEssay(essay.id, index)">删除文章</Button>
         </div>
       </div>
       <div class="line content">
@@ -23,14 +29,33 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
 export default {
-  props: ['essay'],
-  computed: {
-    ...mapState({
-      // 0 主页文章列表 1其他用户文章列表
-      essayListFrom: state => state.essay.essayListFrom
-    })
+  props: ['essay', 'userId', 'essayListFrom'],
+  created () {
+  },
+  methods: {
+    editEssay (essayId) {
+      // this.$store.dispatch("essay/getEssayByEssayId", {
+      //   essayId,
+      //   success: () => {
+      //     this.$router.push("user/")
+      //   }
+      // })
+      this.$store.commit("switchLoading", !0)
+      this.$router.push({ path: "/user/editessay", query: { essayId } })
+    },
+    showEssay (userId, essayId) {
+      this.$store.commit("switchLoading", !0)
+      this.$router.push({ path: "/otheruser/essaydetail", query: { userId, essayId } })
+    },
+    deleteEssay (essayId) {
+      this.$store.dispatch("essay/deleteessay", {
+        essayId,
+        success: res => {
+          console.log(res)
+        }
+      })
+    }
   }
 }
 </script>
@@ -38,7 +63,13 @@ export default {
 .mgr20{
   margin-right: 20px;
 }
-#essayBriefInfo .item{
+#essayBriefInfo .rightAlign{
+  text-align: right
+}
+#essayBriefInfo .checkStatus{
+  margin-right: 40px;
+}
+#essayBriefInfo .essayItem{
   height:60px;
 }
 #essayBriefInfo .line{

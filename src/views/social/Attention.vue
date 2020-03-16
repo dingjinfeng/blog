@@ -3,21 +3,59 @@
     <div class="attentionList">
       <div class="item" v-for="(item, index) in attentionList" :key="index">
         <div class="line">
-          <img src="@/assets/logo.png" width="50px" height="50px">
+          <avatar :imgId="item.imgid"/>
         </div>
-        <div class="line">username</div>
+        <div class="line">{{item.username}}</div>
         <div class="line">
-          <Button size="small" type="dashed">取消关注</Button>
+          <Button size="small" type="dashed" @click="deleteAttention(item.id, index)">取消关注</Button>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { mapState } from "vuex"
+import avatar from "@/components/utils/Avatar"
 export default {
   data () {
     return {
-      attentionList: new Array(100)
+      attentionList: []
+    }
+  },
+  created () {
+    this.getAttention()
+    this.$store.commit("social/setLeftCurrent", 3)
+    this.$store.commit("switchLoading", !1)
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
+  },
+  components: {
+    avatar
+  },
+  methods: {
+    getAttention () {
+      var attention_param = {
+        userId: this.userInfo.id,
+        success: (list) => {
+          console.log("getAttention")
+          console.log(list)
+          this.attentionList = this.attentionList.concat(list)
+        }
+      }
+      this.$store.dispatch("attention/getAttentions", attention_param)
+    },
+    deleteAttention (userId, index) {
+      var attention_param = {
+        fromUserId: this.userInfo.id,
+        toUserId: userId,
+        success: () => {
+          this.attentionList.splice(index, 1)
+        }
+      }
+      this.$store.dispatch("attention/deleteAttention", attention_param)
     }
   }
 }

@@ -12,6 +12,7 @@ export var methods = {
     var promises = []
     var promise
     var res
+    console.log(imgIds)
     // Object.prototype.toString.call(imgIds) == "[object Array]"
     if (imgIds instanceof Array) {
       promises = imgIds.map(item => this.createImgAxios(item))
@@ -25,7 +26,8 @@ export var methods = {
         } else {
           res = process.env.VUE_APP_domain + result[0].data.res
         }
-        return res
+        console.log("res", res)
+        return Promise.resolve(res)
       }))
     return promise
   }

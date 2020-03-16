@@ -1,5 +1,5 @@
 <template>
-    <Menu :active-name="leftCurrent" @on-select="onSelect">
+    <Menu :active-name="leftCurrent+''" @on-select="onSelect">
         <MenuGroup title="个人中心">
             <MenuItem name="1">
                 <Icon type="md-chatbubbles" />
@@ -51,7 +51,6 @@ export default {
           path = 'addessay'
       }
       if (this.$route.path !== `/user/${path}`) {
-        this.$store.commit('user/setLeftCurrent', current)
         this.$router.push({ path: `/user/${path}` })
       }
     }

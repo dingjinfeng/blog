@@ -1,6 +1,7 @@
 <template>
   <div id="user">
     <Dropdown trigger="click">
+      <avatar :imgId="userInfo.imgid"/>
       <Button type="primary">
           <span>个人中心【{{userInfo.username}}】</span>
           <Icon type="ios-arrow-down"></Icon>
@@ -18,8 +19,12 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import avatar from '@/components/utils/Avatar'
 
 export default {
+  components: {
+    avatar
+  },
   computed: {
     ...mapState({
       userInfo: state => state.user.userInfo
@@ -40,13 +45,10 @@ export default {
           break
         case '3':
           path = 'catemanagement'
-          console.log("id", this.userInfo.id)
           break
         default:
-          current = '1'
           path = 'addessay'
       }
-      this.$store.commit('user/setLeftCurrent', current)
       this.$router.push({ path: `/user/${path}` })
     },
     userExit () {

@@ -8,13 +8,16 @@ export default {
       src: ""
     }
   },
-  props: {
-    imgId: {
-      required: !0
-    }
-  },
+  props: ["imgId"],
   created () {
+    console.log("avatardfadfadfadgafgdfgsfdgfgsf:.......", this.imgId)
     this.getImgSrc()
+    console.log(this.src)
+  },
+  watch: {
+    imgId (newValue, oldValue) {
+      this.getImgSrc(newValue)
+    }
   },
   methods: {
     getImgSrc () {
@@ -27,9 +30,11 @@ export default {
       //       console.dir(res)
       //     }
       //   )
+      console.log("getImgSrcjdhfjkahjkdhfjhajsdhfjhajkhdjfhaj")
       this.getImg(this.imgId)
         .then(
           (res) => {
+            console.log(res)
             console.log("ddddddd========", res)
             this.src = res
           }

@@ -1,6 +1,7 @@
 <template>
     <div>
-      <div class="essayEditor" ref="editor" style="text-align:left"></div>
+      <div :class="{essayEditorAuto: !content_editor.isEditable, essayEditorHeight: content_editor.isEditable}" ref="editor" style="text-align:left">
+      </div>
     </div>
 </template>
 
@@ -15,59 +16,72 @@ export default {
     }
   },
   model: {
-    prop: 'content',
+    prop: 'content_editor',
     event: 'getContent'
   },
   props: {
-    content: Object
+    content_editor: Object
+  },
+  watch: {
+    content_editor (newValue, oldValue) {
+      console.log(newValue)
+      this.content_editor = newValue
+    }
+  },
+  created () {
+    console.log(this.content_editor)
   },
   mounted () {
     console.log("图片地址", this.uploadAddress)
     var editor = new E(this.$refs.editor)
     editor.customConfig.zIndex = 100
     // 自定义菜单配置
-    editor.customConfig.menus = [
-      // 标题
-      'head',
-      // 粗体
-      'bold',
-      // 字号
-      'fontSize',
-      // 字体
-      'fontName',
-      // 斜体
-      'italic',
-      // 下划线
-      'underline',
-      // 删除线
-      'strikeThrough',
-      // 文字颜色
-      'foreColor',
-      // 背景颜色
-      'backColor',
-      // 插入链接
-      'link',
-      // 列表
-      'list',
-      // 对齐方式
-      'justify',
-      // 引用
-      'quote',
-      // 表情
-      'emoticon',
-      // 插入图片
-      'image',
-      // 表格
-      'table',
-      // 插入视频
-      // 'video',
-      // 插入代码
-      'code',
-      // 撤销
-      'undo',
-      // 重复
-      'redo'
-    ]
+    console.log(this.content_editor.isEditable)
+    editor.customConfig.menus = []
+    if (this.content_editor.isEditable) {
+      editor.customConfig.menus = [
+        // 标题
+        'head',
+        // 粗体
+        'bold',
+        // 字号
+        'fontSize',
+        // 字体
+        'fontName',
+        // 斜体
+        'italic',
+        // 下划线
+        'underline',
+        // 删除线
+        'strikeThrough',
+        // 文字颜色
+        'foreColor',
+        // 背景颜色
+        'backColor',
+        // 插入链接
+        'link',
+        // 列表
+        'list',
+        // 对齐方式
+        'justify',
+        // 引用
+        'quote',
+        // 表情
+        'emoticon',
+        // 插入图片
+        'image',
+        // 表格
+        'table',
+        // 插入视频
+        // 'video',
+        // 插入代码
+        'code',
+        // 撤销
+        'undo',
+        // 重复
+        'redo'
+      ]
+    }
     // 忽略粘贴内容中的图片
     editor.customConfig.pasteIgnoreImg = true
     // 上传图片的服务器端接口
@@ -161,12 +175,21 @@ export default {
     }
     console.log("editor", editor)
     editor.create()
+    console.log("dirdfhajdhjfhjasdhfjhasdjfhjahsdkljfhkajsdhjkfhajkdhfjkahdsjhf")
+    console.dir(this.content_editor)
+    console.dir(this)
+    console.log("content three: ", this.content_editor.html, this.content_editor.txt, this.content_editor.isEditable)
+    editor.txt.html(this.content_editor.html)
+    editor.$textElem.attr('contenteditable', this.content_editor.isEditable)
   }
 }
 </script>
 
 <style>
-.essayEditor .w-e-text-container{
+.essayEditorHeight .w-e-text-container{
   height: 700px !important;
+}
+.essayEditorAuto .w-e-text-container{
+  height: auto !important;
 }
 </style>

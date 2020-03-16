@@ -1,4 +1,4 @@
-import cateApi from '@/api/cateApi'
+import attentionApi from '@/api/attentionApi'
 import ViewUI from 'view-design'
 
 const state = {
@@ -13,64 +13,49 @@ const getters = {
 
 // actions
 const actions = {
-  getCates ({ commit, state }, param) {
-    cateApi.getCatesByUserId(param).then(function (response) {
+  getAttentions ({ commit, state }, param) {
+    attentionApi.getAttentions(param).then(function (response) {
       var data = response.data
       if (data.flag) {
         data = data.res
-        console.log("getCates", data)
-        param.success(data.list)
-      } else {
-        ViewUI.Message.error(data.info)
-      }
-    })
-  },
-  getCatesByEssay ({ commit, state }, param) {
-    console.log("hahahahahahahahahahahahahahahaah")
-    cateApi.getCatesByEssayId(param).then(function (response) {
-      var data = response.data
-      console.log("data:")
-      console.log(data)
-      if (data.flag) {
-        data = data.res
-        console.log("getCates", data)
+        console.log("getAttention", data)
         param.success(data)
       } else {
         ViewUI.Message.error(data.info)
       }
     })
   },
-  addEssayCate ({ commit, state }, param) {
-    cateApi.addEssayCate(param).then(function (response) {
-      var data = response.data
-      console.log("data")
-      console.log(data)
-      if (data.flag) {
-        data = data.res
-        console.log("addEssayCate", data)
-        param.success()
-      } else {
-        ViewUI.Message.error(data.info)
-      }
-    })
-  },
-  addCate ({ commit, state }, param) {
-    cateApi.addCate(param).then(function (response) {
+  getAttention ({ commit, state }, param) {
+    attentionApi.getAttention(param).then(function (response) {
       var data = response.data
       if (data.flag) {
         data = data.res
-        console.log("addCate", data)
+        console.log("getAttention", data)
         param.success(data)
       } else {
         ViewUI.Message.error(data.info)
       }
     })
   },
-  deleteCate ({ commit, state }, param) {
-    cateApi.deleteCate(param).then(function (response) {
+  addAttention ({ commit, state }, param) {
+    attentionApi.addAttention(param).then(function (response) {
       var data = response.data
       if (data.flag) {
-        param.success()
+        data = data.res
+        console.log("addAttention", data)
+        param.success(data)
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
+  },
+  deleteAttention ({ commit, state }, param) {
+    attentionApi.deleteAttention(param).then(function (response) {
+      var data = response.data
+      if (data.flag) {
+        data = data.res
+        console.log("deleteAttention", data)
+        param.success(data)
       } else {
         ViewUI.Message.error(data.info)
       }

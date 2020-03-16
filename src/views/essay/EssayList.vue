@@ -1,20 +1,20 @@
 <template>
-  <div class="essayList">
+  <div :class="{essayList:!0, isWidthShow: !isWidth}">
     <div :class="{ essayListWrapper: !0, scrollFinish: isFinish, noAvatar: essayListFrom }">
-      <Scroll ref="scroll" :on-reach-bottom="!isFinish ? handleAddEssay : ()=>{}" height="700">
-        <div class="item" v-for="(item, index) in essayList" :key="index">
+      <Scroll ref="scroll" :on-reach-bottom="!isFinish ? handleAddEssay : stopAddEssay" height="700">
+        <div :class="{item: !0, isPaddingShow: !isWidth}" v-for="(item, index) in essayList" :key="index">
           <div
             class="left"
             @click="goOtherUser(item.user.id)"
             v-if="!essayListFrom"
           >
             <div>
-              <img src="@/assets/logo.png" width="50px" height="50px" />
+              <avatar :imgId="item.user.imgid"/>
             </div>
             <div>{{ item.user.username }}{{ index }}</div>
           </div>
           <div class="right">
-            <essayBriefInfo :essay="item.essay"></essayBriefInfo>
+            <essayBriefInfo :essay="item.essay" :userId="item.user.id" :essayListFrom="essayListFrom"></essayBriefInfo>
           </div>
         </div>
       </Scroll>
@@ -23,85 +23,119 @@
 </template>
 <script>
 import essayBriefInfo from "@/components/essay/EssayBriefInfo"
-import { mapState } from "vuex"
+import avatar from "@/components/utils/Avatar"
 export default {
   data () {
     return {
       isFinish: !1,
+      isWidth: 1,
       page: 0,
       flag: [1],
       userId: 0,
-      essayListAction: "essay/getEssayList"
+      essayListAction: "essay/getEssayList",
+      essayList: [],
+      // 0表示不在博文管理中获取文章列表,1表示在博文管理中获取列表
+      essayListFrom: 0,
+      // cate为0表示查询所有分类的文章
+      cateId: 0
     }
   },
   created () {
-    console.log(this.userInfo.id)
+    console.log("hahahahcreated")
     this.getEssayListFrom()
     this.getEssayByPage()
-  },
-  computed: {
-    ...mapState({
-      // 0 主页文章列表 1其他用户文章列表
-      essayListFrom: state => state.essay.essayListFrom,
-      essayList: state => state.essay.essayList,
-      userInfo: state => state.user.userInfo,
-      otherInfo: state => state.user.otherInfo
-    })
+    this.$store.commit("switchLoading", !1)
   },
   components: {
-    essayBriefInfo
+    essayBriefInfo,
+    avatar
+  },
+  watch: {
+    '$route' (to, from) {
+      this.getEssayListFrom()
+      this.getEssayByPage()
+      this.$store.commit("switchLoading", !1)
+    }
   },
   methods: {
     getEssayListFrom () {
       var path = this.$route.path
-      var essayListFrom = this.essayListFrom
-
+      this.isFinish = !1
+      this.isWidth = 1
+      this.page = 0
+      this.userId = 0
+      this.essayListAction = "essay/getEssayList"
+      this.essayList = []
+      // cate为0表示查询所有分类的文章
+      this.cateId = 0
       switch (path) {
         case "/":
-          essayListFrom = 0
+          this.essayListFrom = 0
+          this.isWidth = 0
           this.flag = [1]
           break
         case "/user/blogmanagement":
-          essayListFrom = [-1, 0, 1]
-          this.flag = 1
-          this.userId = this.userInfo.id
+          this.essayListFrom = 1
+          this.flag = [-1, 0, 1]
+          this.isWidth = 1
+          this.userId = this.$store.state.user.userInfo.id
+          this.$store.commit("user/setLeftCurrent", 2)
           break
         case "/otheruser/essayList":
-          essayListFrom = 2
+          this.essayListFrom = 1
           this.flag = [1]
-          this.userId = this.$route.query.userid
+          this.userId = parseInt(this.$route.query.userId)
+          var cateId = this.$route.query.cateId
+          if (cateId) {
+            this.cateId = parseInt(cateId)
+          }
           break
         default:
-          essayListFrom = 0
+          this.essayListFrom = 0
           this.flag = [1]
+          this.isWidth = 0
       }
-      this.$store.commit("essay/setEssayListFrom", essayListFrom)
+      console.log(this.essayListFrom)
     },
     // isMore 是否上拉加载更多
-    getEssayByPage (isMore, done) {
+    // getEssayByPage (isMore, done) {
+    getEssayByPage () {
+      console.log(this.cateId)
       var param = {
         page: ++this.page,
         flag: this.flag,
         userId: this.userId,
-        isMore,
+        cateId: this.cateId,
+        // isMore,
         success: (list) => {
+          // console.log('isMore', isMore)
+          console.log(this)
+          console.log(list)
+          this.essayList = this.essayList.concat(list)
           this.isFinish = list.length < 10
         }
       }
       this.$store.dispatch(this.essayListAction, param)
     },
-    handleAddEssay (done) {
-      console.log("上拉加载更多")
-      this.getEssayByPage(!0, done)
+    handleAddEssay () {
+      return new Promise(resolve => {
+        this.getEssayByPage()
+        resolve()
+      })
     },
-    goOtherUser (userid) {
-      console.log(userid)
+    stopAddEssay () {
+      return new Promise(resolve => {
+        resolve()
+      })
+    },
+    goOtherUser (userId) {
+      console.log(userId)
       this.$store.dispatch("user/getOtherUser", {
-        userId: userid,
+        userId,
         success: res => {
           this.$router.push({
             path: "/otheruser/essayList",
-            query: { userid: res.id }
+            query: { userId: res.id }
           })
         }
       })
@@ -111,21 +145,25 @@ export default {
 </script>
 <style scoped>
 .essayList {
-  width: 960px;
   margin: 0 auto;
+}
+.isWidthShow {
+  width: 960px;
 }
 .essayList .essayListWrapper{
   height: 700px;
 }
 .essayListWrapper .item {
   display: flex;
-  align-items: center;
-  border-bottom: 1px solid skyblue;
-  padding: 0 50px;
+  align-items: left;
+  border-bottom: 1px solid #2d8cf0;
   margin-top: 20px;
 }
 .essayListWrapper .item:last-child {
   border: none;
+}
+.essayListWrapper .isPaddingShow {
+  padding: 0 50px;
 }
 .essayListWrapper .item .left {
   margin-right: 50px;

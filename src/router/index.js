@@ -50,6 +50,10 @@ const routes = [
       {
         path: 'catemanagement',
         component: () => import('@/views/user/CateManagement')
+      },
+      {
+        path: 'editessay',
+        component: () => import('@/views/user/AddEssay')
       }
     ]
   },
@@ -58,7 +62,7 @@ const routes = [
     component: () => import('@/views/other/OtherServe'),
     children: [
       {
-        path: 'essayList',
+        path: 'essaylist',
         component: () => import('@/views/essay/EssayList')
       },
       {

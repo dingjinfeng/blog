@@ -27,5 +27,6 @@ export default {
 }
 .otherServe .right{
   padding-left: 10px;
+  width: 75%;
 }
 </style>

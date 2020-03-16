@@ -13,27 +13,25 @@ const getters = {
 
 // actions
 const actions = {
-  getEssayList ({ commit, state }, param) {
-    console.log(param)
-    essayApi.getEssayList(param).then(function (response) {
+  getEssayByEssayId ({ commit, state }, param) {
+    essayApi.getEssay(param).then(function (response) {
+      console.log(response)
       var data = response.data
       if (data.flag) {
-        data = data.res
-        var list = param.isMore ? state.essayList.concat(data.list) : data.list
-        commit('setEssayList', list)
-        param.success(data.list)
+        console.log(data.res)
+        param.success(data.res)
       } else {
         ViewUI.Message.error(data.info)
       }
     })
   },
-  getEssayListByUserId ({ commit, state }, param) {
-    essayApi.getEssayListByUserId(param).then(function (response) {
+  getEssayList ({ commit, state }, param) {
+    console.log(param)
+    essayApi.getEssayList(param).then(function (response) {
       var data = response.data
+      console.log(data)
       if (data.flag) {
         data = data.res
-        var list = param.isMore ? state.essayList.concat(data.list) : data.list
-        commit('setEssayList', list)
         param.success(data.list)
       } else {
         ViewUI.Message.error(data.info)
@@ -46,6 +44,56 @@ const actions = {
       var data = response.data
       if (data.flag) {
         console.log(data.res)
+        ViewUI.Message.success(data.info)
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
+  },
+  deleteEssay ({ commit, state }, param) {
+    essayApi.deleteEssay(param).then(function (response) {
+      console.log(response)
+      var data = response.data
+      if (data.flag) {
+        console.log(data.res)
+        commit("deleteOneEssayItem", param.essayId)
+        param.success(data.info)
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
+  },
+  getEssayByCateId ({ commit, state }, param) {
+    essayApi.getEssayByCateId(param).then(function (response) {
+      var data = response.data
+      if (data.flag) {
+        data = data.res
+        console.log("getEssayByCateId", data)
+        param.success(data.list)
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
+  },
+  addEssayCate ({ commit, state }, param) {
+    essayApi.addEssayCate(param).then(function (response) {
+      var data = response.data
+      if (data.flag) {
+        data = data.res
+        console.log("addEssayCate", data)
+        param.success()
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
+  },
+  deleteEssayCate ({ commit, state }, param) {
+    essayApi.deleteEssayCate(param).then(function (response) {
+      var data = response.data
+      if (data.flag) {
+        data = data.res
+        console.log("deleteEssayCate", data)
+        param.success()
       } else {
         ViewUI.Message.error(data.info)
       }
@@ -61,6 +109,12 @@ const mutations = {
   setEssayList (state, essayList) {
     state.essayList = essayList
     console.dir(state.essayList)
+  },
+  deleteOneEssayItem (state, essayId) {
+    var res = state.essayList.findIndex(item => item.id === essayId)
+    if (res !== -1) {
+      state.essayList.splice(res, 1)
+    }
   },
   reset (state) {
     state.essayListFrom = 0

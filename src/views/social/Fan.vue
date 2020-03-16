@@ -1,9 +1,9 @@
 <template>
   <div class="fan">
     <div class="fanList">
-      <div class="item" v-for="(item, index) in fanList" :key="index">
+      <div class="item" v-for="(item, index) in fanList" :key="index">{{item}}
         <div class="line">
-          <img src="@/assets/logo.png" width="50px" height="50px">
+          <avatar :imgId="item.imgid"/>
         </div>
         <div class="line">username</div>
       </div>
@@ -11,10 +11,34 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex"
+import avatar from "@/components/utils/Avatar"
 export default {
+  components: {
+    avatar
+  },
   data () {
     return {
-      fanList: new Array(100)
+      fanList: []
+    }
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
+  },
+  created () {
+
+  },
+  methods: {
+    getFans () {
+      var fan_param = {
+        userId: this.userInfo.id,
+        success: (list) => {
+          this.fanList = list
+        }
+      }
+      this.$store.dispatch("fan/getFans", fan_param)
     }
   }
 }
