@@ -35,12 +35,9 @@ export default {
       page: ++this.page,
       success: (list) => {
         this.cateList = this.cateList.concat(list)
-        console.log("cateList:")
-        console.log(this.cateList)
       }
     })
     this.$store.commit("switchLoading", !1)
-    console.log(this.cateList)
   },
   data () {
     return {
@@ -69,8 +66,6 @@ export default {
         flag: 1,
         userId: this.userInfo.id,
         success: (list) => {
-          console.log(list)
-          console.log(this.cateList[cateIndex])
           this.essayList = this.essayList.concat(list)
         }
       }
@@ -80,8 +75,6 @@ export default {
       this.$store.dispatch("essay/getEssayByCateId", param)
       this.isShow = isShow
       this.current_cate = cateId
-      console.log(this.current_cate)
-      console.log("isshow", isShow)
     },
     addEssayCate (essayId, cateId, essayIndex) {
       this.$store.dispatch("essay/addEssayCate", {
@@ -119,8 +112,6 @@ export default {
           })
         },
         onOk: () => {
-          console.log("提交....")
-          console.log(this.userInfo.id)
           this.$store.dispatch("cate/addCate", {
             name: this.cate_name,
             userId: this.userInfo.id,
@@ -132,8 +123,6 @@ export default {
       })
     },
     initEssayData (cateIndex) {
-      console.log("dfjhajkhdkjhfjashdjkfhkj")
-      console.log("cate", cateIndex)
       this.essayPage = 0
       this.essayList = []
       this.isShow = 0

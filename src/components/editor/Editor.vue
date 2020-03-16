@@ -1,7 +1,6 @@
 <template>
     <div>
-      <div :class="{essayEditorAuto: !content_editor.isEditable, essayEditorHeight: content_editor.isEditable}" ref="editor" style="text-align:left">
-      </div>
+      <div :class="{essayEditorAuto: !content_editor.isEditable, essayEditorHeight: content_editor.isEditable}" ref="editor" style="text-align:left"></div>
     </div>
 </template>
 
@@ -23,20 +22,17 @@ export default {
     content_editor: Object
   },
   watch: {
-    content_editor (newValue, oldValue) {
-      console.log(newValue)
-      this.content_editor = newValue
+    "content_editor.html" (newValue, oldValue) {
+      this.content_editor.html = newValue
+      this.editor.txt.html(newValue)
     }
   },
-  created () {
-    console.log(this.content_editor)
-  },
   mounted () {
-    console.log("图片地址", this.uploadAddress)
     var editor = new E(this.$refs.editor)
+    this.editor = editor
+
     editor.customConfig.zIndex = 100
     // 自定义菜单配置
-    console.log(this.content_editor.isEditable)
     editor.customConfig.menus = []
     if (this.content_editor.isEditable) {
       editor.customConfig.menus = [
@@ -117,8 +113,8 @@ export default {
         // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
       },
       error: (xhr, editor) => {
-        console.dir(xhr)
-        console.log(editor)
+        // console.dir(xhr)
+        // console.log(editor)
         this.$Notice.warning({
           title: '上传本地图片失败！',
           desc: ''
@@ -136,7 +132,6 @@ export default {
         // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
         // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
         // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
-        console.log("result", result)
         insertImg(process.env.VUE_APP_domain + process.env.VUE_APP_imagesDir + "/" + result.res.location)
 
         // result 必须是一个 JSON 格式字符串！！！否则报错
@@ -144,7 +139,7 @@ export default {
     }
     // 上传图片的错误提示默认使用alert弹出
     editor.customConfig.customAlert = (info) => {
-      console.log(info)
+      // console.log(info)
       this.$Notice.warning({
         title: '上传图片失败！',
         desc: info
@@ -160,10 +155,10 @@ export default {
     // }
     // 插入网络图片的回调
     editor.customConfig.linkImgCallback = function (url) {
-      console.log(url) // url 即插入图片的地址
+      // console.log(url) // url 即插入图片的地址
     }
     editor.customConfig.linkImgCheck = function (src) {
-      console.log(src) // 图片的链接
+      // console.log(src) // 图片的链接
 
       return true // 返回 true 表示校验成功
       // return '验证失败' // 返回字符串，即校验失败的提示信息
@@ -173,14 +168,9 @@ export default {
       var html = editor.txt.html()
       this.$emit("getContent", { txt, html })
     }
-    console.log("editor", editor)
     editor.create()
-    console.log("dirdfhajdhjfhjasdhfjhasdjfhjahsdkljfhkajsdhjkfhajkdhfjkahdsjhf")
-    console.dir(this.content_editor)
-    console.dir(this)
-    console.log("content three: ", this.content_editor.html, this.content_editor.txt, this.content_editor.isEditable)
     editor.txt.html(this.content_editor.html)
-    editor.$textElem.attr('contenteditable', this.content_editor.isEditable)
+    editor.$textElem.attr('contenteditable', !!this.content_editor.isEditable)
   }
 }
 </script>

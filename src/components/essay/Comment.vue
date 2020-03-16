@@ -4,7 +4,7 @@
       <span>({{comment.createtime}}){{user.username}}</span>
       <span>评论了:</span>
       <Button @click="addReply">回复</Button>
-      <Button type="dashed" size="small" @click="type = 1" v-if="type === 0">展开回复</Button>
+      <Button type="dashed" size="small" @click="type = 1; getReply()" v-if="type === 0">展开回复</Button>
       <Button type="dashed" size="small" @click="type = 0" v-if="type === 1">收起回复</Button>
     </div>
     <div class="bottom">
@@ -40,43 +40,37 @@ export default {
     }
   },
   props: ["comment"],
-  created () {
-    console.log("comment.vue......")
-    this.getUser(this.comment.userId)
-    this.getReply()
-  },
   watch: {
-    comment (newValue, oldValue) {
-      console.log("watch comment.vue.....")
-      this.comment = newValue
+    comment (newVal, oldVal) {
       this.replyList = []
       this.type = 0
       this.isReply = 0
       this.msg = ''
-      this.user = {}
       this.getUser(this.comment.userId)
-      this.getReply()
     }
+  },
+  created () {
+    this.replyList = []
+    this.type = 0
+    this.isReply = 0
+    this.msg = ''
+    this.getUser(this.comment.userId)
   },
   methods: {
     getUser (userId) {
       var user_params = {
         userId,
         success: (res) => {
-          console.log("getUser", res)
           this.user = res
         }
       }
       this.$store.dispatch("user/getUserByUserId", user_params)
     },
     getReply () {
-      console.log("dkjfakljkdjflk;ajdslfjakjdslkfj", this.comment.id)
       var comment_param = {
         commentsId: this.comment.id,
         success: (list) => {
-          console.log("list:dfnakdskfnakndskjfna", list)
           this.replyList = this.replyList.concat(list)
-          console.log("replyList:adfadsfasdf", this.replyList)
         }
       }
       this.$store.dispatch("reply/getReplyByComment", comment_param)
@@ -98,14 +92,12 @@ export default {
           })
         },
         onOk: () => {
-          console.log(this.comment)
           var reply_param = {
             commentsId: this.comment.id,
             fromUserId: this.userInfo.id,
             toUserId: this.comment.userId,
             msg: this.msg,
             success: (reply) => {
-              console.log(reply)
               this.replyList.unshift(reply)
               this.msg = ""
             }
@@ -115,7 +107,6 @@ export default {
       })
     },
     getAddReplyItem (reply) {
-      console.log("reply:fdafadsfadfa", reply)
       this.replyList.unshift(reply)
     }
   }

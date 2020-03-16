@@ -8,7 +8,7 @@
     <div>
     <Tag v-for="(cate, index) in cateListOfEssay" :key="index" type="border" color="success">{{cate.name}}</Tag>
     </div>
-    <div>{{content}}
+    <div>
       <editor v-model="content"></editor>
     </div>
     <Icon type="ios-thumbs-up" size="24"/>(10)|<Icon type="ios-thumbs-down" size="24"/>(4)
@@ -66,25 +66,19 @@ export default {
       var essay_params = {
         essayId,
         success: (res) => {
-          console.log("getEssayDetail", res)
           this.essay = res
           this.content.txt = this.essay.msg
           this.content.html = this.essay.htmlmsg
-          console.log(this.content)
           this.getCommentsByEssayId(this.commentPage)
         }
       }
       this.$store.dispatch("essay/getEssayByEssayId", essay_params)
     },
     getCommentsByEssayId (pageIndex) {
-      console.log("page:", pageIndex)
-      console.log("essayid:", this.essay.id)
       var comments_param = {
         essayId: this.essay.id,
         page: pageIndex,
         success: (pageMsg) => {
-          console.log("getCommentsByEssayId")
-          console.log(pageMsg)
           this.commentTotalCount = pageMsg.totalCount
           this.commentPage = pageMsg.currentPage
           this.commentList = pageMsg.list
@@ -96,7 +90,6 @@ export default {
       var user_params = {
         userId,
         success: (res) => {
-          console.log("getUser", res)
           this.user = res
         }
       }
@@ -106,17 +99,12 @@ export default {
       var cate_params = {
         essayId,
         success: (list) => {
-          console.log("cateListOfEssay")
-          console.log(list)
           this.cateListOfEssay = this.cateListOfEssay.concat(list)
         }
       }
-      console.log("getCatesByEssay", essayId)
       this.$store.dispatch("cate/getCatesByEssay", cate_params)
     },
     addComments (essayId) {
-      console.log(essayId)
-      console.log(this.userInfo.id)
       this.$Modal.confirm({
         render: (h) => {
           return h('Input', {
@@ -133,17 +121,14 @@ export default {
           })
         },
         onOk: () => {
-          console.log(this.msg, this.userInfo.id, essayId)
           var comment_param = {
             msg: this.msg,
             userId: this.userInfo.id,
             essayId,
             success: (comment) => {
-              console.log(comment)
               this.msg = ""
               this.commentList.unshift(comment)
-              this.commentList.pop()
-              console.log(this.commentList)
+              this.commentList.length > 10 && this.commentList.pop()
             }
           }
           this.$store.dispatch("comment/addComments", comment_param)

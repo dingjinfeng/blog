@@ -40,8 +40,6 @@ export default {
       var attention_param = {
         userId: this.userInfo.id,
         success: (list) => {
-          console.log("getAttention")
-          console.log(list)
           this.attentionList = this.attentionList.concat(list)
         }
       }

@@ -21,9 +21,9 @@
                   全部标签
               </template>
               <MenuItem v-for="(cate,index) in cateList" :key="index" :name="cate.id">
-              <div @click="goCateEssayList(cate.id)">
-                {{cate.id}}{{cate.name}}
-              </div>
+                <div @click="goCateEssayList(cate.id)">
+                  {{cate.id}}{{cate.name}}
+                </div>
               </MenuItem>
               <Button v-if="!isEnd" type="dashed" size="small" @click="getCates(user.id)">展开更多标签</Button>
           </Submenu>
@@ -65,8 +65,6 @@ export default {
         userId1: this.userInfo.id,
         userId2: userId,
         success: (letter) => {
-          console.log("getLeter......dfasdfad000")
-          console.log(letter)
           if (letter) {
             this.letterType = 1
           }
@@ -95,19 +93,14 @@ export default {
       this.$store.dispatch("attention/deleteAttention", attention_param)
     },
     goCateEssayList (cateId) {
-      console.log(cateId)
       this.$router.push({ path: "/otheruser/essayList", query: { userId: this.user.id, cateId } })
     },
     getUser (userId) {
       var user_params = {
         userId,
         success: (res) => {
-          console.log("getUser", res)
-          console.log(res)
           this.user = res
           this.getAttention(this.user.id)
-          console.log("user....................")
-          console.log(this.user)
         }
       }
       this.$store.dispatch("user/getUserByUserId", user_params)
@@ -134,7 +127,6 @@ export default {
           if (res.length < 10) {
             this.isEnd = 1
           }
-          console.log("getCates", res)
           this.cateList = this.cateList.concat(res)
         }
       }
@@ -145,7 +137,6 @@ export default {
         userId1: this.userInfo.id,
         userId2: userId,
         success: (letter) => {
-          console.log(letter)
           this.letterType = 1
         }
       }

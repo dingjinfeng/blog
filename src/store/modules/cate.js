@@ -18,7 +18,6 @@ const actions = {
       var data = response.data
       if (data.flag) {
         data = data.res
-        console.log("getCates", data)
         param.success(data.list)
       } else {
         ViewUI.Message.error(data.info)
@@ -26,14 +25,10 @@ const actions = {
     })
   },
   getCatesByEssay ({ commit, state }, param) {
-    console.log("hahahahahahahahahahahahahahahaah")
     cateApi.getCatesByEssayId(param).then(function (response) {
       var data = response.data
-      console.log("data:")
-      console.log(data)
       if (data.flag) {
         data = data.res
-        console.log("getCates", data)
         param.success(data)
       } else {
         ViewUI.Message.error(data.info)
@@ -43,11 +38,8 @@ const actions = {
   addEssayCate ({ commit, state }, param) {
     cateApi.addEssayCate(param).then(function (response) {
       var data = response.data
-      console.log("data")
-      console.log(data)
       if (data.flag) {
         data = data.res
-        console.log("addEssayCate", data)
         param.success()
       } else {
         ViewUI.Message.error(data.info)
@@ -59,7 +51,6 @@ const actions = {
       var data = response.data
       if (data.flag) {
         data = data.res
-        console.log("addCate", data)
         param.success(data)
       } else {
         ViewUI.Message.error(data.info)

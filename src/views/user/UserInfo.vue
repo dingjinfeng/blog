@@ -154,7 +154,6 @@ export default {
     editSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          console.log(this.formEdit.intro)
           this.$store.commit("switchLoading", !0)
           this.$store.dispatch("user/updateUser", {
             id: this.userInfo.id,
@@ -177,7 +176,6 @@ export default {
     setPwdSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          console.log(this.userInfo.id, this.formSetPwd.oldPassword, this.formSetPwd.newPassword)
           this.$store.commit("switchLoading", !0)
           this.$store.dispatch("user/setPassword", {
             userId: this.userInfo.id,
@@ -196,18 +194,13 @@ export default {
       this.$refs[name].resetFields()
     },
     uploadBefore (aa) {
-      console.log(aa)
     },
     uploadError () {
       this.$Notice.error({ title: '头像上传错误' })
     },
     uploadSuccess (response, file, fileList) {
-      console.dir(response)
       // this.$set(this.formEdit, 'imgid', response.res.id)
       this.formEdit.imgid = response.res.id
-      console.log(this.formEdit.imgid)
-      console.dir(file)
-      console.dir(fileList)
     }
   }
 }

@@ -57,15 +57,12 @@ export default {
       var cate_param = {
         userId: this.userInfo.id,
         success: (list) => {
-          console.log(list)
           this.cates = list
         }
       }
       this.$store.dispatch("cate/getCates", cate_param)
     },
     handleSubmit (name) {
-      console.log("哈哈哈")
-      console.log(this.formAddEssay)
       var essay_param = {
         userId: this.userInfo.id,
         oldCateId: this.formAddEssay.cate,

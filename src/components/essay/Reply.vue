@@ -41,7 +41,6 @@ export default {
   },
   created () {
     // 0表示from,1表示to
-    console.log("replyfjkajhdjfkhakjhdjkfhajkh:", this.reply.id)
     this.getUser(this.reply.fromUserId, 0)
     this.getUser(this.reply.toUserId, 1)
   },
@@ -55,7 +54,6 @@ export default {
       var user_params = {
         userId,
         success: (user) => {
-          console.log("getUser", user)
           if (userIndex === 0) {
             this.fromUser = user
           } else if (userIndex === 1) {
@@ -88,7 +86,6 @@ export default {
             toUserId: this.reply.toUserId,
             msg: this.msg,
             success: (reply) => {
-              console.log(reply)
               this.$emit("getReplyItem", reply)
               this.msg = ""
             }

@@ -10,9 +10,7 @@ export default {
   },
   props: ["imgId"],
   created () {
-    console.log("avatardfadfadfadgafgdfgsfdgfgsf:.......", this.imgId)
     this.getImgSrc()
-    console.log(this.src)
   },
   watch: {
     imgId (newValue, oldValue) {
@@ -30,12 +28,9 @@ export default {
       //       console.dir(res)
       //     }
       //   )
-      console.log("getImgSrcjdhfjkahjkdhfjhajsdhfjhajkhdjfhaj")
       this.getImg(this.imgId)
         .then(
           (res) => {
-            console.log(res)
-            console.log("ddddddd========", res)
             this.src = res
           }
         )

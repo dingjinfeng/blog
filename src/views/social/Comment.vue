@@ -55,8 +55,6 @@ export default {
         userId: this.userInfo.id,
         page: ++this.commentPage,
         success: (list) => {
-          console.log("getCommentsByUserId jdfhjahkdjhfjahkdfja")
-          console.log(list)
           if (list.length < 10) {
             this.isCommentFinish = 1
           }
@@ -69,7 +67,6 @@ export default {
       var comment_params = {
         commentId,
         success: () => {
-          console.log("删除成功")
           this.$router.go(0)
         }
       }

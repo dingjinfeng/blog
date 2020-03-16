@@ -16,10 +16,8 @@ export default {
   components: {
   },
   created () {
-    console.log("hhhhh")
     this.$store.commit("user/setLeftCurrent",2)
     this.$store.commit("switchLoading",!1)
-    // console.log(this.$route.query.type)
   },
   methods: {
     getContent: function () {

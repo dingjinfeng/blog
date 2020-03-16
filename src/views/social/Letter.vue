@@ -3,7 +3,7 @@
     <div :class="{ scrollFinish: isLetterFinish, userListWrap: !0 }">
       <Scroll :on-reach-bottom="!isLetterFinish ? bottomAddLetter : stopAddLetter" height="600">
         <div class="userList">
-        <div class="item" v-for="(item, index) in letterList" :key="index" @click="showLetterMsgList(item.letter, item.user)">
+        <div class="item" v-for="(item, index) in letterList" :key="index" @click="showLetterMsgList(item.letter, item.user, index)">
             <div class="avatar mr10">
               <!-- <div class="noRead" v-if="item.noRead > 0"><span>{{+item.noRead > 99 ? "99+ : item.noRead}}</span></div> -->
               <div class="noRead"><span>99+</span></div>
@@ -157,9 +157,7 @@ export default {
   },
   methods: {
     setLetterMsgFlag (flag, letterMsg, index) {
-      console.log(flag)
       if (flag) {
-        console.log(letterMsg)
         var letterMsg_param = {
           letterMsgId: letterMsg.id,
           success: () => {
@@ -186,7 +184,6 @@ export default {
           if (letter.list.length < 10) {
             this.isLetterFinish = !0
           }
-          console.log("getLetter fhajhdjfakjdsfhajkdsjfh", letter)
           this.letterList = this.letterList.concat(letter.list)
         }
       }
@@ -197,7 +194,6 @@ export default {
         letterId,
         page: ++this.letterMsgPage,
         success: (letterMsgList) => {
-          console.log(letterMsgList)
           if (letterMsgList.list.length < 10) {
             this.isLetterMsgFinish = !0
           }
@@ -206,9 +202,10 @@ export default {
       }
       this.$store.dispatch("letterMsg/getLetterMsgList", letter_param)
     },
-    showLetterMsgList (current_letter, current_user) {
+    showLetterMsgList (current_letter, current_user, current_letter_index) {
       this.current_letter = current_letter
       this.current_user = current_user
+      this.current_letter_index = current_letter_index
       this.getLetterMsgList(this.current_letter.id)
       this.isShowDrawer = !0
       // 滚动到最底部
@@ -244,10 +241,8 @@ export default {
     },
     addLetterMsg () {
       // 发送一条私信
-      console.log("开始发送.....")
       // 私信内容 前后去空格 str.replace(/(^\s*)|(\s*$)/g,"") 校验表单 发送的内容是否为空
       var rep_msg = this.formSend.msg.replace(/(^\s*)|(\s*$)/g, "")
-      console.log(rep_msg)
       // 掉接口
       var letterMsgParam = {
         msg: rep_msg,
@@ -255,11 +250,10 @@ export default {
         fromUserId: this.userInfo.id,
         toUserId: this.current_user.id,
         success: (letterMsg) => {
-          console.log(letterMsg)
           this.letterMsgList.unshift(letterMsg)
           this.letterMsgList.pop()
           this.formSend.msg = ""
-          // console.log(this.$refs['letterItem'+(this.letterMsgList.length - 1)][0])
+          this.letterList[this.current_letter_index].latestLetterMsg = letterMsg
           this.$refs['letterItem' + (this.letterMsgList.length - 1)][0].scrollIntoView(false)
         }
       }
@@ -311,6 +305,7 @@ export default {
   background-color: red;
   color: #fff;
   line-height: 22px;
+  z-index: 100;
 }
 .userList>.item .briefContent{
   flex-grow: 1;

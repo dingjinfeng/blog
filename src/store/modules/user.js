@@ -29,14 +29,10 @@ const actions = {
     })
   },
   getOtherUser ({ commit, state }, param) {
-    console.log('param')
-    console.log(param)
     userApi.getUser(param).then(
       (response) => {
         var data = response.data
-        console.log(data)
         if (data.flag) {
-          console.log('set......')
           commit('setOtherUser', data.res)
           param.success(data.res)
         } else {

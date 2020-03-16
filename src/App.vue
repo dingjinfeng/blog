@@ -34,7 +34,6 @@ export default {
     // avatar
   },
   created () {
-    console.log('App---created')
     var userInfo = JSON.parse(sstorage.getItem('user')) || {}
     this.$store.commit('user/setUserInfo', userInfo)
   }

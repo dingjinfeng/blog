@@ -17,7 +17,6 @@ const actions = {
       var data = response.data
       if (data.flag) {
         data = data.res
-        console.log("data", data)
         param.success(data)
       } else {
         ViewUI.Message.error(data.info)
@@ -29,7 +28,6 @@ const actions = {
       var data = response.data
       if (data.flag) {
         data = data.res
-        console.log("data", data)
         param.success(data.list)
       } else {
         ViewUI.Message.error(data.info)
@@ -39,7 +37,6 @@ const actions = {
   addComments ({ commit, state }, param) {
     commentApi.addComments(param).then(function (response) {
       var data = response.data
-      console.log("data", data)
       if (data.flag) {
         data = data.res
         param.success(data)
@@ -51,7 +48,6 @@ const actions = {
   deleteComment ({ commit, state }, param) {
     commentApi.deleteComment(param).then(function (response) {
       var data = response.data
-      console.log("data", data)
       if (data.flag) {
         data = data.res
         param.success(data)

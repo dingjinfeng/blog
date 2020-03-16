@@ -23,9 +23,6 @@ import user from '@/components/header/User'
 import loginOrRegister from '@/components/header/LoginOrRegister'
 import { mapState } from 'vuex'
 export default {
-  created () {
-    console.log('hahaha')
-  },
   computed: {
     ...mapState({
       islogin: state => state.user.userInfo.id

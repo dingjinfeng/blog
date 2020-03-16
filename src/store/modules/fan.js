@@ -18,7 +18,6 @@ const actions = {
       var data = response.data
       if (data.flag) {
         data = data.res
-        console.log("getFans", data)
         param.success(data)
       } else {
         ViewUI.Message.error(data.info)

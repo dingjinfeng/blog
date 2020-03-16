@@ -52,7 +52,6 @@ export default {
       this.$store.dispatch("essay/deleteessay", {
         essayId,
         success: res => {
-          console.log(res)
         }
       })
     }

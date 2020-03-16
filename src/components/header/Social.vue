@@ -21,7 +21,6 @@
 export default {
   methods: {
     goPath (current) {
-      console.log('hahaha')
       let path = ''
       switch (current) {
         case '1':

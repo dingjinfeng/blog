@@ -54,7 +54,6 @@ export default {
         userId: this.userInfo.id,
         page: ++this.replyPage,
         success: (list) => {
-          console.log(list)
           this.replyList = this.replyList.concat(list)
         }
       }

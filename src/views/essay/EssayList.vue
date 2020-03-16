@@ -17,6 +17,7 @@
             <essayBriefInfo :essay="item.essay" :userId="item.user.id" :essayListFrom="essayListFrom"></essayBriefInfo>
           </div>
         </div>
+        <Divider v-if="isFinish">已经到底了</Divider>
       </Scroll>
     </div>
   </div>
@@ -41,7 +42,6 @@ export default {
     }
   },
   created () {
-    console.log("hahahahcreated")
     this.getEssayListFrom()
     this.getEssayByPage()
     this.$store.commit("switchLoading", !1)
@@ -50,12 +50,11 @@ export default {
     essayBriefInfo,
     avatar
   },
-  watch: {
-    '$route' (to, from) {
-      this.getEssayListFrom()
-      this.getEssayByPage()
-      this.$store.commit("switchLoading", !1)
-    }
+  beforeRouteUpdate (to, from, next) {
+    this.getEssayListFrom()
+    this.getEssayByPage()
+    this.$store.commit("switchLoading", !1)
+    next()
   },
   methods: {
     getEssayListFrom () {
@@ -95,12 +94,10 @@ export default {
           this.flag = [1]
           this.isWidth = 0
       }
-      console.log(this.essayListFrom)
     },
     // isMore 是否上拉加载更多
     // getEssayByPage (isMore, done) {
     getEssayByPage () {
-      console.log(this.cateId)
       var param = {
         page: ++this.page,
         flag: this.flag,
@@ -108,9 +105,6 @@ export default {
         cateId: this.cateId,
         // isMore,
         success: (list) => {
-          // console.log('isMore', isMore)
-          console.log(this)
-          console.log(list)
           this.essayList = this.essayList.concat(list)
           this.isFinish = list.length < 10
         }
@@ -123,13 +117,8 @@ export default {
         resolve()
       })
     },
-    stopAddEssay () {
-      return new Promise(resolve => {
-        resolve()
-      })
-    },
+    stopAddEssay () {},
     goOtherUser (userId) {
-      console.log(userId)
       this.$store.dispatch("user/getOtherUser", {
         userId,
         success: res => {

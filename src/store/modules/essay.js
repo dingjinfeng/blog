@@ -15,10 +15,8 @@ const getters = {
 const actions = {
   getEssayByEssayId ({ commit, state }, param) {
     essayApi.getEssay(param).then(function (response) {
-      console.log(response)
       var data = response.data
       if (data.flag) {
-        console.log(data.res)
         param.success(data.res)
       } else {
         ViewUI.Message.error(data.info)
@@ -26,10 +24,8 @@ const actions = {
     })
   },
   getEssayList ({ commit, state }, param) {
-    console.log(param)
     essayApi.getEssayList(param).then(function (response) {
       var data = response.data
-      console.log(data)
       if (data.flag) {
         data = data.res
         param.success(data.list)
@@ -40,10 +36,8 @@ const actions = {
   },
   addEssay ({ commit, state }, param) {
     essayApi.addEssay(param).then(function (response) {
-      console.log(response)
       var data = response.data
       if (data.flag) {
-        console.log(data.res)
         ViewUI.Message.success(data.info)
       } else {
         ViewUI.Message.error(data.info)
@@ -52,10 +46,8 @@ const actions = {
   },
   deleteEssay ({ commit, state }, param) {
     essayApi.deleteEssay(param).then(function (response) {
-      console.log(response)
       var data = response.data
       if (data.flag) {
-        console.log(data.res)
         commit("deleteOneEssayItem", param.essayId)
         param.success(data.info)
       } else {
@@ -68,7 +60,6 @@ const actions = {
       var data = response.data
       if (data.flag) {
         data = data.res
-        console.log("getEssayByCateId", data)
         param.success(data.list)
       } else {
         ViewUI.Message.error(data.info)
@@ -80,7 +71,6 @@ const actions = {
       var data = response.data
       if (data.flag) {
         data = data.res
-        console.log("addEssayCate", data)
         param.success()
       } else {
         ViewUI.Message.error(data.info)
@@ -92,7 +82,6 @@ const actions = {
       var data = response.data
       if (data.flag) {
         data = data.res
-        console.log("deleteEssayCate", data)
         param.success()
       } else {
         ViewUI.Message.error(data.info)
@@ -108,7 +97,6 @@ const mutations = {
   },
   setEssayList (state, essayList) {
     state.essayList = essayList
-    console.dir(state.essayList)
   },
   deleteOneEssayItem (state, essayId) {
     var res = state.essayList.findIndex(item => item.id === essayId)
