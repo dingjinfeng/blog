@@ -4,14 +4,16 @@
       <span>({{comment.createtime}}){{user.username}}</span>
       <span>评论了:</span>
       <Button @click="addReply">回复</Button>
-      <Button type="dashed" size="small" @click="type = 1; getReply()" v-if="type === 0">展开回复</Button>
-      <Button type="dashed" size="small" @click="type = 0" v-if="type === 1">收起回复</Button>
+      <div v-if="replyList.length">
+        <Button type="dashed" size="small" @click="type = 1; getReply()" v-if="type === 0">展开回复</Button>
+        <Button type="dashed" size="small" @click="type = 0" v-if="type === 1">收起回复</Button>
+      </div>
     </div>
     <div class="bottom">
       <span>{{comment.msg}}</span>
     </div>
     <Divider />
-    <div v-if="type">
+    <div v-if="type && replyList.length">
       <div v-for="(item, index) in replyList" :key="index">
         <reply :reply="item" @getReplyItem="getAddReplyItem"></reply>
       </div>
@@ -40,15 +42,6 @@ export default {
     }
   },
   props: ["comment"],
-  watch: {
-    comment (newVal, oldVal) {
-      this.replyList = []
-      this.type = 0
-      this.isReply = 0
-      this.msg = ''
-      this.getUser(this.comment.userId)
-    }
-  },
   created () {
     this.replyList = []
     this.type = 0

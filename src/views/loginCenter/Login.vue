@@ -45,7 +45,7 @@ export default {
           this.$store.dispatch('user/userLogin', {
             formLogin: this.formLogin,
             success: () => {
-              this.$router.push('/')
+              this.$router.go(-1)
             }
           })
         } else {

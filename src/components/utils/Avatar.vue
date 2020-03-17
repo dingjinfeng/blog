@@ -12,11 +12,6 @@ export default {
   created () {
     this.getImgSrc()
   },
-  watch: {
-    imgId (newValue, oldValue) {
-      this.getImgSrc(newValue)
-    }
-  },
   methods: {
     getImgSrc () {
       // <avatar :imgId="1" />

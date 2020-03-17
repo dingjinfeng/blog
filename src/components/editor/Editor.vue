@@ -21,12 +21,6 @@ export default {
   props: {
     content_editor: Object
   },
-  watch: {
-    "content_editor.html" (newValue, oldValue) {
-      this.content_editor.html = newValue
-      this.editor.txt.html(newValue)
-    }
-  },
   mounted () {
     var editor = new E(this.$refs.editor)
     this.editor = editor

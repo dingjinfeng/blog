@@ -2,7 +2,7 @@
   <div class="otherLeft">
     <div class="leftTop">
       <div class="line">
-          <div>
+          <div v-if="user.imgid">
             <avatar :imgId="user.imgid" />
           </div>
           <div>{{user.username}}</div>
@@ -93,7 +93,7 @@ export default {
       this.$store.dispatch("attention/deleteAttention", attention_param)
     },
     goCateEssayList (cateId) {
-      this.$router.push({ path: "/otheruser/essayList", query: { userId: this.user.id, cateId } })
+      this.$router.replace({ path: "/otheruser/essayList", query: { userId: this.user.id, cateId } })
     },
     getUser (userId) {
       var user_params = {

@@ -8,7 +8,7 @@
     <div>
     <Tag v-for="(cate, index) in cateListOfEssay" :key="index" type="border" color="success">{{cate.name}}</Tag>
     </div>
-    <div>
+    <div v-if="content.html">
       <editor v-model="content"></editor>
     </div>
     <Icon type="ios-thumbs-up" size="24"/>(10)|<Icon type="ios-thumbs-down" size="24"/>(4)
@@ -16,8 +16,10 @@
     <div>
       <Button type="primary" shape="circle" @click="addComments(essay.id)">发表评论</Button>
       <Divider />
-      <div v-for="(item, index) in commentList" :key="index">
-        <comment :comment="item"></comment>
+      <div v-if="commentList.length">
+        <div v-for="(item, index) in commentList" :key="index">
+          <comment :comment="item"></comment>
+        </div>
       </div>
       <Page :current="commentPage" :total="commentTotalCount" @on-change="getCommentsByEssayId" simple />
     </div>
@@ -75,6 +77,7 @@ export default {
       this.$store.dispatch("essay/getEssayByEssayId", essay_params)
     },
     getCommentsByEssayId (pageIndex) {
+      this.commentList = []
       var comments_param = {
         essayId: this.essay.id,
         page: pageIndex,

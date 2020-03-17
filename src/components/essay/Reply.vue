@@ -29,16 +29,6 @@ export default {
       required: true
     }
   },
-  watch: {
-    reply (newValue, oldValue) {
-      this.reply = newValue
-      this.fromUser = {}
-      this.toUser = {}
-      this.msg = ""
-      this.getUser(this.reply.fromUserId, 0)
-      this.getUser(this.reply.toUserId, 1)
-    }
-  },
   created () {
     // 0表示from,1表示to
     this.getUser(this.reply.fromUserId, 0)
