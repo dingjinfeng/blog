@@ -14,6 +14,7 @@ export default {
   },
   watch: {
     imgId (newValue) {
+      this.imgId = newValue
       this.getImgSrc()
     }
   },
