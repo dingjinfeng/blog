@@ -13,8 +13,8 @@ export default {
     this.getImgSrc()
   },
   watch: {
-    imgId (newValue, oldValue) {
-      this.getImgSrc(newValue)
+    imgId (newValue) {
+      this.getImgSrc()
     }
   },
   methods: {

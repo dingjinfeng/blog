@@ -36,8 +36,8 @@
         <!-- 修改用户信息 -->
         <div class="editInfo" v-if="type == 2">
             <Form ref="formEdit" :model="formEdit" :rules="ruleEdit" :label-width="90" style="width:400px">
-                <FormItem label="头像" prop="username">
-                  <div class="avatarItem">{{formEdit.imgid}}
+                <FormItem label="头像" prop="imgid">
+                  <div class="avatarItem">
                     <avatar :imgId="formEdit.imgid" class="avatar"/>
                     <Upload class="uploadAvatar"
                         :action="uploadAddress"
@@ -56,8 +56,8 @@
                 </FormItem>
                 <FormItem label="性别" prop="sex">
                     <RadioGroup v-model="formEdit.sex">
-                        <Radio label="1">男</Radio>
-                        <Radio label="2">女</Radio>
+                        <Radio :label="1" border>男</Radio>
+                        <Radio :label="2" border>女</Radio>
                     </RadioGroup>
                 </FormItem>
                 <FormItem label="个性签名" prop="intro">
@@ -116,9 +116,6 @@ export default {
           { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
           { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
         ],
-        // sex: [
-        //   { required: true, message: 'Please select gender', trigger: 'blur' }
-        // ],
         intro: [
           { required: true, message: 'Please enter a personal introduction', trigger: 'blur' },
           { type: 'string', min: 20, message: 'Introduce no less than 20 words', trigger: 'blur' }
