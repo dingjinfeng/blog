@@ -16,10 +16,8 @@
     <div>
       <Button type="primary" shape="circle" @click="addComments(essay.id)">发表评论</Button>
       <Divider />
-      <div v-if="commentList.length">
-        <div v-for="(item, index) in commentList" :key="index">
-          <comment :comment="item"></comment>
-        </div>
+      <div v-for="(item, index) in commentList" :key="index">
+        <comment :comment="item"></comment>
       </div>
       <Page :current="commentPage" :total="commentTotalCount" @on-change="getCommentsByEssayId" simple />
     </div>
@@ -77,7 +75,6 @@ export default {
       this.$store.dispatch("essay/getEssayByEssayId", essay_params)
     },
     getCommentsByEssayId (pageIndex) {
-      this.commentList = []
       var comments_param = {
         essayId: this.essay.id,
         page: pageIndex,

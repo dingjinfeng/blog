@@ -116,9 +116,9 @@ export default {
           { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
           { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
         ],
-        sex: [
-          { required: true, message: 'Please select gender', trigger: 'change' }
-        ],
+        // sex: [
+        //   { required: true, message: 'Please select gender', trigger: 'blur' }
+        // ],
         intro: [
           { required: true, message: 'Please enter a personal introduction', trigger: 'blur' },
           { type: 'string', min: 20, message: 'Introduce no less than 20 words', trigger: 'blur' }
@@ -152,6 +152,7 @@ export default {
   },
   methods: {
     editSubmit (name) {
+      console.log(this.formEdit)
       this.$refs[name].validate((valid) => {
         if (valid) {
           this.$store.commit("switchLoading", !0)

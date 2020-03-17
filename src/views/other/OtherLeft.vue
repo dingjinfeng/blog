@@ -2,7 +2,7 @@
   <div class="otherLeft">
     <div class="leftTop">
       <div class="line">
-          <div v-if="user.imgid">
+          <div v-if="user.imgid || user.imgid == 0">
             <avatar :imgId="user.imgid" />
           </div>
           <div>{{user.username}}</div>
