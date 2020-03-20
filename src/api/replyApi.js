@@ -19,5 +19,10 @@ export default {
       userId: param.userId,
       page: param.page
     })
+  },
+  deleteReply (param) {
+    return axios.post("/user/deleteReplyByReplyId", {
+      replyId: param.replyId
+    })
   }
 }

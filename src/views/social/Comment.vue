@@ -6,12 +6,12 @@
           <div class="line">
             <div class="left">
               <span class="mr10">({{item.comment.createtime}})</span>
-              <span class="mr10">您在</span>
-              <a @click="goOtherEssayDetail" class="mr10 essaylink">{{item.essay.title}}</a>
-              <span>文章中评论了：</span>
+              <Button type="dashed" size="small" @click="deleteComment(item.comment.id, index)">删除评论</Button>
             </div>
             <div class="right">
-              <Button type="dashed" size="small" @click="deleteComment(item.comment.id, index)">删除评论</Button>
+              <span class="mr10">您在</span>
+              <a @click="goOtherEssayDetail(item.essay)" class="mr10 essaylink">{{item.essay.title}}</a>
+              <span>文章中评论了：</span>
             </div>
           </div>
           <div class="line">
@@ -21,7 +21,9 @@
               </div>
             </Poptip>
           </div>
+          <Divider v-if="!(index === (commentList.length - 1))" dashed />
         </div>
+        <Divider v-if="isCommentFinish" size="small" class="fs10" dashed>已经到底了</Divider>
       </Scroll>
     </div>
   </div>
@@ -47,8 +49,8 @@ export default {
     this.$store.commit("switchLoading", !1)
   },
   methods: {
-    goOtherEssayDetail () {
-      this.$router.push('/otheruser/essaydetail')
+    goOtherEssayDetail (essay) {
+      this.$router.push({ path: '/otheruser/essaydetail', query: { essayId: essay.id, userId: essay.userId } })
     },
     getCommentsByUserId () {
       var comment_params = {
@@ -87,6 +89,9 @@ export default {
 }
 </script>
 <style scoped>
+.fs10{
+  font-size: 10px;
+}
 .commentList{
   font-size: 16px;
   width: 100%;
@@ -103,12 +108,7 @@ export default {
 .commentList .line:first-child{
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.commentList .line:first-child .right{
-    width: 20%;
-    text-align: right;
+    flex-direction: column;
 }
 .commentList .content{
     width: 100%;
@@ -117,11 +117,6 @@ export default {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-}
-.commentList .item{
-    border-bottom: 1px dashed #2d8cf0;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
 }
 .commentList .item:last-child{
     border-bottom:none;

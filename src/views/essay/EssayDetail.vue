@@ -1,17 +1,29 @@
 <template>
   <div class="essayDetail">
     <div>
-      <span>{{essay.title}}</span>
       <span>{{essay.createtime}}</span>
+      <div class="fs40">{{essay.title}}</div>
     </div>
-    <div>{{user.username}}</div>
     <div>
-    <Tag v-for="(cate, index) in cateListOfEssay" :key="index" type="border" color="success">{{cate.name}}</Tag>
+      <span>作者:</span>
+      <span class="ml10">{{user.username}}</span></div>
+    <div>
+    <span class="mr10">标签:</span><Tag class="mr10" v-for="(cate, index) in cateListOfEssay" :key="index" type="border" color="success">{{cate.name}}</Tag>
     </div>
     <div v-if="content.html">
       <editor v-model="content"></editor>
     </div>
-    <Icon type="ios-thumbs-up" size="24"/>(10)|<Icon type="ios-thumbs-down" size="24"/>(4)
+    <div>
+      <div v-if="upOrDown === 1">
+        <Icon type="ios-thumbs-up" size="24"/>({{up.up}})|<Icon type="ios-thumbs-down-outline" size="24" @click="updateUp(essay.id, -1)"/>({{up.down}})
+      </div>
+      <div v-if="upOrDown === -1">
+        <Icon type="ios-thumbs-up-outline" size="24" @click="updateUp(essay.id, 1)"/>({{up.up}})|<Icon type="ios-thumbs-down" size="24"/>({{up.down}})
+      </div>
+      <div v-if="upOrDown === 0">
+        <Icon type="ios-thumbs-up-outline" size="24" @click="updateUp(essay.id, 1)"/>({{up.up}})|<Icon type="ios-thumbs-down-outline" size="24" @click="updateUp(essay.id, -1)"/>({{up.down}})
+      </div>
+    </div>
     <Divider />
     <div>
       <Button type="primary" shape="circle" @click="addComments(essay.id)">发表评论</Button>
@@ -37,6 +49,8 @@ export default {
     return {
       essay: {},
       user: {},
+      up: {},
+      upOrDown: 0,
       commentList: [],
       commentTotalCount: 0,
       commentPage: 1,
@@ -55,6 +69,8 @@ export default {
     this.getCatesByEssay(essayId)
     var userId = parseInt(this.$route.query.userId)
     this.getUser(userId)
+    this.getUps(essayId)
+    this.getUpOrDown(essayId, this.userInfo.id)
     this.$store.commit("switchLoading", !1)
   },
   components: {
@@ -62,6 +78,27 @@ export default {
     editor
   },
   methods: {
+    getUpOrDown (essayId, userId) {
+      var up_param = {
+        essayId,
+        userId,
+        success: (up) => {
+          if (up) {
+            this.upOrDown = up.flag
+          }
+        }
+      }
+      this.$store.dispatch("essay/getUpOrDown", up_param)
+    },
+    getUps (essayId) {
+      var up_param = {
+        essayId,
+        success: (up) => {
+          this.up = up
+        }
+      }
+      this.$store.dispatch("essay/getUps", up_param)
+    },
     getEssayDetail (essayId) {
       var essay_params = {
         essayId,
@@ -126,18 +163,44 @@ export default {
             userId: this.userInfo.id,
             essayId,
             success: (comment) => {
+              this.$store.commit("user/setUserInfo", comment.user)
               this.msg = ""
-              this.commentList.unshift(comment)
-              if (!this.commentList.length <= 10) {
-                this.commentList.pop()
-              }
-              console.log(this.commentList)
+              this.getCommentsByEssayId(1)
             }
           }
           this.$store.dispatch("comment/addComments", comment_param)
         }
       })
+    },
+    updateUp (essayId, flag) {
+      var up_param = {
+        essayId,
+        flag,
+        userId: this.userInfo.id,
+        success: (up) => {
+          this.upOrDown = flag
+          this.up = up
+        }
+      }
+      this.$store.dispatch("essay/updateUp", up_param)
     }
   }
 }
 </script>
+<style scoped>
+.fs40{
+  font-size: 40px;
+}
+.mr10{
+  margin-right: 10px;
+}
+.ml10{
+  margin-left: 10px;
+}
+.mt10{
+  margin-top: 10px;
+}
+.mb10{
+  margin-bottom: 10px;
+}
+</style>

@@ -53,7 +53,7 @@ const routes = [
       },
       {
         path: 'editessay',
-        component: () => import('@/views/user/AddEssay')
+        component: () => import('@/views/essay/EditEssay')
       }
     ]
   },

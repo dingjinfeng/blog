@@ -18,5 +18,16 @@ export default {
       userId1: param.userId1,
       userId2: param.userId2
     })
+  },
+  deleteLetter (param) {
+    return axios.post("/user/deleteLetterByLetterId", {
+      letterId: param.letterId
+    })
+  },
+  getNoReadLetterMsgNums (param) {
+    return axios.post("/user/getNoReadLetterMsgNums", {
+      letterId: param.letterId,
+      userId: param.userId
+    })
   }
 }

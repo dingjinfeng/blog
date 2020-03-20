@@ -1,11 +1,12 @@
 <template>
 <div class="reply">
   <div>
-    <span>({{reply.createtime}}){{fromUser.username}}</span>
+    <span>({{reply.createtime}})</span>
+    <span class="mr10 ml10">{{fromUser.username}}</span>
     <span>对</span>
-    <span>{{toUser.username}}</span>
+    <span class="mr10 ml10">{{toUser.username}}</span>
     <span>回复了:</span>
-    <div>
+    <div class="showReply">
       <Button type="dashed" size="small" shape="circle" @click="addReply">回复</Button>
     </div>
   </div>
@@ -76,7 +77,7 @@ export default {
             toUserId: this.reply.toUserId,
             msg: this.msg,
             success: (reply) => {
-              this.$emit("getReplyItem", reply)
+              this.$emit("getReplyItem")
               this.msg = ""
             }
           }
@@ -87,3 +88,20 @@ export default {
   }
 }
 </script>
+<style scoped>
+.reply .showReply{
+  display: inline-block;
+}
+.mr10{
+  margin-right: 10px;
+}
+.ml10{
+  margin-left: 10px;
+}
+.mt10{
+  margin-top: 10px;
+}
+.mb10{
+  margin-bottom: 10px;
+}
+</style>

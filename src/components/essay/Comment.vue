@@ -1,11 +1,14 @@
 <template>
   <div class="comment">
     <div class="top">
-      <span>({{comment.createtime}}){{user.username}}</span>
+      <span>({{comment.createtime}})</span>
+      <span class="mr10 ml10">{{user.username}}</span>
       <span>评论了:</span>
       <Button @click="addReply">回复</Button>
-      <Button type="dashed" size="small" @click="type = 1; getReply()" v-if="type === 0">展开回复</Button>
-      <Button type="dashed" size="small" @click="type = 0" v-if="type === 1">收起回复</Button>
+      <div v-if="replyList.length" class="showOrHide ml10">
+        <Button type="dashed" size="small" @click="type = 1" v-if="type === 0">展开回复</Button>
+        <Button type="dashed" size="small" @click="type = 0" v-if="type === 1">收起回复</Button>
+      </div>
     </div>
     <div class="bottom">
       <span>{{comment.msg}}</span>
@@ -15,6 +18,7 @@
       <div v-for="(item, index) in replyList" :key="index">
         <reply :reply="item" @getReplyItem="getAddReplyItem"></reply>
       </div>
+      <Divider dashed />
     </div>
   </div>
 </template>
@@ -47,6 +51,7 @@ export default {
       this.isReply = 0
       this.msg = ''
       this.getUser(this.comment.userId)
+      this.getReply()
     }
   },
   created () {
@@ -55,6 +60,7 @@ export default {
     this.isReply = 0
     this.msg = ''
     this.getUser(this.comment.userId)
+    this.getReply()
   },
   methods: {
     getUser (userId) {
@@ -70,7 +76,7 @@ export default {
       var comment_param = {
         commentsId: this.comment.id,
         success: (list) => {
-          this.replyList = this.replyList.concat(list)
+          this.replyList = list
         }
       }
       this.$store.dispatch("reply/getReplyByComment", comment_param)
@@ -98,7 +104,7 @@ export default {
             toUserId: this.comment.userId,
             msg: this.msg,
             success: (reply) => {
-              this.replyList.unshift(reply)
+              this.getReply()
               this.msg = ""
             }
           }
@@ -106,9 +112,26 @@ export default {
         }
       })
     },
-    getAddReplyItem (reply) {
-      this.replyList.unshift(reply)
+    getAddReplyItem () {
+      this.getReply()
     }
   }
 }
 </script>
+<style scoped>
+.comment .top .showOrHide{
+  display: inline-block;
+}
+.mr10{
+  margin-right: 10px;
+}
+.ml10{
+  margin-left: 10px;
+}
+.mt10{
+  margin-top: 10px;
+}
+.mb10{
+  margin-bottom: 10px;
+}
+</style>

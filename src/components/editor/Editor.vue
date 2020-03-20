@@ -21,6 +21,11 @@ export default {
   props: {
     content_editor: Object
   },
+  watch: {
+    "content_editor.html" (newValue) {
+      this.editor.txt.html(newValue)
+    }
+  },
   mounted () {
     var editor = new E(this.$refs.editor)
     this.editor = editor
@@ -175,5 +180,8 @@ export default {
 }
 .essayEditorAuto .w-e-text-container{
   height: auto !important;
+}
+.essayEditorAuto .w-e-text {
+  overflow-y: auto !important;
 }
 </style>

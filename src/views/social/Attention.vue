@@ -9,6 +9,7 @@
         <div class="line">
           <Button size="small" type="dashed" @click="deleteAttention(item.id, index)">取消关注</Button>
         </div>
+        <Divider type="vertical" dashed/>
       </div>
     </div>
   </div>
@@ -50,7 +51,7 @@ export default {
         fromUserId: this.userInfo.id,
         toUserId: userId,
         success: () => {
-          this.attentionList.splice(index, 1)
+          this.$storer.go(0)
         }
       }
       this.$store.dispatch("attention/deleteAttention", attention_param)

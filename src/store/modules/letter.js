@@ -23,6 +23,16 @@ const actions = {
       }
     })
   },
+  deleteLetter ({ commit, state }, param) {
+    letterApi.deleteLetter(param).then(function (response) {
+      var data = response.data
+      if (data.flag) {
+        param.success()
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
+  },
   getLetter ({ commit, state }, param) {
     letterApi.getLetter(param).then(function (response) {
       var data = response.data
@@ -34,8 +44,19 @@ const actions = {
       }
     })
   },
-  addLetter ({ coaddLettermmit, state }, param) {
+  addLetter ({ commit, state }, param) {
     letterApi.addLetter(param).then(function (response) {
+      var data = response.data
+      if (data.flag) {
+        data = data.res
+        param.success(data)
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
+  },
+  getNoReadLetterMsgNums ({ commit, state }, param) {
+    letterApi.getNoReadLetterMsgNums(param).then(function (response) {
       var data = response.data
       if (data.flag) {
         data = data.res

@@ -3,29 +3,31 @@
       <div class="replyListWrap">
         <Scroll :on-reach-bottom="!isReplyFinish ? bottomAddReply : stopAddReply" height="600">
           <div class="replyList" v-for="(item,index) in replyList" :key="index">
-              <div class="item">
-                  <div class="line">
-                      <div class="left">
-                          <span class="mr10">({{item.reply.createtime}}):</span>
-                          <span class="mr10">您在</span>
-                          <a @click="goOtherEssayDetail" class="mr10 essaylink">{{item.essay.title}}</a>
-                          <span class="mr10">向</span>
-                          <a @click="goOtherIndex" class="mr10 essaylink">{{item.touser.username}}</a>
-                          <span>回复了：</span>
-                      </div>
-                      <div class="right">
-                          <Button type="dashed">删除回复</Button>
-                      </div>
-                  </div>
-                  <div class="line">
-                      <Poptip trigger="hover" title="当前回复内容" :content="item.reply.msg">
-                          <div class="content">
-                            {{item.reply.msg}}
-                          </div>
-                      </Poptip>
-                  </div>
+            <div class="item">
+              <div class="line">
+                <div class="top">
+                    <span class="mr10">({{item.reply.createtime}}):</span>
+                    <Button type="dashed" @click="deleteReply(item.reply.id)">删除回复</Button>
+                </div>
+                <div class="bottom">
+                  <span class="mr10">您在</span>
+                  <a @click="goOtherEssayDetail(item.essay)" class="mr10 essaylink">{{item.essay.title}}</a>
+                  <span class="mr10">文章中向</span>
+                  <a @click="goOtherIndex(item.touser)" class="mr10 essaylink">{{item.touser.username}}</a>
+                  <span>回复了：</span>
+                </div>
               </div>
+              <div class="line">
+                <Poptip trigger="hover" title="当前回复内容" :content="item.reply.msg">
+                    <div class="content">
+                      {{item.reply.msg}}
+                    </div>
+                </Poptip>
+              </div>
+            </div>
+            <Divider v-if="!(index === (replyList.length-1))" dashed />
           </div>
+          <Divider v-if="isReplyFinish" size="small" class="fs10" dashed>已经到底了</Divider>
         </Scroll>
       </div>
     </div>
@@ -44,16 +46,20 @@ export default {
     this.$store.commit("switchLoading", !1)
   },
   methods: {
-    goOtherEssayDetail () {
-      this.$router.push('/otheruser/essaydetail')
+    goOtherEssayDetail (essay) {
+      this.$router.push({ path: '/otheruser/essaydetail', query: { essayId: essay.id, userId: essay.userId } })
     },
-    goOtherIndex (index) {
+    goOtherIndex (user) {
+      this.$router.push({ path: "/otheruser/essaylist", query: { userId: user.id } })
     },
     getReplyByUserId () {
       var reply_param = {
         userId: this.userInfo.id,
         page: ++this.replyPage,
         success: (list) => {
+          if (list.length < 10) {
+            this.isReplyFinish = 1
+          }
           this.replyList = this.replyList.concat(list)
         }
       }
@@ -66,9 +72,16 @@ export default {
       })
     },
     stopAddReply () {
-      return new Promise(resolve => {
-        resolve()
-      })
+    },
+    deleteReply (replyId) {
+      var reply_param = {
+        replyId,
+        success: () => {
+          this.$Message.success("删除成功")
+          this.$router.go(0)
+        }
+      }
+      this.$store.dispatch("reply/deleteReply", reply_param)
     }
   },
   data () {
@@ -96,15 +109,9 @@ export default {
     color: red;
     text-decoration: underline;
 }
-.replyList .line:first-child{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.replyList .line:first-child .right{
-    width: 20%;
-    text-align: right;
+.replyList .line{
+  display: flex;
+  flex-direction: column;
 }
 .replyList .content{
     width: 100%;
@@ -114,12 +121,10 @@ export default {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
-.replyList .item{
-    border-bottom: 1px dashed #2d8cf0;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-}
 .replyList .item:last-child{
     border-bottom:none;
+}
+.fs10{
+  font-size: 10px;
 }
 </style>

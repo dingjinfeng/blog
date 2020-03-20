@@ -66,6 +66,17 @@ export default {
     handleSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
+          var user_param = {
+            username: this.formValidate.username,
+            mail: this.formValidate.mail,
+            password: this.formValidate.password,
+            sex: this.formValidate.sex,
+            intro: this.formValidate.intro,
+            success: () => {
+              this.$Message.success("请登录邮箱激活使用")
+            }
+          }
+          this.$store.dispatch("user/register", user_param)
           this.$Message.success('Success!')
         } else {
           this.$Message.error('Fail!')

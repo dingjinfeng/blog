@@ -44,6 +44,16 @@ const actions = {
         ViewUI.Message.error(data.info)
       }
     })
+  },
+  deleteReply ({ commit, state }, param) {
+    replyApi.deleteReply(param).then(function (response) {
+      var data = response.data
+      if (data.flag) {
+        param.success()
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
   }
 }
 

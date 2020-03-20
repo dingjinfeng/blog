@@ -21,5 +21,14 @@ export default {
       intro: param.intro,
       imgid: param.imgid
     })
+  },
+  register  (param) {
+    return axios.post('/user/register', {
+      username: param.username,
+      mail: param.mail,
+      password: param.password,
+      sex: param.sex,
+      intro: param.intro
+    })
   }
 }

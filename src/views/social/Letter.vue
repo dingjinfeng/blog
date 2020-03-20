@@ -3,20 +3,23 @@
     <div :class="{ scrollFinish: isLetterFinish, userListWrap: !0 }">
       <Scroll :on-reach-bottom="!isLetterFinish ? bottomAddLetter : stopAddLetter" height="600">
         <div class="userList">
-        <div class="item" v-for="(item, index) in letterList" :key="index" @click="showLetterMsgList(item.letter, item.user, index)">
-            <div class="avatar mr10">
-              <!-- <div class="noRead" v-if="item.noRead > 0"><span>{{+item.noRead > 99 ? "99+ : item.noRead}}</span></div> -->
-              <div class="noRead"><span>99+</span></div>
-              <avatar :imgId="item.user.imgid"/>
-            </div>
-            <div class="briefContent">
-              <div class="line">
-                <span class="mr10">{{item.user.username}}</span>
-                <span v-if="item.latestLetterMsg">{{item.latestLetterMsg.createtime}}</span>
+          <div class="item" v-for="(item, index) in letterList" :key="index">
+              <div class="avatar mr10">
+                <!-- <div class="noRead" v-if="item.noRead > 0"><span>{{+item.noRead > 99 ? "99+ : item.noRead}}</span></div> -->
+                <div class="noRead" v-if="item.noRead > 0"><span>{{item.noRead > 99 ? "99+" : item.noRead}}</span></div>
+                <avatar :imgId="item.user.imgid"/>
               </div>
-              <div class="content" v-if="item.latestLetterMsg">{{item.latestLetterMsg.msg}}</div>
-            </div>
-        </div>
+              <div class="briefContent">
+                <div class="line">
+                  <span class="mr10">{{item.user.username}}:</span>
+                  <span v-if="item.latestLetterMsg">({{item.latestLetterMsg.createtime}})</span>
+                  <Button type="dashed" class="ml10" @click="deleteLetter(item.letter.id)">删除私信</Button>
+                  <Button type="dashed" class="ml10" @click="showLetterMsgList(item.letter, item.user, index)">打开私信</Button>
+                </div>
+                <div class="content" v-if="item.latestLetterMsg">{{item.latestLetterMsg.msg}}</div>
+              </div>
+          </div>
+          <Divider v-if="isLetterFinish" size="small" class="fs10" dashed>已经到底了</Divider>
         </div>
       </Scroll>
     </div>
@@ -31,14 +34,21 @@
           <div :class="{ scrollFinish: isLetterMsgFinish, letterList: !0 }">
             <Scroll :on-reach-top="!isLetterMsgFinish ? topAddLetterMsg : stopAddLetterMsg" height="600">
               <div :class="{item: !0, leftLetter: userInfo.id === item.toUserId, rightLetter: userInfo.id === item.fromUserId}" :ref="'letterItem' + index" v-for="(item, index) in reversedLetterMsgList" :key="index">
-                <div>
-                  {{item.createtime}}
+                <div class="left">
+                  <div class="avatar" v-if="userInfo.id === item.toUserId"><avatar :imgId="current_user.imgid" /></div>
+                  <div class="avatar" v-if="userInfo.id === item.fromUserId"><avatar :imgId="userInfo.imgid" /></div>
                 </div>
-                <div class="avatar" v-if="userInfo.id === item.toUserId"><avatar :imgId="current_user.imgid" /></div>
-                <div class="avatar" v-if="userInfo.id === item.fromUserId"><avatar :imgId="userInfo.imgid" /></div>
-                <div class="msg mr10 ml10">{{item.msg}}</div>
-                <Checkbox v-if="userInfo.id === item.toUserId && !item.flag" v-model="item.flag" @on-change="flag => setLetterMsgFlag(flag, item, index)">{{item.flag? '已读': '未读'}}</Checkbox>
-                <Icon v-if="userInfo.id === item.toUserId && !!item.flag" type="ios-checkmark" size="30"/>
+                <div :class="{ right:!0, rightLetterMsg:userInfo.id === item.fromUserId }">
+                  <div class="top ml10 mr10">
+                    {{item.createtime}}
+                    <span v-if="userInfo.id === item.toUserId && !!item.flag">
+                      <Icon type="ios-checkmark" size="30"/>
+                      已读
+                    </span>
+                    <Checkbox v-if="userInfo.id === item.toUserId && !item.flag" v-model="item.flag" @on-change="flag => setLetterMsgFlag(flag, item, index)">未读</Checkbox>
+                  </div>
+                  <div class="bottom msg mr10 ml10">{{item.msg}}</div>
+                </div>
               </div>
             </Scroll>
 
@@ -74,6 +84,8 @@ export default {
   data () {
     return {
       // 从state中获取
+      socket: "",
+      path: "ws://192.168.2.101:8080/startLetter/" + this.$store.state.user.userInfo.id,
       isLetterFinish: !1,
       isLetterMsgFinish: !1,
       isShowDrawer: !1,
@@ -83,60 +95,6 @@ export default {
       letterMsgPage: 0,
       current_user: {},
       current_letter: {},
-      // userList: [{
-      //   userInfo: {
-      //     username: '哈哈'
-      //   },
-      //   noRead: 1000,
-      //   letterList: [{
-      //     left: !0,
-      //     msg: '私信内容',
-      //     date: '2019-09-12'
-      //   }, {
-      //     right: !0,
-      //     msg: '私信内容私信内容私信内容私信内容私信内容私信内容私信内容私信内容私信内容私信内容私信内容私信内容私信内容私信内容私信内容',
-      //     date: '2019-09-12'
-      //   }]
-      // }, {
-      //   userInfo: {
-      //     username: '哈哈'
-      //   },
-      //   letterList: [{
-      //     left: !0,
-      //     msg: '私信内容',
-      //     date: '2019-09-12'
-      //   }, {
-      //     right: !0,
-      //     msg: '私信内容',
-      //     date: '2019-09-12'
-      //   }]
-      // }, {
-      //   userInfo: {
-      //     username: '哈哈'
-      //   },
-      //   letterList: [{
-      //     left: !0,
-      //     msg: '私信内容',
-      //     date: '2019-09-12'
-      //   }, {
-      //     right: !0,
-      //     msg: '私信内容',
-      //     date: '2019-09-12'
-      //   }]
-      // }, {
-      //   userInfo: {
-      //     username: '哈哈'
-      //   },
-      //   letterList: [{
-      //     left: !0,
-      //     msg: '私信内容',
-      //     date: '2019-09-12'
-      //   }, {
-      //     right: !0,
-      //     msg: '私信内容',
-      //     date: '2019-09-12'
-      //   }]
-      // }],
       formSend: {
         msg: ""
       }
@@ -156,11 +114,75 @@ export default {
     this.getLetterList()
   },
   methods: {
+    initWebSocket () {
+      if (typeof (WebSocket) === "undefined") {
+        this.$Notice.info({
+          title: "浏览器版本过低",
+          desc: "当前浏览器不支持WebSocket,请更换支持WebSocket的浏览器"
+        })
+      } else {
+        // 实例化socket
+        this.socket = new WebSocket(this.path)
+        // 监听socket连接
+        this.socket.onopen = this.open
+        // 监听socket错误信息
+        this.socket.onerror = this.error
+        this.socket.onclose = this.close
+        // 监听socket消息
+        this.socket.onmessage = this.getMessage
+      }
+    },
+    close () {
+      console.log("close")
+    },
+    open () {
+      console.log("onopen")
+    },
+    error () {
+    },
+    getMessage (msg) {
+      var letterMsg = JSON.parse(msg.data)
+      if (letterMsg.toUserId === this.userInfo.id) {
+        this.letterList[this.current_letter_index].noRead++
+      }
+      // success: (letterMsg) => {
+      if (this.letterMsgList.length % 10 === 0 && this.letterMsgList.length > 0) {
+        this.isLetterMsgFinish = 0
+        this.letterMsgList.pop()
+      } else {
+        this.isLetterMsgFinish = 1
+      }
+      this.letterMsgList.unshift(letterMsg)
+      this.letterList[this.current_letter_index].latestLetterMsg = letterMsg
+      this.$refs['letterItem' + (this.letterMsgList.length - 1)][0].scrollIntoView(false)
+    },
+    deleteLetter (letterId) {
+      var letter_param = {
+        letterId,
+        success: () => {
+          this.$Message.success("删除成功")
+          this.$router.go(0)
+        }
+      }
+      this.$store.dispatch("letter/deleteLetter", letter_param)
+    },
+    setLetterNoRead () {
+      var noRead_param = {
+        letterId: this.current_letter.id,
+        userId: this.userInfo.id,
+        success: (nums) => {
+          console.log(nums)
+          this.letterList[this.current_letter_index].noRead = nums
+        }
+      }
+      this.$store.dispatch("letter/getNoReadLetterMsgNums", noRead_param)
+    },
     setLetterMsgFlag (flag, letterMsg, index) {
       if (flag) {
         var letterMsg_param = {
           letterMsgId: letterMsg.id,
           success: () => {
+            this.setLetterNoRead()
             this.letterMsgList[index].flag = 1
           }
         }
@@ -175,6 +197,7 @@ export default {
       this.current_user = {}
       this.current_letter = {}
       this.formSend.msg = ""
+      this.socket.close()
     },
     getLetterList () {
       var letter_param = {
@@ -208,6 +231,7 @@ export default {
       this.current_letter_index = current_letter_index
       this.getLetterMsgList(this.current_letter.id)
       this.isShowDrawer = !0
+      this.initWebSocket()
       // 滚动到最底部
       // this.$nextTick(()=>{
       // })
@@ -248,16 +272,9 @@ export default {
         msg: rep_msg,
         letterId: this.current_letter.id,
         fromUserId: this.userInfo.id,
-        toUserId: this.current_user.id,
-        success: (letterMsg) => {
-          this.letterMsgList.unshift(letterMsg)
-          this.letterMsgList.pop()
-          this.formSend.msg = ""
-          this.letterList[this.current_letter_index].latestLetterMsg = letterMsg
-          this.$refs['letterItem' + (this.letterMsgList.length - 1)][0].scrollIntoView(false)
-        }
+        toUserId: this.current_user.id
       }
-      this.$store.dispatch("letterMsg/addLetterMsg", letterMsgParam)
+      this.socket.send(JSON.stringify(letterMsgParam))
       // 接口成功之后 this.letterList.push()
       // 滚动到最底部
       // this.$nextTick(()=>{
@@ -267,6 +284,9 @@ export default {
 }
 </script>
 <style scoped>
+.fs10{
+  font-size: 10px;
+}
 .mr10{
   margin-right: 10px;
 }
@@ -278,7 +298,6 @@ export default {
 }
 .userListWrap{
   width: 100%;
-  height: 400px;
   position: relative;
 }
 .item .avatar{
@@ -313,7 +332,6 @@ export default {
 }
 .userList>.item .briefContent .line {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 .userList>.item .briefContent .content{
@@ -321,7 +339,6 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
 .letterListWrap{
   padding: 5px;
   width: 100%;
@@ -345,11 +362,13 @@ export default {
   flex-direction: row-reverse;
 }
 .letterList .item .msg{
-  max-width: 74%;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+.letterListWrap .rightLetterMsg{
+  text-align: right;
 }
 </style>

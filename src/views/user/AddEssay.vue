@@ -69,7 +69,10 @@ export default {
         newCateName: this.formAddEssay.newCate,
         title: this.formAddEssay.title,
         msg: this.formAddEssay.contentObj.txt,
-        htmlMsg: this.formAddEssay.contentObj.html
+        htmlMsg: this.formAddEssay.contentObj.html,
+        success: (user) => {
+          this.$store.commit("user/setUserInfo", user)
+        }
       }
       this.$refs[name].validate((valid) => {
         if (valid) {

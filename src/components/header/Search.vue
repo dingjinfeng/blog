@@ -1,9 +1,7 @@
 <template>
     <div class="search">
         <div class="searchWrap">
-            <i-input v-model="txt" enter-button placeholder="输入文章标题搜索文章">
-                <Button slot="append" icon="ios-search"></Button>
-            </i-input>
+            <i-input v-model="txt" icon="md-search" enter-button placeholder="输入文章标题搜索文章" @on-enter="searchEssay" @on-click="searchEssay" />
         </div>
     </div>
 </template>
@@ -11,8 +9,12 @@
 export default {
   data () {
     return {
-      key: '0',
       txt: ''
+    }
+  },
+  methods: {
+    searchEssay () {
+      this.$router.push({ path: "/", query: { search: this.txt } })
     }
   }
 }

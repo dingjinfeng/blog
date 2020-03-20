@@ -1,16 +1,16 @@
 <template>
   <div class="cateManagement">
     <Button class="btn" type="dashed" @click="addCate">添加分类</Button>
-    <Scroll ref="scroll" :on-reach-bottom="!isFinish ? handleAddCate : stopAddCate" height="700">
+    <Scroll ref="scroll" :on-reach-bottom="!isFinish ? handleAddCate : stopAddCate" height="436">
       <div class="line" v-for="(cate, cateIndex) in cateList" :key="cateIndex">
-        <span>{{cate.name}}</span>
+        <span class="catename">{{cate.name}}</span>
         <div>
           <Button class="btn" size="small" type="primary" @click="changeShow(1, cate.id)">添加博文</Button>
           <Button class="btn" size="small"  type="primary" @click="changeShow(2, cate.id)">删除博文</Button>
           <Button class="btn" size="small" type="primary" @click="deleteCate(cate.id, cateIndex)">删除标签</Button>
         </div>
       </div>
-      <Divider v-if="isFinish" :dashed="true">已经到底了</Divider>
+      <Divider v-if="isFinish" size="small" class="fs10" :dashed="true">已经到底了</Divider>
     </Scroll>
     <div>
       <Drawer :title="isShow === 1?'添加博文':'删除博文'" :closable="true" :scrollable="true" :value="!!isShow" @on-close="initEssayData">
@@ -181,6 +181,10 @@ export default {
 .cateManagement .line span:first-child {
   display: inline-block;
   width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .cateManagement .line {
   display: flex;
@@ -188,5 +192,11 @@ export default {
 }
 .cateManagement .btn {
   margin-left: 10px;
+}
+.ivu-scroll-wrapper {
+  width: 100% !important;
+}
+.fs10{
+  font-size: 10px;
 }
 </style>

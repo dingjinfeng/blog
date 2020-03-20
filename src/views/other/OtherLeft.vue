@@ -26,6 +26,7 @@
                 </div>
               </MenuItem>
               <Button v-if="!isEnd" type="dashed" size="small" @click="getCates(user.id)">展开更多标签</Button>
+              <Divider v-if="isEnd" size="small" class="fs10" dashed>已经到底了</Divider>
           </Submenu>
       </Menu>
     </div>
@@ -55,6 +56,9 @@ export default {
   },
   created () {
     var userId = parseInt(this.$route.query.userId)
+    if (this.$route.query.cateId) {
+      this.cateId = parseInt(this.$route.query.cateId)
+    }
     this.getUser(userId)
     this.getCates(userId)
     this.getLetter(userId)
@@ -93,7 +97,7 @@ export default {
       this.$store.dispatch("attention/deleteAttention", attention_param)
     },
     goCateEssayList (cateId) {
-      this.$router.replace({ path: "/otheruser/essayList", query: { userId: this.user.id, cateId } })
+      this.$router.replace({ path: "/otheruser/essaylist", query: { userId: this.user.id, cateId } })
     },
     getUser (userId) {
       var user_params = {
@@ -137,7 +141,8 @@ export default {
         userId1: this.userInfo.id,
         userId2: userId,
         success: (letter) => {
-          this.letterType = 1
+          this.$store.commit("user/setUserInfo", letter.user)
+          this.$router.push("/social/letter")
         }
       }
       this.$store.dispatch("letter/addLetter", letter_param)
@@ -149,6 +154,9 @@ export default {
 }
 </script>
 <style scoped>
+.fs10{
+  font-size: 10px;
+}
 .otherLeft{
   display: flex;
   flex-direction: column;
@@ -161,6 +169,9 @@ export default {
   margin-right:20px;
 }
 .otherLeft .leftTop .line{
+  text-align: center;
+}
+.otherLeft .leftBottom{
   text-align: center;
 }
 </style>

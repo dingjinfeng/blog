@@ -6,10 +6,10 @@
           {{essay.title}}
         </div>
         <div class="date mgr20">
-          时间:{{essay.createtime}}
+          {{essay.createtime}}
         </div>
         <div class="goodnum mgr20">
-          点赞数:5
+          点赞数:{{up.up}}
         </div>
         <div class="checkStatus" v-if="essayListFrom === 1">
           <div v-if="essay.flag == 0">审核中</div>
@@ -17,9 +17,14 @@
           <div v-if="essay.flag == -1">{{essay.checkmsg}}</div>
         </div>
         <div v-if="essayListFrom === 1" class="rightAlign">
-          <Button size="small" type="dashed" @click="showEssay(userId, essay.id)">查看文章</Button>
-          <Button size="small" type="dashed" @click="editEssay(essay.id)">编辑文章</Button>
-          <Button size="small" type="dashed" @click="deleteEssay(essay.id, index)">删除文章</Button>
+          <Dropdown>
+            <Button type="dashed">文章操作</Button>
+            <DropdownMenu slot="list">
+              <DropdownItem @click.native="showEssay(userId, essay.id)">查看文章</DropdownItem>
+              <DropdownItem @click.native="editEssay(essay.id)">编辑文章</DropdownItem>
+              <DropdownItem @click.native="deleteEssay(essay.id)">删除文章</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </div>
       </div>
       <div class="line content">
@@ -30,10 +35,25 @@
 </template>
 <script>
 export default {
+  data () {
+    return {
+      up: {}
+    }
+  },
   props: ['essay', 'userId', 'essayListFrom'],
   created () {
+    this.getUps()
   },
   methods: {
+    getUps () {
+      var up_param = {
+        essayId: this.essay.id,
+        success: (up) => {
+          this.up = up
+        }
+      }
+      this.$store.dispatch("essay/getUps", up_param)
+    },
     editEssay (essayId) {
       // this.$store.dispatch("essay/getEssayByEssayId", {
       //   essayId,
@@ -49,9 +69,10 @@ export default {
       this.$router.push({ path: "/otheruser/essaydetail", query: { userId, essayId } })
     },
     deleteEssay (essayId) {
-      this.$store.dispatch("essay/deleteessay", {
+      this.$store.dispatch("essay/deleteEssay", {
         essayId,
-        success: res => {
+        success: () => {
+          this.$router.go(0)
         }
       })
     }
@@ -83,6 +104,10 @@ export default {
 }
 #essayBriefInfo .title{
   font-size:20px;
+  width: 164px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 #essayBriefInfo .content{
   font-size: 14px;

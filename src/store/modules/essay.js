@@ -39,6 +39,7 @@ const actions = {
       var data = response.data
       if (data.flag) {
         ViewUI.Message.success(data.info)
+        param.success(data.res)
       } else {
         ViewUI.Message.error(data.info)
       }
@@ -48,8 +49,28 @@ const actions = {
     essayApi.deleteEssay(param).then(function (response) {
       var data = response.data
       if (data.flag) {
-        commit("deleteOneEssayItem", param.essayId)
         param.success(data.info)
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
+  },
+  editEssay ({ commit, state }, param) {
+    essayApi.editEssay(param).then(function (response) {
+      var data = response.data
+      if (data.flag) {
+        ViewUI.Message.success(data.info)
+        param.success()
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
+  },
+  getUps ({ commit, state }, param) {
+    essayApi.getUps(param).then(function (response) {
+      var data = response.data
+      if (data.flag) {
+        param.success(data.res)
       } else {
         ViewUI.Message.error(data.info)
       }
@@ -94,6 +115,28 @@ const actions = {
       if (data.flag) {
         data = data.res
         param.success()
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
+  },
+  updateUp ({ commit, state }, param) {
+    essayApi.updateUp(param).then(function (response) {
+      var data = response.data
+      if (data.flag) {
+        data = data.res
+        param.success(data)
+      } else {
+        ViewUI.Message.error(data.info)
+      }
+    })
+  },
+  getUpOrDown ({ commit, state }, param) {
+    essayApi.getUpOrDown(param).then(function (response) {
+      var data = response.data
+      if (data.flag) {
+        data = data.res
+        param.success(data)
       } else {
         ViewUI.Message.error(data.info)
       }

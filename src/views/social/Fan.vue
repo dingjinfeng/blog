@@ -1,12 +1,13 @@
 <template>
   <div class="fan">
     <div class="fanList">
-      <div class="item" v-for="(item, index) in fanList" :key="index">{{item}}
+      <div class="item" v-for="(item, index) in fanList" :key="index">
         <div class="line">
           <avatar :imgId="item.imgid"/>
         </div>
-        <div class="line">username</div>
+        <div class="line">{{item.username}}</div>
       </div>
+      <Divider type="vertical" dashed />
     </div>
   </div>
 </template>
@@ -28,13 +29,14 @@ export default {
     })
   },
   created () {
-
+    this.getFans()
   },
   methods: {
     getFans () {
       var fan_param = {
         userId: this.userInfo.id,
         success: (list) => {
+          console.log(list)
           this.fanList = list
         }
       }

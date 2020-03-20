@@ -45,8 +45,10 @@
                         :on-error="uploadError"
                         :before-upload="uploadBefore"
                         :on-success="uploadSuccess"
+                        :on-exceeded-size="exceededSize"
                         :max-size="1024"
-                        name="upload">
+                        name="upload"
+                        :show-upload-list="false">
                       <Button icon="ios-cloud-upload-outline">上传图片</Button>
                     </Upload>
                   </div>
@@ -56,8 +58,8 @@
                 </FormItem>
                 <FormItem label="性别" prop="sex">
                     <RadioGroup v-model="formEdit.sex">
-                        <Radio :label="1" border>男</Radio>
-                        <Radio :label="2" border>女</Radio>
+                        <Radio label="1" border>男</Radio>
+                        <Radio label="2" border>女</Radio>
                     </RadioGroup>
                 </FormItem>
                 <FormItem label="个性签名" prop="intro">
@@ -148,6 +150,9 @@ export default {
     })
   },
   methods: {
+    exceededSize () {
+      this.$Notice.error({ title: '头像上传超过最大尺寸1MB' })
+    },
     editSubmit (name) {
       console.log(this.formEdit)
       this.$refs[name].validate((valid) => {

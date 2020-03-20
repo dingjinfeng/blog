@@ -25,7 +25,7 @@ export default {
     return {
       formLogin: {
         mail: '1306104920@qq.com',
-        password: '123456789'
+        password: '12345678'
       },
       ruleLogin: {
         mail: [

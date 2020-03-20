@@ -1,20 +1,20 @@
 <template>
   <div id="user">
     <Dropdown trigger="click">
-      <avatar :imgId="userInfo.imgid"/>
       <Button type="primary">
-          <span>个人中心【{{userInfo.username}}】</span>
+          <span class="mr5 ml5">{{userInfo.username}}</span>
+          <span>个人中心</span>
           <Icon type="ios-arrow-down"></Icon>
       </Button>
       <DropdownMenu slot="list">
-          <div @click="goUser('1')"><DropdownItem>增加博文</DropdownItem></div>
+          <div @click="goUser('1')"><DropdownItem>添加博文</DropdownItem></div>
           <div @click="goUser('2')"><DropdownItem>博客管理</DropdownItem></div>
           <div @click="goUser('3')"><DropdownItem>标签管理</DropdownItem></div>
           <div @click="goUser('4')"><DropdownItem>个人资料</DropdownItem></div>
           <div ><DropdownItem>活跃值:{{userInfo.point}}</DropdownItem></div>
-          <div @click="userExit()"><DropdownItem>退出</DropdownItem></div>
       </DropdownMenu>
     </Dropdown>
+    <avatar :imgId="userInfo.imgid"/>
   </div>
 </template>
 <script>
@@ -22,6 +22,12 @@ import { mapState } from 'vuex'
 import avatar from '@/components/utils/Avatar'
 
 export default {
+  data () {
+    return {
+      socket: "",
+      path: "ws://192.168.2.101:8080/getUserNums/" + this.$store.state.user.userInfo.id
+    }
+  },
   components: {
     avatar
   },
@@ -70,5 +76,11 @@ export default {
 #User .ivu-dropdown-menu,
 #User .ivu-dropdown-menu a{
   text-align: center
+}
+.mr5{
+  margin-right: 5px;
+}
+.ml5{
+  margin-left: 5px;
 }
 </style>

@@ -5,7 +5,8 @@ export default {
       page: param.page,
       flag: param.flag,
       userId: param.userId,
-      cateId: param.cateId
+      cateId: param.cateId,
+      search: param.search
     })
   },
   getEssay (param) {
@@ -38,7 +39,7 @@ export default {
     })
   },
   deleteEssay (param) {
-    return axios.post('/user/deleteEssay', {
+    return axios.post('/user/deleteEssayByEssayId', {
       essayId: param.essayId
     })
   },
@@ -60,6 +61,32 @@ export default {
     return axios.post("/user/deleteEssayCate", {
       cateId: param.cateId,
       essayId: param.essayId
+    })
+  },
+  editEssay (param) {
+    return axios.post("/user/editEssay", {
+      essayId: param.essayId,
+      title: param.title,
+      msg: param.msg,
+      htmlmsg: param.htmlmsg
+    })
+  },
+  getUps (param) {
+    return axios.post("/user/getUps", {
+      essayId: param.essayId
+    })
+  },
+  updateUp (param) {
+    return axios.post("/user/updateUp", {
+      essayId: param.essayId,
+      flag: param.flag,
+      userId: param.userId
+    })
+  },
+  getUpOrDown (param) {
+    return axios.post("/user/getUpOrDown", {
+      essayId: param.essayId,
+      userId: param.userId
     })
   }
 }
