@@ -85,7 +85,7 @@ export default {
     return {
       // 从state中获取
       socket: "",
-      path: "ws://192.168.2.101:8080/startLetter/" + this.$store.state.user.userInfo.id,
+      path: process.env.VUE_APP_WS + "/startLetter/" + this.$store.state.user.userInfo.id,
       isLetterFinish: !1,
       isLetterMsgFinish: !1,
       isShowDrawer: !1,
