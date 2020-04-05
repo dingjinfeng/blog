@@ -16,11 +16,15 @@ const actions = {
   getFans ({ commit, state }, param) {
     fanApi.getFans(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success(data)
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success(data)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   }

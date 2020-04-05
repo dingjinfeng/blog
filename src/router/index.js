@@ -8,16 +8,6 @@ const routes = [
     component: () => import('@/views/essay/EssayList')
   },
   {
-    path: '/essay',
-    component: () => import('@/views/essay/EssayIndex'),
-    children: [
-      {
-        path: 'detail',
-        component: () => import('@/views/essay/EssayDetail')
-      }
-    ]
-  },
-  {
     path: '/logincenter',
     component: () => import('@/views/loginCenter/LoginServe'),
     children: [
@@ -37,23 +27,28 @@ const routes = [
     children: [
       {
         path: 'userinfo',
-        component: () => import('@/views/user/UserInfo')
+        component: () => import('@/views/user/UserInfo'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'addessay',
-        component: () => import('@/views/user/AddEssay')
+        component: () => import('@/views/user/AddEssay'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'blogmanagement',
-        component: () => import('@/views/essay/EssayList')
+        component: () => import('@/views/essay/EssayList'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'catemanagement',
-        component: () => import('@/views/user/CateManagement')
+        component: () => import('@/views/user/CateManagement'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'editessay',
-        component: () => import('@/views/essay/EditEssay')
+        component: () => import('@/views/essay/EditEssay'),
+        meta: { requiresAuth: true }
       }
     ]
   },
@@ -77,23 +72,28 @@ const routes = [
     children: [
       {
         path: 'comment',
-        component: () => import('@/views/social/Comment')
+        component: () => import('@/views/social/Comment'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'reply',
-        component: () => import('@/views/social/Reply')
+        component: () => import('@/views/social/Reply'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'attention',
-        component: () => import('@/views/social/Attention')
+        component: () => import('@/views/social/Attention'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'fan',
-        component: () => import('@/views/social/Fan')
+        component: () => import('@/views/social/Fan'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'letter',
-        component: () => import('@/views/social/Letter')
+        component: () => import('@/views/social/Letter'),
+        meta: { requiresAuth: true }
       }
     ]
   },

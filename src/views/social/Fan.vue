@@ -1,13 +1,18 @@
 <template>
   <div class="fan">
     <div class="fanList">
-      <div class="item" v-for="(item, index) in fanList" :key="index">
-        <div class="line">
-          <avatar :imgId="item.imgid"/>
-        </div>
-        <div class="line">{{item.username}}</div>
+      <div v-if="fanList.length <= 0">
+        没有粉丝
       </div>
-      <Divider type="vertical" dashed />
+      <div v-else>
+        <div class="item" v-for="(item, index) in fanList" :key="index" @click="goUserIndex(item)">
+          <div class="line">
+            <avatar :imgId="item.imgid"/>
+          </div>
+          <div class="line">{{item.username}}</div>
+        </div>
+        <Divider type="vertical" dashed />
+      </div>
     </div>
   </div>
 </template>
@@ -29,18 +34,26 @@ export default {
     })
   },
   created () {
+    this.$store.commit("social/setLeftCurrent", 4)
     this.getFans()
   },
   methods: {
+    goUserIndex (user) {
+      this.$router.push({ path: "/otheruser/essaylist", query: { userId: user.id } })
+    },
     getFans () {
-      var fan_param = {
-        userId: this.userInfo.id,
-        success: (list) => {
-          console.log(list)
-          this.fanList = list
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var fan_param = {
+          userId: this.userInfo.id,
+          success: (list) => {
+            console.log(list)
+            this.fanList = list
+          }
         }
+        this.$store.dispatch("fan/getFans", fan_param)
       }
-      this.$store.dispatch("fan/getFans", fan_param)
     }
   }
 }

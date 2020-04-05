@@ -37,32 +37,44 @@ const actions = {
   addEssay ({ commit, state }, param) {
     essayApi.addEssay(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        ViewUI.Message.success(data.info)
-        param.success(data.res)
+      if (data.islogin) {
+        if (data.flag) {
+          ViewUI.Message.success(data.info)
+          param.success(data.res)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
   deleteEssay ({ commit, state }, param) {
     essayApi.deleteEssay(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        param.success(data.info)
+      if (data.islogin) {
+        if (data.flag) {
+          param.success(data.info)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
   editEssay ({ commit, state }, param) {
     essayApi.editEssay(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        ViewUI.Message.success(data.info)
-        param.success()
+      if (data.islogin) {
+        if (data.flag) {
+          ViewUI.Message.success(data.info)
+          param.success()
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
@@ -101,44 +113,60 @@ const actions = {
   addEssayCate ({ commit, state }, param) {
     essayApi.addEssayCate(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success()
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success()
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
   deleteEssayCate ({ commit, state }, param) {
     essayApi.deleteEssayCate(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success()
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success()
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
   updateUp ({ commit, state }, param) {
     essayApi.updateUp(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success(data)
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success(data)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
   getUpOrDown ({ commit, state }, param) {
     essayApi.getUpOrDown(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success(data)
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success(data)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   }

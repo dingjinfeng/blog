@@ -34,7 +34,13 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex"
 export default {
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
+  },
   data () {
     return {
       up: {}
@@ -69,12 +75,16 @@ export default {
       this.$router.push({ path: "/otheruser/essaydetail", query: { userId, essayId } })
     },
     deleteEssay (essayId) {
-      this.$store.dispatch("essay/deleteEssay", {
-        essayId,
-        success: () => {
-          this.$router.go(0)
-        }
-      })
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        this.$store.dispatch("essay/deleteEssay", {
+          essayId,
+          success: () => {
+            this.$router.go(0)
+          }
+        })
+      }
     }
   }
 }

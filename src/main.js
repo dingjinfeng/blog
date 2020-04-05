@@ -5,13 +5,30 @@ import router from './router'
 import store from './store'
 import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
+import { sstorage } from '@/store/storage'
 
 Vue.use(ViewUI)
 Vue.config.productionTip = false
 Vue.mixin({
   methods
 })
-console.dir(process.env)
+var userInfo = JSON.parse(sstorage.getItem('user')) || {}
+store.commit('user/setUserInfo', userInfo)
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    console.log(store.state.user.userInfo)
+    if (!store.state.user.userInfo.id) {
+      console.log("当前没有用户登录")
+      next({
+        path: '/logincenter/login'
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // 确保一定要调用 next()
+  }
+})
 new Vue({
   router,
   store,

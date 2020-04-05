@@ -24,5 +24,11 @@ export default {
     return axios.post("/user/deleteComment", {
       commentId: param.commentId
     })
+  },
+  getCommentWithoutCheck (param) {
+    return axios.post("/admin/getComments", {
+      flag: param.flag,
+      page: param.page
+    })
   }
 }

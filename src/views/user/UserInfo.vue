@@ -27,10 +27,10 @@
                     <span>个性签名:</span>
                     <span>{{userInfo.intro}}</span>
                 </div>
-            </div>
-            <div class="right">
-                <Button type="primary" class="btn" @click="type = 2">修改个人资料</Button>
-                <Button type="primary" @click="type = 3">修改密码</Button>
+                <div class="right">
+                  <Button type="primary" class="btn" @click="type = 2">修改个人资料</Button>
+                  <Button type="primary" @click="type = 3" class="setPwdBtn">修改密码</Button>
+                </div>
             </div>
         </div>
         <!-- 修改用户信息 -->
@@ -154,51 +154,63 @@ export default {
       this.$Notice.error({ title: '头像上传超过最大尺寸1MB' })
     },
     editSubmit (name) {
-      console.log(this.formEdit)
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$store.commit("switchLoading", !0)
-          this.$store.dispatch("user/updateUser", {
-            id: this.userInfo.id,
-            imgid: this.formEdit.imgid,
-            sex: this.formEdit.sex,
-            username: this.formEdit.username,
-            intro: this.formEdit.intro,
-            success: (userInfo) => {
-              this.$store.commit("user/setUserInfo", userInfo)
-              this.$router.go(0)
-            }
-          })
-          this.$Message.success('Success!')
-        } else {
-          this.$Message.error('Fail!')
-        }
-      })
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            this.$store.commit("switchLoading", !0)
+            this.$store.dispatch("user/updateUser", {
+              id: this.userInfo.id,
+              imgid: this.formEdit.imgid,
+              sex: this.formEdit.sex,
+              username: this.formEdit.username,
+              intro: this.formEdit.intro,
+              success: (userInfo) => {
+                this.$store.commit("user/setUserInfo", userInfo)
+                this.$router.go(0)
+              }
+            })
+            this.$Message.success('Success!')
+          } else {
+            this.$Message.error('Fail!')
+          }
+        })
+      }
     },
     editReset (name) {
       this.$refs[name].resetFields()
     },
     setPwdSubmit (name) {
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$store.dispatch("user/setPassword", {
-            userId: this.userInfo.id,
-            oldPassword: this.formSetPwd.oldPassword,
-            newPassword: this.formSetPwd.newPassword,
-            success: () => {
-              this.$Message.success("修改成功")
-              this.$router.go(0)
-            }
-          })
-        } else {
-          this.$Message.error('Fail!')
-        }
-      })
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            this.$store.dispatch("user/setPassword", {
+              userId: this.userInfo.id,
+              oldPassword: this.formSetPwd.oldPassword,
+              newPassword: this.formSetPwd.newPassword,
+              success: () => {
+                this.$Message.success("修改成功")
+                this.$router.go(0)
+              }
+            })
+          } else {
+            this.$Message.error('Fail!')
+          }
+        })
+      }
     },
     setPwdReset (name) {
       this.$refs[name].resetFields()
     },
     uploadBefore (aa) {
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+        return false
+      }
+      return true
     },
     uploadError () {
       this.$Notice.error({ title: '头像上传错误' })
@@ -223,12 +235,8 @@ export default {
     justify-content: center;
 }
 .userInfoWrap .right{
-    display: flex;
-    flex-wrap: wrap-reverse;
-    margin-left:15px;
-}
-.userInfoWrap .right .btn{
-    margin-right: 15px;
+  margin-top: 34px;
+  margin-left: 40px;
 }
 .userInfoWrap .line{
     margin-top:10px;
@@ -258,5 +266,8 @@ export default {
   margin-left: 10px;
   flex-shrink: 1;
   flex-shrink: 1;
+}
+.setPwdBtn{
+  margin-left:90px;
 }
 </style>

@@ -30,7 +30,7 @@ export default {
   data () {
     return {
       socket: "",
-      path: process.env.VUE_APP_WS + "/getUserNums/" + this.$store.state.user.userInfo.id,
+      path: process.env.VUE_APP_WS + "/getHeaderNums?userid=" + this.$store.state.user.userInfo.id,
       noRead: 0
     }
   },

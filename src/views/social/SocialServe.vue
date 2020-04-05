@@ -1,6 +1,6 @@
 <template>
     <div class="socialServeWrap">
-        <socialLeft class="left" :current="current"></socialLeft>
+        <socialLeft class="left"></socialLeft>
         <div class="right">
           <router-view></router-view>
         </div>
@@ -9,19 +9,8 @@
 <script>
 import socialLeft from './SocialLeft'
 export default {
-  data () {
-    return {
-      current: 1
-    }
-  },
   components: {
     socialLeft
-  },
-  created () {
-    this.current = this.$route.query.current
-  },
-  beforeUpdate () {
-    this.current = this.$route.query.current
   }
 }
 </script>

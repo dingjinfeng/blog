@@ -12,6 +12,10 @@ export default {
       txt: ''
     }
   },
+  created () {
+    var query = this.$route.query.search
+    this.txt = query
+  },
   methods: {
     searchEssay () {
       this.$router.push({ path: "/", query: { search: this.txt } })

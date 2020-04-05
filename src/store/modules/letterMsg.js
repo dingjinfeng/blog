@@ -16,32 +16,44 @@ const actions = {
   switchFlag ({ commit, state }, param) {
     letterMsgApi.switchFlag(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        param.success()
+      if (data.islogin) {
+        if (data.flag) {
+          param.success()
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
   getLetterMsgList ({ commit, state }, param) {
     letterMsgApi.getLetterMsgList(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success(data)
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success(data)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
   addLetterMsg ({ commit, state }, param) {
     letterMsgApi.addLetterMsg(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success(data)
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success(data)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   }

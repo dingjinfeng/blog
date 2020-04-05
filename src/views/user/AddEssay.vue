@@ -14,8 +14,8 @@
         <FormItem :label-width = "70" label="博文内容">
         </FormItem>
         <editor v-model="formAddEssay.contentObj"></editor>
-        <FormItem>
-            <Button type="primary" @click="handleSubmit('formAddEssay')">提交博文</Button>
+        <FormItem class="subBtnWrap">
+            <Button class="subBtn" type="primary" @click="handleSubmit('formAddEssay')">提交博文</Button>
         </FormItem>
     </Form>
   </div>
@@ -25,7 +25,9 @@ import { mapState } from "vuex"
 import editor from "@/components/editor/Editor"
 export default {
   created () {
-    this.getCates()
+    if (this.userInfo.id) {
+      this.getCates()
+    }
     this.$store.commit("user/setLeftCurrent", 1)
     this.$store.commit("switchLoading", !1)
   },
@@ -94,5 +96,11 @@ export default {
 .addEssay .input{
     width: 296px;
     margin-left: 15px;
+}
+.subBtnWrap{
+  text-align: center;
+}
+.subBtnWrap .subBtn{
+  margin-top: 28px;
 }
 </style>

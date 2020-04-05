@@ -16,44 +16,60 @@ const actions = {
   getAttentions ({ commit, state }, param) {
     attentionApi.getAttentions(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success(data)
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success(data)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
   getAttention ({ commit, state }, param) {
     attentionApi.getAttention(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success(data)
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success(data)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
   addAttention ({ commit, state }, param) {
     attentionApi.addAttention(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success(data)
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success(data)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
   deleteAttention ({ commit, state }, param) {
     attentionApi.deleteAttention(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success(data)
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success(data)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   }

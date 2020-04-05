@@ -26,8 +26,7 @@ import { mapState } from 'vuex'
 export default {
   computed: {
     ...mapState({
-      leftCurrent: state => state.user.leftCurrent,
-      userInfo: state => state.user.userInfo
+      leftCurrent: state => state.user.leftCurrent
     })
   },
   methods: {

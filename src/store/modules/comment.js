@@ -26,33 +26,45 @@ const actions = {
   getCommentsByUserId ({ commit, state }, param) {
     commentApi.getCommentsByUserId(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success(data.list)
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success(data.list)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
   addComments ({ commit, state }, param) {
     commentApi.addComments(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success(data)
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success(data)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   },
   deleteComment ({ commit, state }, param) {
     commentApi.deleteComment(param).then(function (response) {
       var data = response.data
-      if (data.flag) {
-        data = data.res
-        param.success(data)
+      if (data.islogin) {
+        if (data.flag) {
+          data = data.res
+          param.success(data)
+        } else {
+          ViewUI.Message.error(data.info)
+        }
       } else {
-        ViewUI.Message.error(data.info)
+        param.fail()
       }
     })
   }

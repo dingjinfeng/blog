@@ -42,25 +42,31 @@ const actions = {
     )
   },
   setPassword ({ commit, state }, param) {
-    userApi.setPassword(param).then(
-      (response) => {
-        var data = response.data
+    userApi.setPassword(param).then((response) => {
+      var data = response.data
+      if (data.islogin) {
         if (data.flag) {
           param.success()
         } else {
           ViewUI.Message.error(data.info)
         }
+      } else {
+        param.fail()
       }
-    )
+    })
   },
   updateUser ({ commit, state }, param) {
     userApi.updateUser(param).then(
       (response) => {
         var data = response.data
-        if (data.flag) {
-          param.success(data.res)
+        if (data.islogin) {
+          if (data.flag) {
+            param.success(data.res)
+          } else {
+            ViewUI.Message.error(data.info)
+          }
         } else {
-          ViewUI.Message.error(data.info)
+          param.fail()
         }
       }
     )

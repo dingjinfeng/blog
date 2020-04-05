@@ -88,5 +88,11 @@ export default {
       essayId: param.essayId,
       userId: param.userId
     })
+  },
+  getEssaysWithoutCheck (param) {
+    return axios.post("/admin/getEssays", {
+      page: param.page,
+      flag: param.flag
+    })
   }
 }

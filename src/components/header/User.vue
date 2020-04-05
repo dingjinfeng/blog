@@ -11,7 +11,7 @@
           <div @click="goUser('2')"><DropdownItem>博客管理</DropdownItem></div>
           <div @click="goUser('3')"><DropdownItem>标签管理</DropdownItem></div>
           <div @click="goUser('4')"><DropdownItem>个人资料</DropdownItem></div>
-          <div ><DropdownItem>活跃值:{{userInfo.point}}</DropdownItem></div>
+          <div ><DropdownItem>活跃值:<span class="fc">{{userInfo.point}}</span></DropdownItem></div>
       </DropdownMenu>
     </Dropdown>
     <avatar :imgId="userInfo.imgid"/>
@@ -25,11 +25,16 @@ export default {
   data () {
     return {
       socket: "",
-      path: "ws://192.168.2.101:8080/getUserNums/" + this.$store.state.user.userInfo.id
+      path: process.env.VUE_APP_WS + "/loginCheck?userid=" + this.$store.state.user.userInfo.id
     }
   },
   components: {
     avatar
+  },
+  created () {
+    if (this.userInfo.id) {
+      this.initWebSocket()
+    }
   },
   computed: {
     ...mapState({
@@ -37,6 +42,49 @@ export default {
     })
   },
   methods: {
+    initWebSocket () {
+      if (typeof (WebSocket) === "undefined") {
+        this.$Notice.info({
+          title: "浏览器版本过低",
+          desc: "当前浏览器不支持WebSocket,请更换支持WebSocket的浏览器"
+        })
+      } else {
+        // 实例化socket
+        this.socket = new WebSocket(this.path)
+        // 监听socket连接
+        this.socket.onopen = this.open
+        // 监听socket错误信息
+        this.socket.onerror = this.error
+        this.socket.onclose = this.close
+        // 监听socket消息
+        this.socket.onmessage = this.getMessage
+      }
+    },
+    close () {
+      console.log("User close")
+    },
+    open () {
+      console.log("User onopen")
+    },
+    error () {
+    },
+    getMessage (msg) {
+      console.log("User getMessage")
+      var _this = this
+      var loginCheck = JSON.parse(msg.data)
+      console.log(loginCheck)
+      if (!loginCheck.login) {
+        this.$Notice.warning({
+          title: "登录异常",
+          desc: loginCheck.info,
+          duration: 3,
+          onClose: () => {
+            _this.$store.commit("user/setUserInfo", {})
+            _this.$router.go(0)
+          }
+        })
+      }
+    },
     goUser (current) {
       let path = ''
       switch (current) {
@@ -56,18 +104,6 @@ export default {
           path = 'addessay'
       }
       this.$router.push({ path: `/user/${path}` })
-    },
-    userExit () {
-      this.$store.commit("user/reset")
-      this.$store.commit("essay/reset")
-      this.$store.dispatch("user/getEssayList", {
-        page: 1,
-        flag: 1,
-        userId: 0,
-        success: () => {
-          this.$route.push({ path: "/" })
-        }
-      })
     }
   }
 }
@@ -82,5 +118,8 @@ export default {
 }
 .ml5{
   margin-left: 5px;
+}
+.fc{
+  color: #57a3f3;
 }
 </style>

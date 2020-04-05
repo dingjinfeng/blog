@@ -1,6 +1,9 @@
 <template>
   <div :class="{essayList:!0, isWidthShow: !isWidth}">
-    <div :class="{ essayListWrapper: !0, scrollFinish: isFinish, noAvatar: essayListFrom }">
+    <div v-if="essayList.length <= 0">
+      当前没有文章显示
+    </div>
+    <div v-else :class="{ essayListWrapper: !0, scrollFinish: isFinish, noAvatar: essayListFrom }">
       <Scroll ref="scroll" :on-reach-bottom="!isFinish ? handleAddEssay : stopAddEssay" height="700">
         <div v-for="(item, index) in essayList" :key="index">
           <div :class="{item: !0, isPaddingShow: !isWidth}">
@@ -8,7 +11,7 @@
               <div>
                 <avatar :imgId="item.user.imgid"/>
               </div>
-              <div>{{ item.user.username }}{{ index }}</div>
+              <div>{{ item.user.username }}</div>
             </div>
             <div class="right">
               <essayBriefInfo :essay="item.essay" :userId="item.user.id" :essayListFrom="essayListFrom"></essayBriefInfo>
@@ -24,7 +27,13 @@
 <script>
 import essayBriefInfo from "@/components/essay/EssayBriefInfo"
 import avatar from "@/components/utils/Avatar"
+import { mapState } from "vuex"
 export default {
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
+  },
   data () {
     return {
       isFinish: !1,
@@ -42,7 +51,6 @@ export default {
     }
   },
   created () {
-    console.log(this.$route)
     var essay_param = {}
     if (this.$route.query.userId) {
       essay_param.userId = parseInt(this.$route.query.userId)
@@ -99,12 +107,16 @@ export default {
           }
           break
         case "/user/blogmanagement":
-          this.essayListFrom = 1
-          this.flag = [-1, 0, 1]
-          this.isWidth = 1
-          this.search = ""
-          this.userId = this.$store.state.user.userInfo.id
-          this.$store.commit("user/setLeftCurrent", 2)
+          if (!this.userInfo.id) {
+            this.$router.push("/")
+          } else {
+            this.essayListFrom = 1
+            this.flag = [-1, 0, 1]
+            this.isWidth = 1
+            this.search = ""
+            this.userId = this.$store.state.user.userInfo.id
+            this.$store.commit("user/setLeftCurrent", 2)
+          }
           break
         case "/otheruser/essaylist":
           this.essayListFrom = 2
@@ -120,7 +132,6 @@ export default {
           this.flag = [1]
           this.isWidth = 0
       }
-      console.log(this)
     },
     // isMore 是否上拉加载更多
     // getEssayByPage (isMore, done) {

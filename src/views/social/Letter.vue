@@ -1,6 +1,9 @@
 <template>
   <div id="letter">
-    <div :class="{ scrollFinish: isLetterFinish, userListWrap: !0 }">
+    <div v-if="letterList.length <= 0">
+      当前没有私信用户
+    </div>
+    <div v-else :class="{ scrollFinish: isLetterFinish, userListWrap: !0 }">
       <Scroll :on-reach-bottom="!isLetterFinish ? bottomAddLetter : stopAddLetter" height="600">
         <div class="userList">
           <div class="item" v-for="(item, index) in letterList" :key="index">
@@ -85,7 +88,8 @@ export default {
     return {
       // 从state中获取
       socket: "",
-      path: process.env.VUE_APP_WS + "/startLetter/" + this.$store.state.user.userInfo.id,
+      path: process.env.VUE_APP_WS + "/sendLetterMsg?userid=" + this.$store.state.user.userInfo.id,
+      letterPath: "",
       isLetterFinish: !1,
       isLetterMsgFinish: !1,
       isShowDrawer: !1,
@@ -97,7 +101,8 @@ export default {
       current_letter: {},
       formSend: {
         msg: ""
-      }
+      },
+      letterSocket: []
     }
   },
   computed: {
@@ -113,23 +118,32 @@ export default {
     this.$store.commit("social/setLeftCurrent", 5)
     this.getLetterList()
   },
+  destroyed () {
+    this.letterSocket.map(item => {
+      item.socket.close()
+    })
+  },
   methods: {
     initWebSocket () {
-      if (typeof (WebSocket) === "undefined") {
-        this.$Notice.info({
-          title: "浏览器版本过低",
-          desc: "当前浏览器不支持WebSocket,请更换支持WebSocket的浏览器"
-        })
+      if (!this.userInfo.id) {
+        this.$router.push("/")
       } else {
-        // 实例化socket
-        this.socket = new WebSocket(this.path)
-        // 监听socket连接
-        this.socket.onopen = this.open
-        // 监听socket错误信息
-        this.socket.onerror = this.error
-        this.socket.onclose = this.close
-        // 监听socket消息
-        this.socket.onmessage = this.getMessage
+        if (typeof (WebSocket) === "undefined") {
+          this.$Notice.info({
+            title: "浏览器版本过低",
+            desc: "当前浏览器不支持WebSocket,请更换支持WebSocket的浏览器"
+          })
+        } else {
+          // 实例化socket
+          this.socket = new WebSocket(this.path)
+          // 监听socket连接
+          this.socket.onopen = this.open
+          // 监听socket错误信息
+          this.socket.onerror = this.error
+          this.socket.onclose = this.close
+          // 监听socket消息
+          this.socket.onmessage = this.getMessage
+        }
       }
     },
     close () {
@@ -154,12 +168,19 @@ export default {
       }
       this.letterMsgList.unshift(letterMsg)
       this.letterList[this.current_letter_index].latestLetterMsg = letterMsg
-      this.$refs['letterItem' + (this.letterMsgList.length - 1)][0].scrollIntoView(false)
+      this.$nextTick(function () {
+        this.$refs['letterItem' + (this.letterMsgList.length - 1)][0].scrollIntoView(false)
+      })
     },
     deleteLetter (letterId) {
       var letter_param = {
         letterId,
         success: () => {
+          this.letterSocket.map(item => {
+            if (letterId === item.letterId) {
+              item.socket.close()
+            }
+          })
           this.$Message.success("删除成功")
           this.$router.go(0)
         }
@@ -199,31 +220,82 @@ export default {
       this.formSend.msg = ""
       this.socket.close()
     },
-    getLetterList () {
-      var letter_param = {
-        userId: this.userInfo.id,
-        page: ++this.letterPage,
-        success: (letter) => {
-          if (letter.list.length < 10) {
-            this.isLetterFinish = !0
+    letterOpen () {
+    },
+    letterClose () {
+      console.log("letterClose......")
+    },
+    letterMessage (msg) {
+      console.log(msg)
+      msg = JSON.parse(msg.data)
+      console.log(msg)
+      this.letterList.map(item => {
+        console.log(item.letter.id, msg.letterId, item.letter.id === msg.letterId)
+        if (item.letter.id === msg.letterId) {
+          item.noRead = msg.nums
+          if (msg.latestLetterMsg) {
+            item.latestLetterMsg = msg.latestLetterMsg
           }
-          this.letterList = this.letterList.concat(letter.list)
         }
+        return item
+      })
+    },
+    letterError () {
+    },
+    getLetterList () {
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var letter_param = {
+          userId: this.userInfo.id,
+          page: ++this.letterPage,
+          success: (letter) => {
+            if (typeof (WebSocket) === "undefined") {
+              this.$Notice.info({
+                title: "浏览器版本过低",
+                desc: "当前浏览器不支持WebSocket,请更换支持WebSocket的浏览器"
+              })
+            } else {
+              letter.list.map(item => {
+              // 实例化socket
+                var letterPath = process.env.VUE_APP_WS + "/getLetterMsgNums?letterid=" + item.letter.id + "&userid=" + this.$store.state.user.userInfo.id
+                var socket = new WebSocket(letterPath)
+                console.log(this)
+                this.letterSocket.unshift({ letterId: item.letter.id, socket })
+                // 监听socket连接
+                socket.onopen = this.letterOpen
+                // 监听socket错误信息
+                socket.onerror = this.letterError
+                socket.onclose = this.letterClose
+                // 监听socket消息
+                socket.onmessage = this.letterMessage
+              })
+            }
+            if (letter.list.length < 10) {
+              this.isLetterFinish = !0
+            }
+            this.letterList = this.letterList.concat(letter.list)
+          }
+        }
+        this.$store.dispatch("letter/getLetterList", letter_param)
       }
-      this.$store.dispatch("letter/getLetterList", letter_param)
     },
     getLetterMsgList (letterId) {
-      var letter_param = {
-        letterId,
-        page: ++this.letterMsgPage,
-        success: (letterMsgList) => {
-          if (letterMsgList.list.length < 10) {
-            this.isLetterMsgFinish = !0
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var letter_param = {
+          letterId,
+          page: ++this.letterMsgPage,
+          success: (letterMsgList) => {
+            if (letterMsgList.list.length < 10) {
+              this.isLetterMsgFinish = !0
+            }
+            this.letterMsgList = this.letterMsgList.concat(letterMsgList.list)
           }
-          this.letterMsgList = this.letterMsgList.concat(letterMsgList.list)
         }
+        this.$store.dispatch("letterMsg/getLetterMsgList", letter_param)
       }
-      this.$store.dispatch("letterMsg/getLetterMsgList", letter_param)
     },
     showLetterMsgList (current_letter, current_user, current_letter_index) {
       this.current_letter = current_letter
@@ -266,15 +338,19 @@ export default {
     addLetterMsg () {
       // 发送一条私信
       // 私信内容 前后去空格 str.replace(/(^\s*)|(\s*$)/g,"") 校验表单 发送的内容是否为空
-      var rep_msg = this.formSend.msg.replace(/(^\s*)|(\s*$)/g, "")
-      // 掉接口
-      var letterMsgParam = {
-        msg: rep_msg,
-        letterId: this.current_letter.id,
-        fromUserId: this.userInfo.id,
-        toUserId: this.current_user.id
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var rep_msg = this.formSend.msg.replace(/(^\s*)|(\s*$)/g, "")
+        // 掉接口
+        var letterMsgParam = {
+          msg: rep_msg,
+          letterId: this.current_letter.id,
+          fromUserId: this.userInfo.id,
+          toUserId: this.current_user.id
+        }
+        this.socket.send(JSON.stringify(letterMsgParam))
       }
-      this.socket.send(JSON.stringify(letterMsgParam))
       // 接口成功之后 this.letterList.push()
       // 滚动到最底部
       // this.$nextTick(()=>{

@@ -22,11 +22,9 @@
               </template>
               <MenuItem v-for="(cate,index) in cateList" :key="index" :name="cate.id">
                 <div @click="goCateEssayList(cate.id)">
-                  {{cate.id}}{{cate.name}}
+                  {{cate.name}}
                 </div>
               </MenuItem>
-              <Button v-if="!isEnd" type="dashed" size="small" @click="getCates(user.id)">展开更多标签</Button>
-              <Divider v-if="isEnd" size="small" class="fs10" dashed>已经到底了</Divider>
           </Submenu>
       </Menu>
     </div>
@@ -47,9 +45,7 @@ export default {
       user: {},
       type: 0,
       cateList: [],
-      catePage: 0,
       cateId: 0,
-      isEnd: 0,
       // 0表示未建立私信, 1 表示已建立私信
       letterType: 0
     }
@@ -61,91 +57,135 @@ export default {
     }
     this.getUser(userId)
     this.getCates(userId)
-    this.getLetter(userId)
+    if (this.userInfo.id) {
+      this.getLetter(userId)
+      this.getAttention(userId)
+    }
+  },
+  watch: {
+    $route (to, from) {
+      this.user = {}
+      this.type = 0
+      this.cateList = []
+      this.cateId = 0
+      this.letterType = 0
+      var userId = parseInt(to.query.userId)
+      if (to.query.cateId) {
+        this.cateId = parseInt(to.query.cateId)
+      }
+      this.getUser(userId)
+      this.getCates(userId)
+      if (this.userInfo.id) {
+        this.getLetter(userId)
+      }
+    }
   },
   methods: {
     getLetter (userId) {
-      var letter_param = {
-        userId1: this.userInfo.id,
-        userId2: userId,
-        success: (letter) => {
-          if (letter) {
-            this.letterType = 1
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var _this = this
+        var letter_param = {
+          userId1: _this.userInfo.id,
+          userId2: userId,
+          success: (letter) => {
+            if (letter) {
+              _this.letterType = 1
+            }
           }
         }
+        _this.$store.dispatch("letter/getLetter", letter_param)
       }
-      this.$store.dispatch("letter/getLetter", letter_param)
     },
     addAttention (userId) {
-      var attention_param = {
-        fromUserId: this.userInfo.id,
-        toUserId: userId,
-        success: () => {
-          this.type = 1
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var _this = this
+        var attention_param = {
+          fromUserId: _this.userInfo.id,
+          toUserId: userId,
+          success: () => {
+            _this.type = 1
+          }
         }
+        _this.$store.dispatch("attention/addAttention", attention_param)
       }
-      this.$store.dispatch("attention/addAttention", attention_param)
     },
     deleteAttention (userId) {
-      var attention_param = {
-        fromUserId: this.userInfo.id,
-        toUserId: userId,
-        success: () => {
-          this.type = 0
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var attention_param = {
+          fromUserId: this.userInfo.id,
+          toUserId: userId,
+          success: () => {
+            this.type = 0
+          }
         }
+        this.$store.dispatch("attention/deleteAttention", attention_param)
       }
-      this.$store.dispatch("attention/deleteAttention", attention_param)
     },
     goCateEssayList (cateId) {
       this.$router.replace({ path: "/otheruser/essaylist", query: { userId: this.user.id, cateId } })
     },
     getUser (userId) {
+      var _this = this
       var user_params = {
         userId,
         success: (res) => {
-          this.user = res
-          this.getAttention(this.user.id)
+          _this.user = res
+          if (_this.userInfo.id) {
+            _this.getAttention(this.user.id)
+          }
         }
       }
       this.$store.dispatch("user/getUserByUserId", user_params)
     },
     getAttention (userId) {
-      var attention_params = {
-        fromUserId: this.userInfo.id,
-        toUserId: userId,
-        success: (res) => {
-          if (res) {
-            this.type = 1
-          } else {
-            this.type = 0
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var _this = this
+        var attention_params = {
+          fromUserId: this.userInfo.id,
+          toUserId: userId,
+          success: (res) => {
+            if (res) {
+              _this.type = 1
+            } else {
+              _this.type = 0
+            }
           }
         }
+        this.$store.dispatch("attention/getAttention", attention_params)
       }
-      this.$store.dispatch("attention/getAttention", attention_params)
     },
     getCates (userId) {
+      var _this = this
       var cate_params = {
         userId,
-        page: ++this.catePage,
         success: (res) => {
-          if (res.length < 10) {
-            this.isEnd = 1
-          }
-          this.cateList = this.cateList.concat(res)
+          _this.cateList = _this.cateList.concat(res)
         }
       }
-      this.$store.dispatch("cate/getCates", cate_params)
+      _this.$store.dispatch("cate/getCates", cate_params)
     },
     addLetter (userId) {
-      var letter_param = {
-        userId1: this.userInfo.id,
-        userId2: userId,
-        success: (letter) => {
-          this.$store.commit("user/setUserInfo", letter.user)
-          this.$router.push("/social/letter")
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var letter_param = {
+          userId1: this.userInfo.id,
+          userId2: userId,
+          success: (letter) => {
+            this.$store.commit("user/setUserInfo", letter.user)
+            this.$router.push("/social/letter")
+          }
         }
+        this.$store.dispatch("letter/addLetter", letter_param)
       }
-      this.$store.dispatch("letter/addLetter", letter_param)
     }
   },
   components: {

@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-import { sstorage } from '@/store/storage'
+// import { sstorage } from '@/store/storage'
 import loading from '@/components/utils/Loading'
 import myheader from './views/nav/myheader'
 import { mapState } from "vuex"
@@ -25,17 +25,14 @@ import { mapState } from "vuex"
 export default {
   computed: {
     ...mapState({
-      loading: state => state.loading
+      loading: state => state.loading,
+      isLoginPage: state => state.isLoginPage
     })
   },
   components: {
     loading,
     myheader
     // avatar
-  },
-  created () {
-    var userInfo = JSON.parse(sstorage.getItem('user')) || {}
-    this.$store.commit('user/setUserInfo', userInfo)
   }
 }
 </script>
@@ -70,5 +67,8 @@ export default {
 }
 .scrollFinish .ivu-scroll-content{
   opacity: 1;
+}
+.fc{
+  color: #57a3f3;
 }
 </style>

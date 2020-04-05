@@ -2,9 +2,9 @@
 <div class="reply">
   <div>
     <span>({{reply.createtime}})</span>
-    <span class="mr10 ml10">{{fromUser.username}}</span>
+    <span class="fc mr10 ml10" @click="goOtherIndex(fromUser)">{{fromUser.username}}</span>
     <span>对</span>
-    <span class="mr10 ml10">{{toUser.username}}</span>
+    <span class="fc mr10 ml10" @click="goOtherIndex(toUser)">{{toUser.username}}</span>
     <span>回复了:</span>
     <div class="showReply">
       <Button type="dashed" size="small" shape="circle" @click="addReply">回复</Button>
@@ -30,6 +30,13 @@ export default {
       required: true
     }
   },
+  watch: {
+    reply (newVal) {
+      this.reply = newVal
+      this.getUser(newVal.fromUserId, 0)
+      this.getUser(newVal.toUserId, 1)
+    }
+  },
   created () {
     // 0表示from,1表示to
     this.getUser(this.reply.fromUserId, 0)
@@ -41,6 +48,9 @@ export default {
     })
   },
   methods: {
+    goOtherIndex (user) {
+      this.$router.push({ path: "/otheruser/essaylist", query: { userId: user.id } })
+    },
     getUser (userId, userIndex) {
       var user_params = {
         userId,
@@ -55,35 +65,40 @@ export default {
       this.$store.dispatch("user/getUserByUserId", user_params)
     },
     addReply () {
-      this.$Modal.confirm({
-        render: (h) => {
-          return h('Input', {
-            props: {
-              value: this.msg,
-              autofocus: true,
-              placeholder: '回复信息...'
-            },
-            on: {
-              input: (val) => {
-                this.msg = val
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        this.$Modal.confirm({
+          render: (h) => {
+            return h('Input', {
+              props: {
+                value: this.msg,
+                autofocus: true,
+                placeholder: '回复信息...'
+              },
+              on: {
+                input: (val) => {
+                  this.msg = val
+                }
+              }
+            })
+          },
+          onOk: () => {
+            var reply_param = {
+              commentsId: this.reply.commentsId,
+              fromUserId: this.userInfo.id,
+              toUserId: this.reply.fromUserId,
+              msg: this.msg,
+              success: (reply) => {
+                this.$emit("getReplyItem")
+                this.msg = ""
               }
             }
-          })
-        },
-        onOk: () => {
-          var reply_param = {
-            commentsId: this.reply.commentsId,
-            fromUserId: this.userInfo.id,
-            toUserId: this.reply.toUserId,
-            msg: this.msg,
-            success: (reply) => {
-              this.$emit("getReplyItem")
-              this.msg = ""
-            }
+            console.log(reply_param)
+            this.$store.dispatch("reply/addReply", reply_param)
           }
-          this.$store.dispatch("reply/addReply", reply_param)
-        }
-      })
+        })
+      }
     }
   }
 }
@@ -91,6 +106,9 @@ export default {
 <style scoped>
 .reply .showReply{
   display: inline-block;
+}
+.fc{
+  text-decoration: underline;
 }
 .mr10{
   margin-right: 10px;

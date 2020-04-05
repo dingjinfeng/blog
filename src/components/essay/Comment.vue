@@ -2,7 +2,7 @@
   <div class="comment">
     <div class="top">
       <span>({{comment.createtime}})</span>
-      <span class="mr10 ml10">{{user.username}}</span>
+      <span class="mr10 ml10 fc" @click="goOtherIndex(user)">{{user.username}}</span>
       <span>评论了:</span>
       <Button @click="addReply">回复</Button>
       <div v-if="replyList.length" class="showOrHide ml10">
@@ -63,6 +63,9 @@ export default {
     this.getReply()
   },
   methods: {
+    goOtherIndex (user) {
+      this.$router.push({ path: "/otheruser/essaylist", query: { userId: user.id } })
+    },
     getUser (userId) {
       var user_params = {
         userId,
@@ -82,35 +85,39 @@ export default {
       this.$store.dispatch("reply/getReplyByComment", comment_param)
     },
     addReply () {
-      this.$Modal.confirm({
-        render: (h) => {
-          return h('Input', {
-            props: {
-              value: this.msg,
-              autofocus: true,
-              placeholder: '回复信息...'
-            },
-            on: {
-              input: (val) => {
-                this.msg = val
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        this.$Modal.confirm({
+          render: (h) => {
+            return h('Input', {
+              props: {
+                value: this.msg,
+                autofocus: true,
+                placeholder: '回复信息...'
+              },
+              on: {
+                input: (val) => {
+                  this.msg = val
+                }
+              }
+            })
+          },
+          onOk: () => {
+            var reply_param = {
+              commentsId: this.comment.id,
+              fromUserId: this.userInfo.id,
+              toUserId: this.comment.userId,
+              msg: this.msg,
+              success: (reply) => {
+                this.getReply()
+                this.msg = ""
               }
             }
-          })
-        },
-        onOk: () => {
-          var reply_param = {
-            commentsId: this.comment.id,
-            fromUserId: this.userInfo.id,
-            toUserId: this.comment.userId,
-            msg: this.msg,
-            success: (reply) => {
-              this.getReply()
-              this.msg = ""
-            }
+            this.$store.dispatch("reply/addReply", reply_param)
           }
-          this.$store.dispatch("reply/addReply", reply_param)
-        }
-      })
+        })
+      }
     },
     getAddReplyItem () {
       this.getReply()
@@ -133,5 +140,8 @@ export default {
 }
 .mb10{
   margin-bottom: 10px;
+}
+.fc{
+  text-decoration: underline;
 }
 </style>

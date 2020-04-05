@@ -1,11 +1,14 @@
 <template>
   <div class="attention">
     <div class="attentionList">
-      <div class="item" v-for="(item, index) in attentionList" :key="index">
-        <div class="line">
+      <div v-if="attentionList.length <= 0">
+        当前没有关注
+      </div>
+      <div v-else class="item" v-for="(item, index) in attentionList" :key="index">
+        <div class="line" @click="goUserIndex(item)">
           <avatar :imgId="item.imgid"/>
         </div>
-        <div class="line">{{item.username}}</div>
+        <div class="line" @click="goUserIndex(item)">{{item.username}}</div>
         <div class="line">
           <Button size="small" type="dashed" @click="deleteAttention(item.id, index)">取消关注</Button>
         </div>
@@ -37,24 +40,35 @@ export default {
     avatar
   },
   methods: {
+    goUserIndex (user) {
+      this.$router.push({ path: "/otheruser/essaylist", query: { userId: user.id } })
+    },
     getAttention () {
-      var attention_param = {
-        userId: this.userInfo.id,
-        success: (list) => {
-          this.attentionList = this.attentionList.concat(list)
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var attention_param = {
+          userId: this.userInfo.id,
+          success: (list) => {
+            this.attentionList = this.attentionList.concat(list)
+          }
         }
+        this.$store.dispatch("attention/getAttentions", attention_param)
       }
-      this.$store.dispatch("attention/getAttentions", attention_param)
     },
     deleteAttention (userId, index) {
-      var attention_param = {
-        fromUserId: this.userInfo.id,
-        toUserId: userId,
-        success: () => {
-          this.$storer.go(0)
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var attention_param = {
+          fromUserId: this.userInfo.id,
+          toUserId: userId,
+          success: () => {
+            this.$storer.go(0)
+          }
         }
+        this.$store.dispatch("attention/deleteAttention", attention_param)
       }
-      this.$store.dispatch("attention/deleteAttention", attention_param)
     }
   }
 }

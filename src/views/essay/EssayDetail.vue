@@ -1,19 +1,20 @@
 <template>
   <div class="essayDetail">
     <div>
+      <div class="fs40 fc">{{essay.title}}</div>
       <span>{{essay.createtime}}</span>
-      <div class="fs40">{{essay.title}}</div>
     </div>
     <div>
       <span>作者:</span>
-      <span class="ml10">{{user.username}}</span></div>
+      <span class="ml10">{{user.username}}</span>
+    </div>
     <div>
-    <span class="mr10">标签:</span><Tag class="mr10" v-for="(cate, index) in cateListOfEssay" :key="index" type="border" color="success">{{cate.name}}</Tag>
+    <span class="mr10">标签:</span><Tag color="#57a3f3" class="mr10" v-for="(cate, index) in cateListOfEssay" :key="index" type="border">{{cate.name}}</Tag>
     </div>
     <div v-if="content.html">
       <editor v-model="content"></editor>
     </div>
-    <div>
+    <div v-if="essay.flag === 1">
       <div v-if="upOrDown === 1">
         <Icon type="ios-thumbs-up" size="24"/>({{up.up}})|<Icon type="ios-thumbs-down-outline" size="24" @click="updateUp(essay.id, -1)"/>({{up.down}})
       </div>
@@ -25,13 +26,13 @@
       </div>
     </div>
     <Divider />
-    <div>
+    <div v-if="essay.flag === 1">
       <Button type="primary" shape="circle" @click="addComments(essay.id)">发表评论</Button>
       <Divider />
       <div v-for="(item, index) in commentList" :key="index">
         <comment :comment="item"></comment>
       </div>
-      <Page :current="commentPage" :total="commentTotalCount" @on-change="getCommentsByEssayId" simple />
+      <Page v-if="commentTotalPage > 1" :current="commentPage" :total="commentTotalCount" @on-change="getCommentsByEssayId" simple />
     </div>
   </div>
 </template>
@@ -53,6 +54,7 @@ export default {
       upOrDown: 0,
       commentList: [],
       commentTotalCount: 0,
+      commentTotalPage: 0,
       commentPage: 1,
       cateListOfEssay: [],
       msg: '',
@@ -70,7 +72,9 @@ export default {
     var userId = parseInt(this.$route.query.userId)
     this.getUser(userId)
     this.getUps(essayId)
-    this.getUpOrDown(essayId, this.userInfo.id)
+    if (this.userInfo.id) {
+      this.getUpOrDown(essayId, this.userInfo.id)
+    }
     this.$store.commit("switchLoading", !1)
   },
   components: {
@@ -119,6 +123,7 @@ export default {
           this.commentTotalCount = pageMsg.totalCount
           this.commentPage = pageMsg.currentPage
           this.commentList = pageMsg.list
+          this.commentTotalPage = pageMsg.totalPage
         }
       }
       this.$store.dispatch("comment/getCommentsByEssayId", comments_param)
@@ -142,54 +147,62 @@ export default {
       this.$store.dispatch("cate/getCatesByEssay", cate_params)
     },
     addComments (essayId) {
-      this.$Modal.confirm({
-        render: (h) => {
-          return h('Input', {
-            props: {
-              value: "",
-              autofocus: true,
-              placeholder: '评论内容......'
-            },
-            on: {
-              input: (val) => {
-                this.msg = val
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        this.$Modal.confirm({
+          render: (h) => {
+            return h('Input', {
+              props: {
+                value: "",
+                autofocus: true,
+                placeholder: '评论内容......'
+              },
+              on: {
+                input: (val) => {
+                  this.msg = val
+                }
+              }
+            })
+          },
+          onOk: () => {
+            var comment_param = {
+              msg: this.msg,
+              userId: this.userInfo.id,
+              essayId,
+              success: (comment) => {
+                this.$store.commit("user/setUserInfo", comment.user)
+                this.msg = ""
+                this.getCommentsByEssayId(1)
               }
             }
-          })
-        },
-        onOk: () => {
-          var comment_param = {
-            msg: this.msg,
-            userId: this.userInfo.id,
-            essayId,
-            success: (comment) => {
-              this.$store.commit("user/setUserInfo", comment.user)
-              this.msg = ""
-              this.getCommentsByEssayId(1)
-            }
+            this.$store.dispatch("comment/addComments", comment_param)
           }
-          this.$store.dispatch("comment/addComments", comment_param)
-        }
-      })
+        })
+      }
     },
     updateUp (essayId, flag) {
-      var up_param = {
-        essayId,
-        flag,
-        userId: this.userInfo.id,
-        success: (up) => {
-          this.upOrDown = flag
-          this.up = up
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var up_param = {
+          essayId,
+          flag,
+          userId: this.userInfo.id,
+          success: (up) => {
+            this.upOrDown = flag
+            this.up = up
+          }
         }
+        this.$store.dispatch("essay/updateUp", up_param)
       }
-      this.$store.dispatch("essay/updateUp", up_param)
     }
   }
 }
 </script>
 <style scoped>
 .fs40{
-  font-size: 40px;
+  font-size: 34px;
 }
 .mr10{
   margin-right: 10px;

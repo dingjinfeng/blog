@@ -57,22 +57,26 @@ export default {
       this.$store.dispatch("essay/getEssayByEssayId", essay_param)
     },
     handleSubmit (name) {
-      var essay_param = {
-        essayId: this.essay.id,
-        title: this.formEditEssay.title,
-        msg: this.formEditEssay.contentObj.txt,
-        htmlmsg: this.formEditEssay.contentObj.html,
-        success: () => {
-          this.$router.go(-1)
+      if (!this.userInfo.id) {
+        this.$router.push("/")
+      } else {
+        var essay_param = {
+          essayId: this.essay.id,
+          title: this.formEditEssay.title,
+          msg: this.formEditEssay.contentObj.txt,
+          htmlmsg: this.formEditEssay.contentObj.html,
+          success: () => {
+            this.$router.go(-1)
+          }
         }
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            this.$store.dispatch("essay/editEssay", essay_param)
+          } else {
+            this.$Message.error('Fail!')
+          }
+        })
       }
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$store.dispatch("essay/editEssay", essay_param)
-        } else {
-          this.$Message.error('Fail!')
-        }
-      })
     }
   },
   computed: {
