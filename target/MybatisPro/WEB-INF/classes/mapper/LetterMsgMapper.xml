@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.LetterMsgDao">
+    <select id="getAllChatroomMsgByChatroomIdNum" resultType="int">
+        select count(*) from lettermsg where letterid=#{chatroomid} and msg like "%#{search}%";
+    </select>
+    <select id="getAllChatroomMsgByChatroomId" resultType="domain.LetterMsg">
+        select * from lettermsg where letterid=#{chatroomid} and msg like "%#{search}%" order by time desc limit #{start},#{size}
+    </select>
+    <insert id="addChatroomMsg">
+        insert into lettermsg (letterid,fromuserid,touserid,msg) values(#{lettermsg.chatroomid},#{lettermsg.fromuserid},#{lettermsg.touserid},#{lettermsg.msg})
+    </insert>
+    <delete id="deleteChatroomMsg">
+        delete from lettermsg where id=#{chatroommsgid}
+    </delete>
+</mapper>

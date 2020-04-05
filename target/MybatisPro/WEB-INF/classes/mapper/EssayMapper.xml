@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.EssayDao">
+    <select id="getAllEssays" resultType="domain.Essay">
+        select * from essay where title like "%#{search}%" order by createtime desc limit #{start},#{size}  ;
+    </select>
+    <select id="getAllEssaysNum" resultType="int">
+        select count(*) from essay where title like "%#{search}%"
+    </select>
+    <select id="getAllEssaysByUserIdNum" parameterType="int" resultType="int">
+        select count(*) from essay where userid=#{userid} and title like "%#{search}%"
+    </select>
+    <select id="getAllEssaysByUserId" resultType="domain.Essay">
+        select * from essay where userid=#{userid} and title like "%#{search}%" order by createtime desc limit #{start},#{size}
+    </select>
+    <select id="getAllEssaysByCateIdNum" resultType="int">
+        select count(*) from essaycate where cateid=#{cateid}
+    </select>
+    <select id="getAllEssaysByCateId" resultType="domain.Essay">
+        select e.* from essay as e,essaycate as ec where e.id=ec.essayid and cateid=#{cateid} order by e.createtime desc
+    </select>
+    <select id="getEssayByEssayId" resultType="domain.Essay">
+        select * from essay where id=#{essayid}
+    </select>
+    <select id="getUserByEssayId" resultType="domain.User">
+        select * from user where id in (select userid from essay where id=#{essayid});
+    </select>
+    <delete id="deleteEssay">
+        delete from essay where id=#{essayid}
+    </delete>
+    <update id="updateAllEssaysCateNumsByCateId">
+        update essay set catenums=catenums-1 where id in (select essayid from essaycate where cateid=#{cateid})
+    </update>
+    <select id="getAllNotEssaysByCateIdNum" resultType="int">
+        select count(*) from essay where (id not in (select essayid from essaycate where cateid=#{cateid})) or catenums=0
+    </select>
+    <select id="getAllNotEssaysByCateId" resultType="domain.Essay">
+        select count(*) from essay where id not in (select essayid from essaycate where cateid=#{cateid}) order by createtime desc
+    </select>
+    <select id="getAllEssaysByCateNumsNum" resultType="int">
+        select count(*) from essay where catenums=#{catenums}
+    </select>
+    <select id="getAllEssaysByCateNums" resultType="domain.Essay">
+        select * from essay where catenums=#{catenums} order by createtime desc limit #{start},#{size}
+    </select>
+    <update id="updateEssayFlag">
+        update essay set flag=#{flag} where id=#{essayid}
+    </update>
+    <update id="updateEssayFlagAndMsg">
+        update essay set flag=#{flag},msg=#{msg} where id=#{essayid}
+    </update>
+</mapper>

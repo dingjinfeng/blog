@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ReplyDao">
+    <select id="getAllReplyByUserIdNum" resultType="int">
+        select count(*) from reply where fromuserid=#{userid} and msg like "%#{search}%";
+    </select>
+    <select id="getAllReplyByUserId" resultType="domain.Reply">
+        select * from reply where fromuserid=#{userid} and msg like "%#{search}%" order by stime desc limit #{start},#{size} ;
+    </select>
+    <select id="getAllReplyByCommentIdNum" resultType="int">
+        select count(*) from reply where commentid=#{commentid} order by stime;
+    </select>
+    <select id="getAllReplyByCommentId" resultType="domain.Reply">
+        select * from reply where commentid=#{commentid} order by stime limit #{start},#{size};
+    </select>
+    <delete id="deleteReply">
+        delete from reply where id=#{replyid}
+    </delete>
+</mapper>

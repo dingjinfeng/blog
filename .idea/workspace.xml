@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="MybatisPro:war exploded" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f4659eb9-fc24-426b-ac0c-c51086a41109" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeInsightSettings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MybatisPro.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Controller/AdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Interceptor/AdminInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Interceptor/AdminPublicInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Interceptor/UserInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Interceptor/UserPublicInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Listeners/SessionListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/WebSocket/WebSocketConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/WebSocket/admin/AdminLoginCheckWebSocketHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/WebSocket/user/HeaderMsgNumWebsocketHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/WebSocket/user/LetterMsgNumWebSocketHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/WebSocket/user/LetterMsgTransportWebSocketHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/WebSocket/user/UserLoginCheckWebSocketHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/WebSocketInterceptor/AdminLoginInterceptors.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/WebSocketInterceptor/UserLoginInterceptors.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/AdministratorDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/AttentionDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/CateDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/CommentsDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/CommentsHistoryDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/EssayCateDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/EssayDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/EssayHistoryDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/ImgDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/LetterDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/LetterMsgDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/PointDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/ReplyDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/UpDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/UserDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Administrator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Attention.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Cate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Collection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Comments.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/CommentsHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/CurrentAdmin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/CurrentUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Essay.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/EssayCate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/EssayHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Img.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Letter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/LetterMsg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/LetterNoRead.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/LoginCheck.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/PageBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Reply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/ResultInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/ReturnImg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/Up.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/domain/UserNoRead.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/AdministratorService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/AttentionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/CateService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/CommentsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/EssayCateService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/EssayService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/HistoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/ImgService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/LetterMsgService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/LetterService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/PointService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/ReplyService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/UpService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/AdministratorServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/AttentionServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/CateServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/CommentsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/EssayCateServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/EssayServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/HistoryServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/ImgServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/LetterMsgServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/LetterServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/PointServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/ReplyServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/UpServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/impl/UserSericeImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/CheckImage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/IpUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/MailUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/Md5Util.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/SessionData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/TransferJsonSerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/UuidUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/bean.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/AdministratorMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/AttentionMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/CateMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/CommentsHistory.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/CommentsMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/EssayCateMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/EssayHistory.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/EssayMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/ImgMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/LetterMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/LetterMsgMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/PointMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/ReplyMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/UpMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis-config.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/springmvc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap-grid.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap-grid.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap-grid.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap-grid.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap-reboot.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap-reboot.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap-reboot.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap-reboot.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/0.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/01DA913A15E24FD0AA79550935A5D7EC.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/0F6BB710A6124E75A920A35AE1C6D525" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/12C91A1712F642BD888534A549D656E8.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/1C1E8150119649598C8A2191491768ED.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/1F87ED81A7FF4A67B89EAA4EA1D6A7BD.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/2812F15D17A14552A4AA66AB97F2783A.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/2927D3D2AA984BF899FD565DBAFF376E.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/2942E5F369854684BDF14F918C7DE59B.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/29851A13E3944947AF5238371F5789BA.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/2A329BD17E8741B3B054B6FFEE2B3ADF.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/306D95F6849B4DFB8745FBE4E6067F5F.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/3201BA71194D4F8A8752B699515DA914.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/324C9455704F490898F235D6ED5917A5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/38D86B202E6643E59514D0BEA6183AA2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/41F650C65A0C40E8A0E66D14A0FAD284.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/46A1D5CF4AC44FE389E121A9B9863910.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/5014CE76026F449A91A58B64E5875FD2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/5638251428EE4C188CD2CC28F5F3C412.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/5C3B3B1F7C9D456FBCEB87A14DF9718F.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/6045BFE9EAA54A328E36644BAD82A03A.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/633CB3F26EBE424980F81303CE0FFDD4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/65EBCDF0ABF14CBD907C9C57CD391D2B.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/66A57564402F40B5A33CF3EC108655FC.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/6D31A78287FA461B9C73F6DC78D2AD95.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/70D682A8475148B6BE9418A96C24F0E3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/76D153EDC2D547DD85CCFB7BE2E38C5C.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/78172B00860849EEABEC0BBEF141240D.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/7B48A482B06F41D2B2BB83F943AF3CDB.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/800A6861CF204CD5A2C4F39C0724716C.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/89CF9580D22049BAA99D115FD91F6832.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/8E80D8989EEC4E32898420E68F49DA9E.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/950244FBEF20440CA71DD62B4621F405.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/9519779AF21F4B99AE2B6127F379DC62.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/959ABBB056FC4C15B27CCDE57CFA5D53.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/9641D98F71F64646B579712D12B3237A.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/982F1516D0CE4009810ACF2B23D8933B.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/A0707B36795D4621AD25DD8C8F714AED.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/A2E74F20EB434A67BFD023DC3C31597F.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/A6B95D3BB9EE4BCAA0B8C2DF7D3777B7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/AC78E9AEC9A843BDAC275D718F76E5A3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/B02733EA32074CB5A997E50F70939AB5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/B5B3A98D0B0F4BDE868CC8CA4EAA9971.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/B5CFECCE7F8C4854AC37F55189786328.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/C21C9CE9DF9E4046B1A1A7A3B32870E0.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/C3DD1AF870AD427D8DCF61CF1E6CE745.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/C41ADE14177949738821F0F80A98D690.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/C515861DC6E24B73AC450DA1256EB4B4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/C555F7126EAD41FE850EFF0AC3AF7194.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/CEC141F20F124DB19FFA57568D89A2A4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/D2BCBC0DF38941A8A56F96C7CA785B35.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/D614CD4E9F994F73B741F396C49E1EB2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/DCF8F0BD9C3F4FE2B5376EA309581174.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/E376512A002144CA95AA0EFAB65C3A09.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/E3EFBB12EAC7484A9527EFA13E91BC11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/E603489AC21A4C8E96E619B63B96DE69.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/EB44604FA64B473198C8C2E0AF774C9A.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/EF52B38A1C8145B5836396F4FA52DDC3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/F0333954AAF4496F816FCB02987BE173.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/F29DD463002E42D3B8FB3217429DD91D.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/F3930D739F7440BCAC87D1F7DA701CB6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/F71641E8FDAB457792B5D7827A664FC2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/F7D931A69C294CCF8E5DA76312AE6494.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/FD28F2606D634C2EA9193061A5FE0FCF.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/No.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/admin.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/default.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/js/vue.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro.war" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/Controller/AdminController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/Controller/UserController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/Interceptor/AdminInterceptor.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/Interceptor/UserInterceptor.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/META-INF/MybatisPro.kotlin_module" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/bean.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/dao/AdministratorDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/dao/AttentionDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/dao/CateDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/dao/CommentsDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/dao/EssayCateDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/dao/EssayDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/dao/ImgDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/dao/LetterDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/dao/LetterMsgDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/dao/ReplyDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/dao/UserDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/Administrator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/Attention.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/Cate.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/Collection.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/Comments.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/CurrentUser.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/Essay.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/EssayCate.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/Img.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/Letter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/LetterMsg.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/PageBean.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/Reply.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/ResultInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/ReturnImg.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/Up.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/domain/User.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/mapper/AdministratorMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/mapper/AttentionMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/mapper/CateMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/mapper/CommentsMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/mapper/EssayCateMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/mapper/EssayMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/mapper/ImgMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/mapper/LetterMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/mapper/LetterMsgMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/mapper/ReplyMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/mapper/UserMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/AdministratorService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/AttentionService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/CateService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/CommentsService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/EssayCateService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/EssayService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/ImgService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/LetterMsgService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/LetterService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/ReplyService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/UserService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/impl/AdministratorServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/impl/AttentionServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/impl/CateServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/impl/CommentsServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/impl/EssayCateServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/impl/EssayServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/impl/ImgServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/impl/LetterMsgServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/impl/LetterServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/impl/ReplyServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/service/impl/UserSericeImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/springmvc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/utils/CheckImage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/utils/MailUtils$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/utils/MailUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/utils/Md5Util.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/utils/TransferJsonSerializer$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/utils/TransferJsonSerializer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/classes/utils/UuidUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/activation-1.1.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/aspectjweaver-1.8.7.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/commons-fileupload-1.3.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/commons-io-2.4.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/commons-logging-1.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/druid-1.0.9.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/hamcrest-core-1.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/jackson-annotations-2.9.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/jackson-core-2.9.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/jackson-databind-2.9.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/javax.mail-1.6.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/javax.mail-api-1.6.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/junit-4.12.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/mybatis-3.4.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/mybatis-spring-1.3.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/mysql-connector-java-8.0.19.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/protobuf-java-3.6.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/reactive-streams-1.0.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/reactor-core-3.1.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/spring-aop-5.0.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/spring-beans-5.0.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/spring-context-5.0.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/spring-core-5.0.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/spring-expression-5.0.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/spring-jcl-5.0.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/spring-jdbc-5.0.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/spring-tx-5.0.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/spring-web-5.0.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/spring-webflux-5.0.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/spring-webmvc-5.0.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/lib/spring-websocket-5.0.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/css/bootstrap-grid.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/css/bootstrap-grid.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/css/bootstrap-grid.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/css/bootstrap-grid.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/css/bootstrap-reboot.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/css/bootstrap-reboot.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/css/bootstrap-reboot.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/css/bootstrap-reboot.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/css/bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/css/bootstrap.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/css/bootstrap.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/js/vue.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/MybatisPro/login.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Controller/AdminController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Controller/UserController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Interceptor/AdminInterceptor.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Interceptor/AdminPublicInterceptor.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Interceptor/UserInterceptor.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Interceptor/UserPublicInterceptor.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Listeners/SessionListener.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/MybatisPro.kotlin_module" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/WebSocket/WebSocketConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/WebSocket/admin/AdminLoginCheckWebSocketHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/WebSocket/user/HeaderMsgNumWebsocketHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/WebSocket/user/LetterMsgNumWebSocketHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/WebSocket/user/LetterMsgTransportWebSocketHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/WebSocket/user/UserLoginCheckWebSocketHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/WebSocketInterceptor/AdminLoginInterceptors.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/WebSocketInterceptor/UserLoginInterceptors.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/bean.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/AdministratorDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/AttentionDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/CateDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/CommentsDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/CommentsHistoryDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/EssayCateDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/EssayDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/EssayHistoryDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/ImgDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/LetterDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/LetterMsgDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/PointDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/ReplyDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/UpDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/dao/UserDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/Administrator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/Attention.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/Cate.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/Collection.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/Comments.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/CommentsHistory.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/CurrentAdmin.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/CurrentUser.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/Essay.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/EssayCate.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/EssayHistory.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/Img.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/Letter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/LetterMsg.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/LetterNoRead.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/LoginCheck.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/PageBean.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/Reply.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/ResultInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/ReturnImg.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/Up.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/User.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/domain/UserNoRead.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/AdministratorMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/AttentionMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/CateMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/CommentsHistory.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/CommentsMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/EssayCateMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/EssayHistory.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/EssayMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/ImgMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/LetterMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/LetterMsgMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/PointMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/ReplyMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/UpMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mapper/UserMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mybatis-config.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/AdministratorService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/AttentionService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/CateService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/CommentsService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/EssayCateService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/EssayService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/HistoryService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/ImgService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/LetterMsgService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/LetterService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/PointService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/ReplyService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/UpService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/UserService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/AdministratorServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/AttentionServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/CateServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/CommentsServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/EssayCateServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/EssayServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/HistoryServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/ImgServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/LetterMsgServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/LetterServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/PointServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/ReplyServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/UpServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/service/impl/UserSericeImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/springmvc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/utils/CheckImage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/utils/IpUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/utils/MailUtils$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/utils/MailUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/utils/Md5Util.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/utils/SessionData.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/utils/TransferJsonSerializer$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/utils/TransferJsonSerializer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/utils/UuidUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/conf/logging.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/conf/tomcat-users.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/conf/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-02-10" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-02-11" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-02-12" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-02-18" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-02-19" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-02-20" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-02-21" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-02-26" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-02-27" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-02-28" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-02-29" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-01" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-02" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-04" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-07" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-08" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-09" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-10" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-11" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-12" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-13" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-14" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-15" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-16" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-17" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-18" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-19" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-20" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-21" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-22" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-26" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-27" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-29" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-30" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-03-31" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-04-01" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-04-02" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-04-03" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-04-04" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2020-04-05" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/WEB_002dINF/pages/login_jsp.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/WEB_002dINF/pages/login_jsp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/hello_jsp.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/hello_jsp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/index_jsp.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/index_jsp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/login_jsp.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/login_jsp.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Tag Library Descriptor" />
+        <option value="HTML File" />
+        <option value="FxmlFile" />
+        <option value="spring-beans.schema" />
+        <option value="Jsp File" />
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$USER_HOME$/Downloads/maven" />
+        <option name="userSettingsFile" value="$USER_HOME$/Downloads/maven/conf/settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="vmOptions" value="-DartypeCatalog=internal" />
+  </component>
+  <component name="ProjectId" id="1XQJr4KfjtsLtkW31JWjSp7cZrf" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.55632186" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/mapper" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/WEB-INF" />
+      <recent name="$PROJECT_DIR$/src/main/webapp" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/mapper" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/images" />
+      <recent name="$PROJECT_DIR$/src/main/java/domain" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/webapp" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean" />
+      <command value="mvn tomcat7:stop" />
+      <command value="mvn tomcat7:shutdown" />
+      <command value="mvn deploy" />
+      <command value="mvn tomcat7:run" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Maven.MybatisPro [tomcat7:run]">
+    <configuration name="IpUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="utils.IpUtils" />
+      <module name="MybatisPro" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MybatisPro [tomcat7:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="tomcat7:run" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2">
+        <option name="MakeProject" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="tomcat7:run" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2">
+        <option name="MakeProject" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.IpUtils" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f4659eb9-fc24-426b-ac0c-c51086a41109" name="Default Changelist" comment="" />
+      <created>1580972579602</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1580972579602</updated>
+      <workItem from="1580972584507" duration="894000" />
+      <workItem from="1580973594217" duration="6009000" />
+      <workItem from="1580980840012" duration="3482000" />
+      <workItem from="1580986171923" duration="1123000" />
+      <workItem from="1580987314892" duration="8969000" />
+      <workItem from="1581042799591" duration="2940000" />
+      <workItem from="1581061411598" duration="26420000" />
+      <workItem from="1581165607492" duration="17982000" />
+      <workItem from="1581314406355" duration="2573000" />
+      <workItem from="1581320923250" duration="532000" />
+      <workItem from="1581321474919" duration="2844000" />
+      <workItem from="1581327391265" duration="44142000" />
+      <workItem from="1581518376430" duration="4432000" />
+      <workItem from="1581854338012" duration="1920000" />
+      <workItem from="1581985627971" duration="10150000" />
+      <workItem from="1582001424409" duration="21977000" />
+      <workItem from="1582089594354" duration="59449000" />
+      <workItem from="1582246604414" duration="1395000" />
+      <workItem from="1582248026826" duration="893000" />
+      <workItem from="1582252120386" duration="12513000" />
+      <workItem from="1582269640816" duration="12256000" />
+      <workItem from="1582427709281" duration="24088000" />
+      <workItem from="1582726829859" duration="54741000" />
+      <workItem from="1582941183194" duration="25985000" />
+      <workItem from="1583108815609" duration="5511000" />
+      <workItem from="1583236955723" duration="1109000" />
+      <workItem from="1583289012025" duration="3837000" />
+      <workItem from="1583556475152" duration="28913000" />
+      <workItem from="1583908636923" duration="49379000" />
+      <workItem from="1584183468268" duration="23119000" />
+      <workItem from="1584500197711" duration="14941000" />
+      <workItem from="1584582970181" duration="25522000" />
+      <workItem from="1584675128435" duration="8634000" />
+      <workItem from="1584756370976" duration="84120000" />
+      <workItem from="1585624583927" duration="23715000" />
+      <workItem from="1585804162631" duration="5277000" />
+      <workItem from="1585904034615" duration="32223000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="540" y="206" width="800" height="677" key="#Auto_Import" timestamp="1585918855420">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="540" y="206" width="800" height="677" key="#Auto_Import/49.27.1871.1053@49.27.1871.1053" timestamp="1585918855420" />
+    <state x="479" y="133" width="1000" height="905" key="#Intentions" timestamp="1585919187121">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="479" y="133" width="1000" height="905" key="#Intentions/49.27.1871.1053@49.27.1871.1053" timestamp="1585919187121" />
+    <state x="479" y="133" width="1000" height="839" key="#Notifications" timestamp="1584858164621">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="479" y="133" width="1000" height="839" key="#Notifications/49.27.1871.1053@49.27.1871.1053" timestamp="1584858164621" />
+    <state x="637" y="156" width="685" height="792" key="#Tomcat_8.5.50" timestamp="1582727829727">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="637" y="156" width="685" height="792" key="#Tomcat_8.5.50/49.27.1871.1053@49.27.1871.1053" timestamp="1582727829727" />
+    <state x="499" y="227" width="1133" height="777" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585289726895">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="499" y="227" width="1133" height="777" key="#com.intellij.execution.impl.EditConfigurationsDialog/49.27.1871.1053@49.27.1871.1053" timestamp="1585289726895" />
+    <state x="1094" y="411" width="826" height="626" key="#com.intellij.ide.util.MemberChooser" timestamp="1585922921992">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="1094" y="411" width="826" height="626" key="#com.intellij.ide.util.MemberChooser/49.27.1871.1053@49.27.1871.1053" timestamp="1585922921992" />
+    <state x="587" y="150" width="827" height="846" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1585705572566">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="587" y="150" width="827" height="846" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/49.27.1871.1053@49.27.1871.1053" timestamp="1585705572566" />
+    <state x="780" y="338" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1585208658249">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="780" y="338" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/49.27.1871.1053@49.27.1871.1053" timestamp="1585208658248" />
+    <state width="559" height="582" key="DebuggerActiveHint" timestamp="1585228020309">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="559" height="582" key="DebuggerActiveHint/49.27.1871.1053@49.27.1871.1053" timestamp="1585228020309" />
+    <state x="49" y="225" width="1671" height="855" key="DiffContextDialog" timestamp="1585298145546">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="49" y="225" width="1671" height="855" key="DiffContextDialog/49.27.1871.1053@49.27.1871.1053" timestamp="1585298145546" />
+    <state x="508" y="415" width="718" height="484" key="FileChooserDialogImpl" timestamp="1586100720585">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="508" y="415" width="718" height="484" key="FileChooserDialogImpl/49.27.1871.1053@49.27.1871.1053" timestamp="1586100720585" />
+    <state x="767" y="425" width="425" height="357" key="Github.ShareDialog" timestamp="1586100704164">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="767" y="425" width="425" height="357" key="Github.ShareDialog/49.27.1871.1053@49.27.1871.1053" timestamp="1586100704164" />
+    <state width="1871" height="389" key="GridCell.Tab.0.bottom" timestamp="1586100832279">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="1871" height="389" key="GridCell.Tab.0.bottom/49.27.1871.1053@49.27.1871.1053" timestamp="1586100832279" />
+    <state width="1871" height="389" key="GridCell.Tab.0.center" timestamp="1586100832278">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="1871" height="389" key="GridCell.Tab.0.center/49.27.1871.1053@49.27.1871.1053" timestamp="1586100832278" />
+    <state width="1871" height="389" key="GridCell.Tab.0.left" timestamp="1586100832277">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="1871" height="389" key="GridCell.Tab.0.left/49.27.1871.1053@49.27.1871.1053" timestamp="1586100832277" />
+    <state width="1871" height="389" key="GridCell.Tab.0.right" timestamp="1586100832279">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="1871" height="389" key="GridCell.Tab.0.right/49.27.1871.1053@49.27.1871.1053" timestamp="1586100832279" />
+    <state width="1871" height="348" key="GridCell.Tab.1.bottom" timestamp="1586005836824">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="1871" height="348" key="GridCell.Tab.1.bottom/49.27.1871.1053@49.27.1871.1053" timestamp="1586005836824" />
+    <state width="1871" height="348" key="GridCell.Tab.1.center" timestamp="1586005836822">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="1871" height="348" key="GridCell.Tab.1.center/49.27.1871.1053@49.27.1871.1053" timestamp="1586005836822" />
+    <state width="1871" height="348" key="GridCell.Tab.1.left" timestamp="1586005836822">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="1871" height="348" key="GridCell.Tab.1.left/49.27.1871.1053@49.27.1871.1053" timestamp="1586005836822" />
+    <state width="1871" height="348" key="GridCell.Tab.1.right" timestamp="1586005836823">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="1871" height="348" key="GridCell.Tab.1.right/49.27.1871.1053@49.27.1871.1053" timestamp="1586005836823" />
+    <state x="968" y="291" width="924" height="684" key="Maven.ArtifactSearchDialog" timestamp="1584549117361">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="968" y="291" width="924" height="684" key="Maven.ArtifactSearchDialog/49.27.1871.1053@49.27.1871.1053" timestamp="1584549117361" />
+    <state x="222" y="175" width="1400" height="905" key="SettingsEditor" timestamp="1586100785310">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="222" y="175" width="1400" height="905" key="SettingsEditor/49.27.1871.1053@49.27.1871.1053" timestamp="1586100785310" />
+    <state width="562" height="446" key="SwitcherDM" timestamp="1582106842477">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="562" height="446" key="SwitcherDM/49.27.1871.1053@49.27.1871.1053" timestamp="1582106842477" />
+    <state x="49" y="423" width="1861" height="612" key="com.intellij.javaee.MapExternalResourceDialog" timestamp="1581170408142">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="49" y="423" width="1861" height="612" key="com.intellij.javaee.MapExternalResourceDialog/49.27.1871.1053@49.27.1871.1053" timestamp="1581170408142" />
+    <state x="358" y="554" width="1381" height="1027" key="dock-window-1" timestamp="1585920822542">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="358" y="554" width="1381" height="1027" key="dock-window-1/49.27.1871.1053@49.27.1871.1053" timestamp="1585920822542" />
+    <state x="629" y="283" width="962" height="678" key="find.popup" timestamp="1584080989016">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="629" y="283" width="962" height="678" key="find.popup/49.27.1871.1053@49.27.1871.1053" timestamp="1584080989016" />
+    <state width="600" height="424" key="javadoc.popup" timestamp="1582247757357">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="600" height="424" key="javadoc.popup/49.27.1871.1053@49.27.1871.1053" timestamp="1582247757357" />
+    <state x="293" y="251" width="1372" height="603" key="new project wizard" timestamp="1583243461111">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="293" y="251" width="1372" height="603" key="new project wizard/49.27.1871.1053@49.27.1871.1053" timestamp="1583243461111" />
+    <state x="674" y="279" width="840" height="677" key="run.anything.popup" timestamp="1584873824948">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="674" y="279" width="840" height="677" key="run.anything.popup/49.27.1871.1053@49.27.1871.1053" timestamp="1584873824948" />
+    <state x="1130" y="380" width="672" height="678" key="search.everywhere.popup" timestamp="1583135889695">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="1130" y="380" width="672" height="678" key="search.everywhere.popup/49.27.1871.1053@49.27.1871.1053" timestamp="1583135889695" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Interceptor/AdminInterceptor.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Controller/AdminController.java</url>
+          <line>231</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Controller/AdminController.java</url>
+          <line>170</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/service/impl/HistoryServiceImpl.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Controller/AdminController.java</url>
+          <line>280</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
