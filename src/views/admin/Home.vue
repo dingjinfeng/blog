@@ -1,6 +1,12 @@
 <template>
   <div class="home">
-   待审核（当天24点默认审核通过）
+    <div>
+      <adminLeft></adminLeft>
+    </div>
+    <div class="right">
+      <router-view></router-view>
+    </div>
+   <!-- 待审核（当天24点默认审核通过）
       博文审核
                   博文列表        审核状态  审核中 审核成功 审核失败   描述信息
                   博文链接         -1/0/1
@@ -27,7 +33,24 @@
       平台所有用户
 
    设置
-    修改密码
-
+    修改密码 -->
   </div>
 </template>
+<script>
+import adminLeft from "@/components/admin/AdminLeft"
+export default {
+  components: {
+    adminLeft
+  }
+}
+</script>
+<style scoped>
+.home{
+  display: flex;
+}
+.right{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+</style>

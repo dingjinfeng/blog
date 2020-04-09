@@ -3,7 +3,7 @@ module.exports = {
     disableHostCheck: true,
     proxy: {
       '/api': {
-        target: 'http://192.168.2.101:8080',
+        target: process.env.VUE_APP_domain,
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

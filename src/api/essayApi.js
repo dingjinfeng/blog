@@ -1,17 +1,19 @@
 import axios from './networkAxios'
 export default {
-  getEssayList (param) {
-    return axios.post('/user/getEssayListByTime', {
-      page: param.page,
-      flag: param.flag,
-      userId: param.userId
+  getEssay (param) {
+    return axios.post('/user/getEssayByEssayId', {
+      essayId: param.essayId
     })
   },
-  getEssayListByUserId (param) {
-    return axios.post('/user/getEssaysByUserIdByTime', {
+  getEssaysWithoutCheck (param) {
+    return axios.post("/admin/getEssays", {
       page: param.page,
-      userId: param.userId,
-      flag: param.flag
+    })
+  },
+  getEssayHistorys (param) {
+    return axios.post("/admin/getEssayHistorys", {
+      page: param.page,
+      search: param.search
     })
   }
 }

@@ -5,20 +5,5 @@ export default {
     return axios.post('/user/getUserByUserId', {
       userId: param.userId
     })
-  },
-  setPassword (param) {
-    return axios.post('/user/setPassword', {
-      userId: param.userId,
-      oldPassword: param.oldPassword,
-      newPassword: param.newPassword
-    })
-  },
-  updateUser (param) {
-    return axios.post('/user/updateUser', {
-      id: param.id,
-      sex: param.sex,
-      username: param.username,
-      intro: param.intro
-    })
   }
 }

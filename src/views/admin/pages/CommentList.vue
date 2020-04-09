@@ -1,5 +1,5 @@
 <template>
-  <div class="mt20 ml20">
+  <div class="mt20 ml20 width100">
     <div v-if="!isEmptyList">
       <div v-for="(item, index) in commentList" :key="index">
         <comment :comment="item" :currentPage="currentPage" @flushComment="flushComment"></comment>
@@ -35,7 +35,7 @@ export default {
   },
   created () {
     this.$store.commit("admin/setLeftCurrent", "1-2")
-    this.getComments(this.currentPage)
+    this.getComments(1)
   },
   methods: {
     getComments (pageIndex) {
@@ -43,7 +43,7 @@ export default {
         this.$router.push("/")
       } else {
         var _this = this
-        var comment_param = {
+        var commentParam = {
           page: pageIndex,
           flag: 0,
           success: (commentList) => {
@@ -61,7 +61,7 @@ export default {
             _this.$router.push("/")
           }
         }
-        this.$store.dispatch("comment/getCommentWithoutCheck", comment_param)
+        this.$store.dispatch("comment/getCommentWithoutCheck", commentParam)
       }
     },
     getNextPage (pageIndex) {
@@ -90,5 +90,8 @@ export default {
 }
 .ml20{
   margin-left: 20px;
+}
+.width100{
+  width: 100%;
 }
 </style>

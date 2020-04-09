@@ -24,8 +24,14 @@ export default {
   watch: {
     "content_editor" (newValue) {
       this.content_editor = newValue
-      this.editor.txt.html(newValue.html)
-      this.editor.txt.text(newValue.txt)
+      this.initEditor()
+    }
+  },
+  methods: {
+    initEditor () {
+      this.editor.txt.text(this.content_editor.txt)
+      this.editor.txt.html(this.content_editor.html)
+      this.editor.$textElem.attr('contenteditable', !!this.content_editor.isEditable)
     }
   },
   mounted () {
@@ -170,8 +176,7 @@ export default {
       this.$emit("getContent", { txt, html })
     }
     editor.create()
-    editor.txt.html(this.content_editor.html)
-    editor.$textElem.attr('contenteditable', !!this.content_editor.isEditable)
+    this.initEditor()
   }
 }
 </script>

@@ -67,7 +67,7 @@ export default {
         this.$router.push("/")
       } else {
         var _this = this
-        var essay_param = {
+        var essayParam = {
           page: pageIndex,
           flag: 0,
           success: (essayList) => {
@@ -85,7 +85,7 @@ export default {
             _this.$router.push("/")
           }
         }
-        _this.$store.dispatch("essay/getEssaysWithoutCheck", essay_param)
+        _this.$store.dispatch("essay/getEssaysWithoutCheck", essayParam)
       }
     },
     getNextPage (pageIndex) {

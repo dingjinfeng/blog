@@ -21,7 +21,7 @@
           <div>
             <span class="mr10">标签:</span><Tag color="#57a3f3" class="mr10" v-for="(cate, index) in cateListOfEssay" :key="index" type="border">{{cate.name}}</Tag>
           </div>
-          <div>{{content}}
+          <div>
             <editor v-model="content"></editor>
           </div>
         </Modal>
@@ -73,13 +73,13 @@ export default {
     },
     getCatesOfEssay (essayId) {
       var _this = this
-      var cate_param = {
+      var cateParam = {
         essayId,
         success: (cateList) => {
           _this.cateListOfEssay = cateList
         }
       }
-      this.$store.dispatch("cate/getCatesByEssay", cate_param)
+      this.$store.dispatch("cate/getCatesByEssay", cateParam)
     }
   }
 }

@@ -54,7 +54,7 @@ export default {
       } else {
         var _this = this
         _this.$refs[name].validate((valid) => {
-          var admin_param = {
+          var adminParam = {
             adminId: _this.adminInfo.id,
             oldPassword: _this.formSetPwd.oldPassword,
             newPassword: _this.formSetPwd.newPassword,
@@ -67,7 +67,7 @@ export default {
             }
           }
           if (valid) {
-            this.$store.dispatch("admin/setPassword", admin_param)
+            this.$store.dispatch("admin/setPassword", adminParam)
           } else {
             _this.$Message.error('Fail!')
           }

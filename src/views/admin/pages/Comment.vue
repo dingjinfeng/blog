@@ -57,13 +57,13 @@ export default {
   },
   methods: {
     getUser (userId) {
-      var user_params = {
+      var userParam = {
         userId,
         success: (res) => {
           this.user = res
         }
       }
-      this.$store.dispatch("user/getUserByUserId", user_params)
+      this.$store.dispatch("user/getUserByUserId", userParam)
     },
     commentCheck (commentId, flag) {
       if (!this.adminInfo.id) {
@@ -75,7 +75,7 @@ export default {
             title: "当前评论内容 :" + _this.comment.msg,
             content: "你确定将当前评论设定为审核通过吗",
             onOk: () => {
-              var comment_param = {
+              var commentParam = {
                 commentId,
                 flag,
                 success: () => {
@@ -85,7 +85,7 @@ export default {
                   _this.$router.go(0)
                 }
               }
-              this.$store.dispatch("admin/setCommentFlag", comment_param)
+              this.$store.dispatch("admin/setCommentFlag", commentParam)
             }
           })
         } else if (flag === -1) {
@@ -109,7 +109,7 @@ export default {
             },
             onOk: () => {
               var _this = this
-              var comment_param = {
+              var commentParam = {
                 commentId,
                 flag,
                 checkmsg: this.failMsg,
@@ -120,7 +120,7 @@ export default {
                   _this.$router.go(0)
                 }
               }
-              this.$store.dispatch("admin/setCommentFlag", comment_param)
+              this.$store.dispatch("admin/setCommentFlag", commentParam)
             }
           })
         }

@@ -4,98 +4,48 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    component: () => import('@/views/essay/EssayList')
+    path: "/",
+    component: () => import("@/views/admin/Login")
   },
   {
-    path: '/essay',
-    component: () => import('@/views/essay/EssayIndex'),
+    path: "/home",
+    component: () => import("@/views/admin/Home"),
     children: [
       {
-        path: 'detail',
-        component: () => import('@/views/essay/EssayDetail')
+        path: "",
+        component: () => import("@/views/admin/pages/EssayList"),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: "essay",
+        component: () => import("@/views/admin/pages/EssayList"),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: "comment",
+        component: () => import("@/views/admin/pages/CommentList"),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: "essayhistory",
+        component: () => import("@/views/admin/pages/EssayHistoryList"),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: "commenthistory",
+        component: () => import("@/views/admin/pages/CommentHistoryList"),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: "setpassword",
+        component: () => import("@/views/admin/pages/SetPassword"),
+        meta: { requiresAuth: true }
       }
     ]
   },
   {
-    path: '/logincenter',
-    component: () => import('@/views/loginCenter/LoginServe'),
-    children: [
-      {
-        path: 'register',
-        component: () => import('@/views/loginCenter/Register')
-      },
-      {
-        path: 'login',
-        component: () => import('@/views/loginCenter/Login')
-      }
-    ]
-  },
-  {
-    path: '/user',
-    component: () => import('@/views/user/UserServe'),
-    children: [
-      {
-        path: 'userinfo',
-        component: () => import('@/views/user/UserInfo')
-      },
-      {
-        path: 'addessay',
-        component: () => import('@/views/user/AddEssay')
-      },
-      {
-        path: 'blogmanagement',
-        component: () => import('@/views/essay/EssayList')
-      },
-      {
-        path: 'catemanagement',
-        component: () => import('@/views/user/CateManagement')
-      }
-    ]
-  },
-  {
-    path: '/otheruser',
-    component: () => import('@/views/other/OtherServe'),
-    children: [
-      {
-        path: 'essayList',
-        component: () => import('@/views/essay/EssayList')
-      },
-      {
-        path: 'essaydetail',
-        component: () => import('@/views/essay/EssayDetail')
-      }
-    ]
-  },
-  {
-    path: '/social',
-    component: () => import('@/views/social/SocialServe'),
-    children: [
-      {
-        path: 'comment',
-        component: () => import('@/views/social/Comment')
-      },
-      {
-        path: 'reply',
-        component: () => import('@/views/social/Reply')
-      },
-      {
-        path: 'attention',
-        component: () => import('@/views/social/Attention')
-      },
-      {
-        path: 'fan',
-        component: () => import('@/views/social/Fan')
-      },
-      {
-        path: 'letter',
-        component: () => import('@/views/social/Letter')
-      }
-    ]
-  },
-  {
-    path: '/*',
-    component: () => import('@/views/error/404')
+    path: "/*",
+    component: () => import("@/views/error/404")
   }
 ]
 

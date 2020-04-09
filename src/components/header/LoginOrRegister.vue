@@ -1,7 +1,7 @@
 <template>
 <div>
   <div id="loginOrRegister">
-      <router-link :to="{path:'/logincenter/login'}">
+      <router-link :to="{path:'/'}">
         <Button type="primary" class="btn" ghost>登录</Button>
       </router-link>
       <router-link :to="{path:'/logincenter/register'}">

@@ -86,13 +86,13 @@ export default {
     },
     getCatesOfEssay (essayId) {
       var _this = this
-      var cate_param = {
+      var cateParam = {
         essayId,
         success: (cateList) => {
           _this.cateListOfEssay = cateList
         }
       }
-      this.$store.dispatch("cate/getCatesByEssay", cate_param)
+      this.$store.dispatch("cate/getCatesByEssay", cateParam)
     },
     essayCheck (essayId, flag) {
       if (!this.adminInfo.id) {
@@ -104,7 +104,7 @@ export default {
             title: "当前文章 :" + this.essay.title,
             content: "你确定将当前文章设定为审核通过吗",
             onOk: () => {
-              var essay_param = {
+              var essayParam = {
                 essayId,
                 flag,
                 success: () => {
@@ -114,7 +114,7 @@ export default {
                   _this.$router.go(0)
                 }
               }
-              this.$store.dispatch("admin/setEssayFlag", essay_param)
+              this.$store.dispatch("admin/setEssayFlag", essayParam)
             }
           })
         } else if (flag === -1) {
@@ -138,7 +138,7 @@ export default {
             },
             onOk: () => {
               var _this = this
-              var essay_param = {
+              var essayParam = {
                 essayId,
                 flag,
                 checkmsg: this.failMsg,
@@ -149,7 +149,7 @@ export default {
                   _this.$router.go(0)
                 }
               }
-              this.$store.dispatch("admin/setEssayFlag", essay_param)
+              this.$store.dispatch("admin/setEssayFlag", essayParam)
             }
           })
         }

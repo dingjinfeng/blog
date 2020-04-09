@@ -1,10 +1,7 @@
 <template>
   <div>
     <div id="loading" v-if="loading">
-      <loading></loading>
-    </div>
-    <div id="headerWrap">
-      <myheader></myheader>
+      <Loading></Loading>
     </div>
     <div id="contentWrap">
       <router-view></router-view>
@@ -15,9 +12,7 @@
   </div>
 </template>
 <script>
-import { sstorage } from '@/store/storage'
-import loading from '@/views/utils/loading'
-import myheader from './views/nav/myheader'
+import Loading from '@/components/utils/loading'
 import { mapState } from "vuex"
 
 export default {
@@ -27,13 +22,7 @@ export default {
     })
   },
   components: {
-    loading,
-    myheader
-  },
-  created () {
-    console.log('App---created')
-    var userInfo = JSON.parse(sstorage.getItem('user')) || {}
-    this.$store.commit('user/setUserInfo', userInfo)
+    Loading
   }
 }
 </script>

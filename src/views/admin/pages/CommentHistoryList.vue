@@ -50,7 +50,7 @@ export default {
         this.$router.push("/")
       } else {
         var _this = this
-        var comment_param = {
+        var commentParam = {
           page: pageIndex,
           search: _this.searchCommentsMsg,
           success: (commentHistoryList) => {
@@ -68,7 +68,7 @@ export default {
             _this.$router.push("/")
           }
         }
-        this.$store.dispatch("comment/getCommentHistorys", comment_param)
+        this.$store.dispatch("comment/getCommentHistorys", commentParam)
       }
     },
     getNextPage (pageIndex) {
