@@ -57,17 +57,21 @@ export default {
   },
   methods: {
     getCates () {
+      var _this = this
       var cate_param = {
-        userId: this.userInfo.id,
+        userId: _this.userInfo.id,
         success: (list) => {
-          this.cateList = this.cateList.concat(list)
+          _this.cateList = _this.cateList.concat(list)
+        },
+        fail: () => {
+          _this.$router.push("/logincenter/login")
         }
       }
-      this.$store.dispatch("cate/getCates", cate_param)
+      _this.$store.dispatch("cate/getCates", cate_param)
     },
     changeShow (isShow, cate) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
         var _this = this
         // 1表示查询所有具备该标签的文章,2 表示查询所有不具备该标签的文章
@@ -91,35 +95,43 @@ export default {
     },
     addEssayCate (essayId, cateId, essayIndex) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
-        this.$store.dispatch("essay/addEssayCate", {
+        var _this = this
+        _this.$store.dispatch("essay/addEssayCate", {
           cateId,
           essayId,
           success: () => {
-            this.essayList.splice(essayIndex, 1)
-            this.$store.commit("switchLoading", !1)
+            _this.essayList.splice(essayIndex, 1)
+            _this.$store.commit("switchLoading", !1)
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         })
       }
     },
     deleteEssayCate (essayId, cateId, essayIndex) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
-        this.$store.dispatch("essay/deleteEssayCate", {
+        var _this = this
+        _this.$store.dispatch("essay/deleteEssayCate", {
           cateId,
           essayId,
           success: () => {
-            this.essayList.splice(essayIndex, 1)
-            this.$store.commit("switchLoading", !1)
+            _this.essayList.splice(essayIndex, 1)
+            _this.$store.commit("switchLoading", !1)
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         })
       }
     },
     addCate () {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
         this.$Modal.confirm({
           render: (h) => {
@@ -136,11 +148,15 @@ export default {
             })
           },
           onOk: () => {
-            this.$store.dispatch("cate/addCate", {
-              name: this.cate_name,
-              userId: this.userInfo.id,
+            var _this = this
+            _this.$store.dispatch("cate/addCate", {
+              name: _this.cate_name,
+              userId: _this.userInfo.id,
               success: (cate) => {
-                this.$router.go(0)
+                _this.$router.go(0)
+              },
+              fail: () => {
+                _this.$router.push("/logincenter/login")
               }
             })
           },
@@ -155,17 +171,21 @@ export default {
       this.isShow = 0
       this.current_cate = {}
     },
-    deleteCate (cateId, cateIndex) {
+    deleteCate (cate, cateIndex) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         var cate_param = {
-          cateId,
+          cateId: cate.id,
           success: () => {
-            this.$router.go(0)
+            _this.cateList.splice(cateIndex, 1)
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
-        this.$store.dispatch("cate/deleteCate", cate_param)
+        _this.$store.dispatch("cate/deleteCate", cate_param)
       }
     }
   }

@@ -108,7 +108,7 @@ export default {
           break
         case "/user/blogmanagement":
           if (!this.userInfo.id) {
-            this.$router.push("/")
+            this.$router.push("/logincenter/login")
           } else {
             this.essayListFrom = 1
             this.flag = [-1, 0, 1]
@@ -158,7 +158,7 @@ export default {
     },
     stopAddEssay () {},
     goOtherUser (userId) {
-      this.$store.dispatch("user/getOtherUser", {
+      this.$store.dispatch("user/getUserByUserId", {
         userId,
         success: res => {
           this.$router.push({

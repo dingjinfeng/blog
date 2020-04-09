@@ -90,6 +90,9 @@ export default {
           if (up) {
             this.upOrDown = up.flag
           }
+        },
+        fail: () => {
+          this.$router.push("/logincenter/login")
         }
       }
       this.$store.dispatch("essay/getUpOrDown", up_param)
@@ -148,8 +151,9 @@ export default {
     },
     addComments (essayId) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         this.$Modal.confirm({
           render: (h) => {
             return h('Input', {
@@ -166,35 +170,46 @@ export default {
             })
           },
           onOk: () => {
-            var comment_param = {
-              msg: this.msg,
-              userId: this.userInfo.id,
-              essayId,
-              success: (comment) => {
-                this.$store.commit("user/setUserInfo", comment.user)
-                this.msg = ""
-                this.getCommentsByEssayId(1)
+            if (_this.msg.length > 0 && _this.msg.length <= 50) {
+              var comment_param = {
+                msg: _this.msg,
+                userId: _this.userInfo.id,
+                essayId,
+                success: (comment) => {
+                  _this.$store.commit("user/setUserInfo", comment.user)
+                  _this.msg = ""
+                  _this.getCommentsByEssayId(1)
+                },
+                fail: () => {
+                  _this.$router.push("/logincenter/login")
+                }
               }
+              _this.$store.dispatch("comment/addComments", comment_param)
+            } else {
+              _this.$Message.error("信息长度在1-50位")
             }
-            this.$store.dispatch("comment/addComments", comment_param)
           }
         })
       }
     },
     updateUp (essayId, flag) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
-        var up_param = {
+        var _this = this
+        var upParam = {
           essayId,
           flag,
           userId: this.userInfo.id,
           success: (up) => {
-            this.upOrDown = flag
-            this.up = up
+            _this.upOrDown = flag
+            _this.up = up
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
-        this.$store.dispatch("essay/updateUp", up_param)
+        _this.$store.dispatch("essay/updateUp", upParam)
       }
     }
   }

@@ -16,9 +16,7 @@ var userInfo = JSON.parse(sstorage.getItem('user')) || {}
 store.commit('user/setUserInfo', userInfo)
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    console.log(store.state.user.userInfo)
     if (!store.state.user.userInfo.id) {
-      console.log("当前没有用户登录")
       next({
         path: '/logincenter/login'
       })

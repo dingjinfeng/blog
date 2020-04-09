@@ -44,11 +44,11 @@
                 <div :class="{ right:!0, rightLetterMsg:userInfo.id === item.fromUserId }">
                   <div class="top ml10 mr10">
                     {{item.createtime}}
-                    <span v-if="userInfo.id === item.toUserId && !!item.flag">
+                    <span v-if="userInfo.id === item.toUserId && item.flag === 1">
                       <Icon type="ios-checkmark" size="30"/>
                       已读
                     </span>
-                    <Checkbox v-if="userInfo.id === item.toUserId && !item.flag" v-model="item.flag" @on-change="flag => setLetterMsgFlag(flag, item, index)">未读</Checkbox>
+                    <Checkbox v-if="userInfo.id === item.toUserId && item.flag === 0" @on-change="flag => setLetterMsgFlag(flag, item, index)">未读</Checkbox>
                   </div>
                   <div class="bottom msg mr10 ml10">{{item.msg}}</div>
                 </div>
@@ -126,7 +126,7 @@ export default {
   methods: {
     initWebSocket () {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
         if (typeof (WebSocket) === "undefined") {
           this.$Notice.info({
@@ -156,23 +156,24 @@ export default {
     },
     getMessage (msg) {
       var letterMsg = JSON.parse(msg.data)
-      if (letterMsg.toUserId === this.userInfo.id) {
-        this.letterList[this.current_letter_index].noRead++
-      }
-      // success: (letterMsg) => {
-      if (this.letterMsgList.length % 10 === 0 && this.letterMsgList.length > 0) {
-        this.isLetterMsgFinish = 0
-        this.letterMsgList.pop()
+      if (!letterMsg.isSend) {
+        this.$Message.error(letterMsg.res)
       } else {
-        this.isLetterMsgFinish = 1
+        if (this.letterMsgList.length % 10 === 0 && this.letterMsgList.length > 0) {
+          this.isLetterMsgFinish = 0
+          this.letterMsgList.pop()
+        } else {
+          this.isLetterMsgFinish = 1
+        }
+        this.letterMsgList.unshift(letterMsg.res)
+        this.letterList[this.current_letter_index].latestLetterMsg = letterMsg
+        this.$nextTick(function () {
+          this.$refs['letterItem' + (this.letterMsgList.length - 1)][0].scrollIntoView(false)
+        })
       }
-      this.letterMsgList.unshift(letterMsg)
-      this.letterList[this.current_letter_index].latestLetterMsg = letterMsg
-      this.$nextTick(function () {
-        this.$refs['letterItem' + (this.letterMsgList.length - 1)][0].scrollIntoView(false)
-      })
     },
     deleteLetter (letterId) {
+      var _this = this
       var letter_param = {
         letterId,
         success: () => {
@@ -183,28 +184,40 @@ export default {
           })
           this.$Message.success("删除成功")
           this.$router.go(0)
+        },
+        fail: () => {
+          _this.$router.push("/logincenter/login")
         }
       }
       this.$store.dispatch("letter/deleteLetter", letter_param)
     },
     setLetterNoRead () {
+      var _this = this
       var noRead_param = {
         letterId: this.current_letter.id,
         userId: this.userInfo.id,
         success: (nums) => {
           console.log(nums)
           this.letterList[this.current_letter_index].noRead = nums
+        },
+        fail: () => {
+          _this.$router.push("/logincenter/login")
         }
       }
       this.$store.dispatch("letter/getNoReadLetterMsgNums", noRead_param)
     },
     setLetterMsgFlag (flag, letterMsg, index) {
+      console.log(flag, index, letterMsg)
+      var _this = this
       if (flag) {
         var letterMsg_param = {
           letterMsgId: letterMsg.id,
           success: () => {
-            this.setLetterNoRead()
-            this.letterMsgList[index].flag = 1
+            // this.setLetterNoRead()
+            _this.letterMsgList[this.letterMsgList.length - 1 - index].flag = 1
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         this.$store.dispatch("letterMsg/switchFlag", letterMsg_param)
@@ -223,14 +236,10 @@ export default {
     letterOpen () {
     },
     letterClose () {
-      console.log("letterClose......")
     },
     letterMessage (msg) {
-      console.log(msg)
       msg = JSON.parse(msg.data)
-      console.log(msg)
       this.letterList.map(item => {
-        console.log(item.letter.id, msg.letterId, item.letter.id === msg.letterId)
         if (item.letter.id === msg.letterId) {
           item.noRead = msg.nums
           if (msg.latestLetterMsg) {
@@ -244,8 +253,9 @@ export default {
     },
     getLetterList () {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         var letter_param = {
           userId: this.userInfo.id,
           page: ++this.letterPage,
@@ -260,7 +270,6 @@ export default {
               // 实例化socket
                 var letterPath = process.env.VUE_APP_WS + "/getLetterMsgNums?letterid=" + item.letter.id + "&userid=" + this.$store.state.user.userInfo.id
                 var socket = new WebSocket(letterPath)
-                console.log(this)
                 this.letterSocket.unshift({ letterId: item.letter.id, socket })
                 // 监听socket连接
                 socket.onopen = this.letterOpen
@@ -275,6 +284,9 @@ export default {
               this.isLetterFinish = !0
             }
             this.letterList = this.letterList.concat(letter.list)
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         this.$store.dispatch("letter/getLetterList", letter_param)
@@ -282,8 +294,9 @@ export default {
     },
     getLetterMsgList (letterId) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         var letter_param = {
           letterId,
           page: ++this.letterMsgPage,
@@ -292,6 +305,9 @@ export default {
               this.isLetterMsgFinish = !0
             }
             this.letterMsgList = this.letterMsgList.concat(letterMsgList.list)
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         this.$store.dispatch("letterMsg/getLetterMsgList", letter_param)
@@ -339,17 +355,21 @@ export default {
       // 发送一条私信
       // 私信内容 前后去空格 str.replace(/(^\s*)|(\s*$)/g,"") 校验表单 发送的内容是否为空
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
         var rep_msg = this.formSend.msg.replace(/(^\s*)|(\s*$)/g, "")
-        // 掉接口
-        var letterMsgParam = {
-          msg: rep_msg,
-          letterId: this.current_letter.id,
-          fromUserId: this.userInfo.id,
-          toUserId: this.current_user.id
+        if (rep_msg.length >= 1 && rep_msg.length <= 50) {
+          // 掉接口
+          var letterMsgParam = {
+            msg: rep_msg,
+            letterId: this.current_letter.id,
+            fromUserId: this.userInfo.id,
+            toUserId: this.current_user.id
+          }
+          this.socket.send(JSON.stringify(letterMsgParam))
+        } else {
+          this.$Message.error("内容长度需要在1-50位")
         }
-        this.socket.send(JSON.stringify(letterMsgParam))
       }
       // 接口成功之后 this.letterList.push()
       // 滚动到最底部

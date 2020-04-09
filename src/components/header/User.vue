@@ -69,11 +69,9 @@ export default {
     error () {
     },
     getMessage (msg) {
-      console.log("User getMessage")
       var _this = this
       var loginCheck = JSON.parse(msg.data)
-      console.log(loginCheck)
-      if (!loginCheck.login) {
+      if (!loginCheck.islogin) {
         this.$Notice.warning({
           title: "登录异常",
           desc: loginCheck.info,

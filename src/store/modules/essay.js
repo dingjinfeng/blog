@@ -40,7 +40,7 @@ const actions = {
       if (data.islogin) {
         if (data.flag) {
           ViewUI.Message.success(data.info)
-          param.success(data.res)
+          param.success()
         } else {
           ViewUI.Message.error(data.info)
         }

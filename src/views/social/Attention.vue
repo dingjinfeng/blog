@@ -27,7 +27,9 @@ export default {
     }
   },
   created () {
-    this.getAttention()
+    if (this.userinfo.id) {
+      this.getAttention()
+    }
     this.$store.commit("social/setLeftCurrent", 3)
     this.$store.commit("switchLoading", !1)
   },
@@ -45,12 +47,16 @@ export default {
     },
     getAttention () {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         var attention_param = {
           userId: this.userInfo.id,
           success: (list) => {
             this.attentionList = this.attentionList.concat(list)
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         this.$store.dispatch("attention/getAttentions", attention_param)
@@ -58,13 +64,16 @@ export default {
     },
     deleteAttention (userId, index) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
         var attention_param = {
           fromUserId: this.userInfo.id,
           toUserId: userId,
           success: () => {
-            this.$storer.go(0)
+            this.$router.go(0)
+          },
+          fail: () => {
+            this.$router.push("/logincenter/login")
           }
         }
         this.$store.dispatch("attention/deleteAttention", attention_param)

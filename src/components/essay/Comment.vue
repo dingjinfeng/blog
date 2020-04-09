@@ -86,13 +86,14 @@ export default {
     },
     addReply () {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         this.$Modal.confirm({
           render: (h) => {
             return h('Input', {
               props: {
-                value: this.msg,
+                value: _this.msg,
                 autofocus: true,
                 placeholder: '回复信息...'
               },
@@ -104,17 +105,25 @@ export default {
             })
           },
           onOk: () => {
-            var reply_param = {
-              commentsId: this.comment.id,
-              fromUserId: this.userInfo.id,
-              toUserId: this.comment.userId,
-              msg: this.msg,
-              success: (reply) => {
-                this.getReply()
-                this.msg = ""
+            var msg = _this.msg.replace(/(^\s*)|(\s*$)/g, "")
+            if (msg.length > 0 && msg.length <= 50) {
+              var reply_param = {
+                commentsId: _this.comment.id,
+                fromUserId: _this.userInfo.id,
+                toUserId: _this.comment.userId,
+                msg,
+                success: (reply) => {
+                  _this.getReply()
+                  _this.msg = ""
+                },
+                fail: () => {
+                  _this.$router.push("/logincenter/login")
+                }
               }
+              _this.$store.dispatch("reply/addReply", reply_param)
+            } else {
+              _this.$Message.error("长度不能为空且不能超过50位")
             }
-            this.$store.dispatch("reply/addReply", reply_param)
           }
         })
       }

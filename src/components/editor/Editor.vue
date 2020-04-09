@@ -23,7 +23,15 @@ export default {
   },
   watch: {
     "content_editor.html" (newValue) {
+      this.content_editor.html = newValue
       this.editor.txt.html(newValue)
+    }
+  },
+  methods: {
+    initEditor () {
+      this.editor.txt.text(this.content_editor.txt)
+      this.editor.txt.html(this.content_editor.html)
+      this.editor.$textElem.attr('contenteditable', !!this.content_editor.isEditable)
     }
   },
   mounted () {
@@ -165,11 +173,10 @@ export default {
     editor.customConfig.onchange = () => {
       var txt = editor.txt.text()
       var html = editor.txt.html()
-      this.$emit("getContent", { txt, html })
+      this.$emit("getContent", { txt, html, isEditable: this.content_editor.isEditable })
     }
     editor.create()
-    editor.txt.html(this.content_editor.html)
-    editor.$textElem.attr('contenteditable', !!this.content_editor.isEditable)
+    this.initEditor()
   }
 }
 </script>

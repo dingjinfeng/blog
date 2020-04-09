@@ -46,7 +46,8 @@ export default {
       cates: [],
       ruleAddEssay: {
         title: [
-          { required: true, message: '请输入博文标签', trigger: 'blur' }
+          { required: true, message: '请输入博文标题', trigger: 'blur' },
+          { type: 'string', max: 20, min: 1, message: '标题长度在1-20位', trigger: 'blur' }
         ]
       }
     }
@@ -65,24 +66,36 @@ export default {
       this.$store.dispatch("cate/getCates", cate_param)
     },
     handleSubmit (name) {
-      var essay_param = {
-        userId: this.userInfo.id,
-        oldCateId: this.formAddEssay.cate,
-        newCateName: this.formAddEssay.newCate,
-        title: this.formAddEssay.title,
-        msg: this.formAddEssay.contentObj.txt,
-        htmlMsg: this.formAddEssay.contentObj.html,
-        success: (user) => {
-          this.$store.commit("user/setUserInfo", user)
+      if (!this.userInfo.id) {
+        this.$router.push("/logincenter/login")
+      } else {
+        if (this.formAddEssay.contentObj.html.length > 0 && this.formAddEssay.contentObj.html.length <= 5000 && this.formAddEssay.title.length > 0 && this.formAddEssay.title.length <= 20) {
+          var _this = this
+          var essay_param = {
+            userId: this.userInfo.id,
+            oldCateId: this.formAddEssay.cate,
+            newCateName: this.formAddEssay.newCate,
+            title: this.formAddEssay.title,
+            msg: this.formAddEssay.contentObj.txt,
+            htmlMsg: this.formAddEssay.contentObj.html,
+            success: (user) => {
+              this.$router.replace("/user/blogmanagement")
+            },
+            fail: () => {
+              _this.$router.push("/logincenter/login")
+            }
+          }
+          this.$refs[name].validate((valid) => {
+            if (valid) {
+              this.$store.dispatch("essay/addEssay", essay_param)
+            } else {
+              this.$Message.error('标题需要在1-20位,内容在4000字左右')
+            }
+          })
+        } else {
+          this.$Message.error('标题需要在1-20位,内容在4000字左右')
         }
       }
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$store.dispatch("essay/addEssay", essay_param)
-        } else {
-          this.$Message.error('Fail!')
-        }
-      })
     }
   },
   computed: {

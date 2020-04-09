@@ -25,7 +25,7 @@
                 </div>
                 <div class="line">
                     <span>个性签名:</span>
-                    <span>{{userInfo.intro}}</span>
+                    <span class="userInfoFormat">{{userInfo.intro}}</span>
                 </div>
                 <div class="right">
                   <Button type="primary" class="btn" @click="type = 2">修改个人资料</Button>
@@ -112,15 +112,19 @@ export default {
       },
       ruleEdit: {
         username: [
-          { required: true, message: 'The name cannot be empty', trigger: 'blur' }
+          { required: true, message: '用户名不能为空', trigger: 'blur' },
+          { type: 'string', pattern: /^.{5,15}$/, message: '用户名长度需在5-15位', trigger: 'blur' }
         ],
         mail: [
-          { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
-          { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
+          { required: true, message: '邮箱不能为空', trigger: 'blur' },
+          { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
         ],
         intro: [
-          { required: true, message: 'Please enter a personal introduction', trigger: 'blur' },
-          { type: 'string', min: 20, message: 'Introduce no less than 20 words', trigger: 'blur' }
+          { type: 'string', max: 200, message: '个人简介不能超过200位', trigger: 'blur' }
+        ],
+        sex: [
+          { required: true, message: '性别不能为空', trigger: 'blur' },
+          { type: 'string', pattern: /^[1-2]$/, trigger: 'change' }
         ]
       },
       formSetPwd: {
@@ -129,10 +133,12 @@ export default {
       },
       ruleSetPwd: {
         oldPassword: [
-          { required: true, message: '原密码不能为空', trigger: 'blur' }
+          { required: true, message: '原密码不能为空', trigger: 'blur' },
+          { type: 'string', pattern: /^[a-zA-Z0-9]{8,20}$/, message: '原密码格式错误,请输入8-20位的字母或数字', trigger: 'blur' }
         ],
         newPassword: [
-          { required: true, message: '新密码不能为空', trigger: 'blur' }
+          { required: true, message: '新密码不能为空', trigger: 'blur' },
+          { type: 'string', pattern: /^[a-zA-Z0-9]{8,20}$/, message: '新密码格式错误,请输入8-20位的字母或数字', trigger: 'blur' }
         ]
       }
     }
@@ -155,27 +161,35 @@ export default {
     },
     editSubmit (name) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            this.$store.commit("switchLoading", !0)
-            this.$store.dispatch("user/updateUser", {
-              id: this.userInfo.id,
-              imgid: this.formEdit.imgid,
-              sex: this.formEdit.sex,
-              username: this.formEdit.username,
-              intro: this.formEdit.intro,
-              success: (userInfo) => {
-                this.$store.commit("user/setUserInfo", userInfo)
-                this.$router.go(0)
-              }
-            })
-            this.$Message.success('Success!')
-          } else {
-            this.$Message.error('Fail!')
-          }
-        })
+        var username = this.formEdit.username.replace(/(^\s*)|(\s*$)/g, "")
+        if (username.length < 5 || username.length > 20) {
+          this.$Message.error("用户名长度在5-20位")
+        } else {
+          var _this = this
+          _this.$refs[name].validate((valid) => {
+            if (valid) {
+              _this.$store.dispatch("user/updateUser", {
+                id: _this.userInfo.id,
+                imgid: _this.formEdit.imgid,
+                sex: _this.formEdit.sex,
+                username: _this.formEdit.username,
+                intro: _this.formEdit.intro,
+                success: (userInfo) => {
+                  _this.$store.commit("user/setUserInfo", userInfo)
+                  _this.$router.go(0)
+                },
+                fail: () => {
+                  _this.$router.push("/logincenter/login")
+                }
+              })
+              _this.$Message.success('Success!')
+            } else {
+              _this.$Message.error('Fail!')
+            }
+          })
+        }
       }
     },
     editReset (name) {
@@ -183,7 +197,7 @@ export default {
     },
     setPwdSubmit (name) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
         this.$refs[name].validate((valid) => {
           if (valid) {
@@ -194,6 +208,9 @@ export default {
               success: () => {
                 this.$Message.success("修改成功")
                 this.$router.go(0)
+              },
+              fail: () => {
+                this.$router.push("/logincenter/login")
               }
             })
           } else {
@@ -207,7 +224,7 @@ export default {
     },
     uploadBefore (aa) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
         return false
       }
       return true
@@ -269,5 +286,12 @@ export default {
 }
 .setPwdBtn{
   margin-left:90px;
+}
+.userInfoFormat{
+  display: inline-block;
+  overflow: hidden;
+  width: 298px;
+  height: 16px;
+  text-overflow: ellipsis;
 }
 </style>

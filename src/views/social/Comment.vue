@@ -59,8 +59,9 @@ export default {
     },
     getCommentsByUserId () {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         var comment_params = {
           userId: this.userInfo.id,
           page: ++this.commentPage,
@@ -69,6 +70,9 @@ export default {
               this.isCommentFinish = 1
             }
             this.commentList = this.commentList.concat(list)
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         this.$store.dispatch("comment/getCommentsByUserId", comment_params)
@@ -76,12 +80,16 @@ export default {
     },
     deleteComment (commentId, commentIndex) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         var comment_params = {
           commentId,
           success: () => {
             this.$router.go(0)
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         this.$store.dispatch("comment/deleteComment", comment_params)

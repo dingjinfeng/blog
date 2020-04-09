@@ -43,7 +43,8 @@ export default {
       },
       ruleValidate: {
         username: [
-          { required: true, message: '请输入昵称', trigger: 'blur' }
+          { required: true, message: '请输入昵称', trigger: 'blur' },
+          { type: 'string', pattern: /^.{5,15}$/, message: '用户名长度需在5-15位', trigger: 'blur'}
         ],
         mail: [
           { required: true, message: '请输入邮箱', trigger: 'blur' },
@@ -54,10 +55,11 @@ export default {
           { pattern: /^[0-9|a-zA-Z]{8,20}$/, message: '密码长度为8-20位，请重新输入密码', trigger: 'blur' }
         ],
         sex: [
-          { required: true, message: '请选择性别', trigger: 'change' }
+          { required: true, message: '请选择性别', trigger: 'blur' },
+          { type: 'string', pattern: /^[1-2]$/, trigger: 'change' }
         ],
         intro: [
-          { pattern: /^[0-9|a-zA-Z]{0,200}$/, message: '个性签名超过长度', trigger: 'blur' }
+          { type: 'string', max: 200, message: '个人简介不能超过200位', trigger: 'blur' }
         ]
       }
     }

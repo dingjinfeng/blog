@@ -59,8 +59,9 @@ export default {
     },
     getReplyByUserId () {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         var reply_param = {
           userId: this.userInfo.id,
           page: ++this.replyPage,
@@ -69,6 +70,9 @@ export default {
               this.isReplyFinish = 1
             }
             this.replyList = this.replyList.concat(list)
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         this.$store.dispatch("reply/getReplyByUserId", reply_param)
@@ -84,13 +88,17 @@ export default {
     },
     deleteReply (replyId) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         var reply_param = {
           replyId,
           success: () => {
             this.$Message.success("删除成功")
             this.$router.go(0)
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         this.$store.dispatch("reply/deleteReply", reply_param)

@@ -31,7 +31,8 @@ export default {
       },
       ruleEditEssay: {
         title: [
-          { required: true, message: '请输入博文标签', trigger: 'blur' }
+          { required: true, message: '请输入博文标签', trigger: 'blur' },
+          { type: 'string', max: 20, min: 1, message: '标题长度在1-20位', trigger: 'blur' }
         ]
       }
     }
@@ -47,7 +48,6 @@ export default {
       var essay_param = {
         essayId,
         success: (essay) => {
-          console.log(essay)
           this.essay = essay
           this.formEditEssay.title = essay.title
           this.formEditEssay.contentObj.txt = essay.msg
@@ -58,24 +58,32 @@ export default {
     },
     handleSubmit (name) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
-        var essay_param = {
-          essayId: this.essay.id,
-          title: this.formEditEssay.title,
-          msg: this.formEditEssay.contentObj.txt,
-          htmlmsg: this.formEditEssay.contentObj.html,
-          success: () => {
-            this.$router.go(-1)
+        var _this = this
+        if (_this.formEditEssay.contentObj.html.length > 0 && _this.formEditEssay.contentObj.html.length <= 5000 && _this.formEditEssay.title.length > 0 && _this.formEditEssay.title.length <= 20) {
+          var essay_param = {
+            essayId: _this.essay.id,
+            title: _this.formEditEssay.title,
+            msg: _this.formEditEssay.contentObj.txt,
+            htmlmsg: _this.formEditEssay.contentObj.html,
+            success: () => {
+              _this.$router.replace("/user/blogmanagement")
+            },
+            fail: () => {
+              _this.$router.push("/logincenter/login")
+            }
           }
+          _this.$refs[name].validate((valid) => {
+            if (valid) {
+              _this.$store.dispatch("essay/editEssay", essay_param)
+            } else {
+              _this.$Message.error('Fail!')
+            }
+          })
+        } else {
+          _this.$Message.error('标题需要在1-20位,内容在4000字左右')
         }
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            this.$store.dispatch("essay/editEssay", essay_param)
-          } else {
-            this.$Message.error('Fail!')
-          }
-        })
       }
     }
   },

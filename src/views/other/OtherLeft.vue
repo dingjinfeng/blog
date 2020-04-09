@@ -83,7 +83,7 @@ export default {
   methods: {
     getLetter (userId) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
         var _this = this
         var letter_param = {
@@ -93,6 +93,9 @@ export default {
             if (letter) {
               _this.letterType = 1
             }
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         _this.$store.dispatch("letter/getLetter", letter_param)
@@ -100,7 +103,7 @@ export default {
     },
     addAttention (userId) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
         var _this = this
         var attention_param = {
@@ -108,6 +111,9 @@ export default {
           toUserId: userId,
           success: () => {
             _this.type = 1
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         _this.$store.dispatch("attention/addAttention", attention_param)
@@ -115,13 +121,17 @@ export default {
     },
     deleteAttention (userId) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         var attention_param = {
           fromUserId: this.userInfo.id,
           toUserId: userId,
           success: () => {
             this.type = 0
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         this.$store.dispatch("attention/deleteAttention", attention_param)
@@ -145,10 +155,10 @@ export default {
     },
     getAttention (userId) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
         var _this = this
-        var attention_params = {
+        var attentionParams = {
           fromUserId: this.userInfo.id,
           toUserId: userId,
           success: (res) => {
@@ -157,9 +167,12 @@ export default {
             } else {
               _this.type = 0
             }
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
-        this.$store.dispatch("attention/getAttention", attention_params)
+        this.$store.dispatch("attention/getAttention", attentionParams)
       }
     },
     getCates (userId) {
@@ -174,14 +187,18 @@ export default {
     },
     addLetter (userId) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         var letter_param = {
           userId1: this.userInfo.id,
           userId2: userId,
           success: (letter) => {
             this.$store.commit("user/setUserInfo", letter.user)
             this.$router.push("/social/letter")
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         this.$store.dispatch("letter/addLetter", letter_param)

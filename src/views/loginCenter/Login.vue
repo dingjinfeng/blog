@@ -29,11 +29,12 @@ export default {
       },
       ruleLogin: {
         mail: [
-          { required: true, message: '请输入正确的邮箱格式', trigger: 'blur' }
+          { required: true, message: '请输入邮箱内容', trigger: 'blur' },
+          { tpye: 'email', message: '请输入正确的邮箱格式', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
-          { pattern: /^[0-9|a-zA-Z]{8,20}$/, message: '密码长度错误，请重新输入密码', trigger: 'blur' }
+          { type: 'string', pattern: /^[0-9a-zA-Z]{8,20}$/, message: '密码长度错误，请重新输入密码', trigger: 'blur' }
         ]
       }
     }

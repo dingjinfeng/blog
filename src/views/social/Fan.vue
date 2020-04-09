@@ -43,13 +43,17 @@ export default {
     },
     getFans () {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         var fan_param = {
           userId: this.userInfo.id,
           success: (list) => {
             console.log(list)
             this.fanList = list
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         }
         this.$store.dispatch("fan/getFans", fan_param)

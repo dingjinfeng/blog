@@ -76,12 +76,16 @@ export default {
     },
     deleteEssay (essayId) {
       if (!this.userInfo.id) {
-        this.$router.push("/")
+        this.$router.push("/logincenter/login")
       } else {
+        var _this = this
         this.$store.dispatch("essay/deleteEssay", {
           essayId,
           success: () => {
-            this.$router.go(0)
+            _this.$router.go(0)
+          },
+          fail: () => {
+            _this.$router.push("/logincenter/login")
           }
         })
       }
